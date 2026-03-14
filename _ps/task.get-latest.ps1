@@ -8,4 +8,4 @@ Get-ScheduledTask | ForEach-Object {
         LastRunTime = $taskInfo.LastRunTime
         NextRunTime = $taskInfo.NextRunTime
     }
-} | Sort-Object CreationTime -Descending | Select-Object -First 10
+} | Sort-Object CreationTime -Descending | Select-Object -First 10 | Format-Table -AutoSize
