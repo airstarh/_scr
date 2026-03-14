@@ -1,4 +1,5 @@
-$searchTerm = "org"
+### Search Task by Name, Description, Command
+$searchTerm = "yandex"
 $matchingTasks = @()
 
 Get-ScheduledTask | ForEach-Object {
