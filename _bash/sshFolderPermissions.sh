@@ -10,11 +10,11 @@ sshFolderPermissions() {
     echo "Установлены права 700 для каталога: $ssh_dir"
 
     find "$ssh_dir" -maxdepth 1 -type f ! -name "*.*" -exec chmod 600 {} \;
-    echo "Установлены права 600 для файлов без расширения в: $ssh_dir"
+    echo "600 *.*"
 
     find "$ssh_dir" -maxdepth 1 -type f -name "*.private" -exec chmod 600 {} \;
-    echo "Установлены права 644 для файлов с расширением .private в: $ssh_dir"
+    echo "600 *.private"
 
     find "$ssh_dir" -maxdepth 1 -type f -name "*.pub" -exec chmod 644 {} \;
-    echo "Установлены права 644 для файлов с расширением .pub в: $ssh_dir"
+    echo "644 *.pub"
 }
