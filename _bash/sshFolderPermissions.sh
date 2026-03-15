@@ -7,7 +7,7 @@ sshFolderPermissions() {
     fi
 
     chmod 700 "$ssh_dir"
-    echo "Установлены права 700 для каталога: $ssh_dir"
+    echo "700 $ssh_dir"
 
     find "$ssh_dir" -maxdepth 1 -type f ! -name "*.*" -exec chmod 600 {} \;
     echo "600 *.*"
