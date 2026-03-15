@@ -1,3 +1,6 @@
+# chmod 700 ~/.ssh
+# chmod 600 ~/.ssh/001
+# chmod 644 ~/.ssh/001.pub
 sshFolderPermissions() {
     local ssh_dir="$HOME/.ssh"
     local known_hosts="$ssh_dir/known_hosts"
@@ -41,4 +44,15 @@ sshFolderPermissions() {
     else
         echo "Файл $config_file не найден, пропускаем установку прав."
     fi
+
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/001
+    ssh-add ~/.ssh/002
+    ssh-add ~/.ssh/003
+    ssh-add ~/.ssh/004
+    ssh-add ~/.ssh/005
+    ssh-add ~/.ssh/006
+    ssh-add ~/.ssh/007
 }
+
+sshFolderPermissions

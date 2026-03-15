@@ -1,0 +1,1 @@
+code --install-extension mathematic.vscode-pdf
