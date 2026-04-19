@@ -45,14 +45,15 @@ sshFolderPermissions() {
         echo "Файл $config_file не найден, пропускаем установку прав."
     fi
 
-    eval "$(ssh-agent -s)"
+    ### eval "$(ssh-agent -s)"
+    # SSS:
     ssh-add ~/.ssh/001
+    # 1378862
     ssh-add ~/.ssh/002
+    # 1234
     ssh-add ~/.ssh/003
+    # 1234
     ssh-add ~/.ssh/004
-    ssh-add ~/.ssh/005
-    ssh-add ~/.ssh/006
-    ssh-add ~/.ssh/007
 }
 
 sshFolderPermissions
