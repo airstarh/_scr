@@ -1,6 +1,6 @@
 # Резюме: Азовский Всеволод
-# PHP (Laravel, Yii, Symfony)
-# JavaScript (Vue)
+## PHP (Laravel, Yii, Symfony)
+## JavaScript (Vue)
 
 **Дата рождения:** 13.02.1988
 **Должность:** Фулстек‑разработчик
@@ -8,54 +8,74 @@
 ## Контакты
 
 - **Email:** vsevolod.azovsky@gmail.com
-- **Телефон/мессенджеры:** +7 960 106 15 65 (Max/Telegram/WhatsApp)
-- **Telegram** @BorgSeva
+- **Телефон/мессенджеры:** [+7 960 106 15 65](Tel:+79601061565)
+- **Telegram** [@BorgSeva](https://t.me/BorgSeva)
 
 ---
 
 ## О себе
 
-Специализируюсь на создании масштабируемых веб‑приложений и системной интеграции. Опыт руководства командами до 10 человек (Scrum Master).
+Специализируюсь на создании масштабируемых веб‑приложений. Опыт руководства командами до 10 человек (Scrum Master).
 
-**Ключевые компетенции:**
+**Компетенции**
 
 - проектирование архитектуры приложений и баз данных;
 - оптимизация производительности и отказоустойчивости;
 - интеграция с внешними сервисами и API;
 - CI/CD и DevOps‑практики;
-- созадние SPA, вёрстка под любые;
-- внимание к деталям, быстрое обучение, эффективная коммуникация в команде.
+- созадние SPA, вёрстка под любые экраны;
+- внимание к деталям, быстрое обучение, коммуникация в команде.
 
 ---
 
-## Ключевые навыки
+**Навыки**
 
-**Языки программирования:** JavaScript, PHP, Python, SQL, NoSQL, C.
-**Фреймворки и библиотеки:** Vue.js (2/3), Laravel, Yii, Symfony, React (jQuery, Backbone, Underscore/Lodash).
-**Бэкенд‑технологии:** Node.js, WordPress, Drupal, Joomla.
-**Фронтенд‑технологии:** Bootstrap, Quasar, SCSS, webRTC.
-**Базы данных:** MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcache.
-**DevOps и инфраструктура:** Docker, AWS, Yandex Cloud, Nginx, Apache, Ubuntu, Fedora, Manjaro.
-**Инструменты разработки:** Git, Jenkins, Webpack, Babel, Gulp, Grunt.
-**Методологии:** Scrum, CI/CD.
-**Системы отслеживания задач:** Jira, Trello, Redmine.
-**IoT:** Arduino, Raspberry Pi.
+- **Языки программирования:**
+PHP, JavaScript, Python, SQL, NoSQL, C
+
+- **Frontend Фреймворки:**
+Vue.js (2/3), jQuery, Backbone, Underscore/Lodash, Bootstrap, Quasar
+
+- **Backend Фреймворки:**
+Laravel, Yii, Symfony
+
+- **CMS**
+WordPress, Drupal
+
+- **Frontend‑технологии:**
+webRTC
+
+- **Базы данных:**
+MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcache
+
+- **DevOps и инфраструктура:**
+Docker, AWS, Yandex Cloud, Nginx, Apache, Ubuntu, Fedora, Arch (Manjaro)
+
+- **Инструменты разработки:**
+Git, Jenkins, Webpack, Babel, Gulp, Grunt
+
+- **Методологии:**
+Scrum, CI/CD.
+
+- **Системы отслеживания задач:**
+Jira, Trello, Redmine.
+
+- **IoT**
+ Arduino, Raspberry Pi.
 
 ---
 
 ## Опыт работы
 
-### 2024 — н. в.
+### *2024 — сегодня* **SoftGamings**
 
-**SoftGamings**
+Game Dev (NDA).
 
-- Game Dev (NDA).
+Laravel, Symfony, Legacy.
 
-### 2023 — н. в.
+# <small>2023 — сегодня<small> ИП «Всеволод Леонидович Азовский»
 
-**ИП «Всеволод Леонидович Азовский»**
-
-- Контракты с юридическими лицами (B2B).
+- Уточню: предпочту трудоустройство по ТК. ИП открыто для расширения возможности работы с некоторыми заказчиками.
 
 ### 2014–2023
 
@@ -95,11 +115,11 @@
 
 ---
 
-## Избранные проекты
+## Избранные примеры проектов
 
 ### 1. Финансовая практика (NDA)
 
-**Технологии:** Docker, Nginx, MS SQL, MySQL 5.7–8.0, PHP 7.4, JavaScript (Backbone.js, jQuery).
+**Технологии:** Docker, Nginx, MS SQL, MySQL 5.7–8+, PHP 7.4 - 8+, JavaScript (Backbone, Lodash (Underscore), jQuery).
 **Роль:** Scrum Master (команда 3–10 чел.), архитектор БД.
 
 **Достижения:**
