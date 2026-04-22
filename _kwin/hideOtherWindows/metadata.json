@@ -2,19 +2,14 @@
     "KPlugin": {
         "Name": "Hide Other Windows",
         "Description": "Minimizes all windows except the active one",
-        "Icon": "preferences-system-windows-scriptman",
         "Authors": [
             {
-                "Email": "vsevolod.azovsky@gmail.com",
-                "Name": "VA"
+                "Name": "Your Name"
             }
         ],
-        "Category": "Window Management",
-        "EnabledByDefault": true,
         "Id": "hide-other-windows",
-        "License": "GPL",
-        "Version": "12.0"
+        "Version": "1.0",
+        "EnabledByDefault": true
     },
-    "X-KWin-Video-Wall": false,
     "KPackageStructure": "KWin/Script"
 }
