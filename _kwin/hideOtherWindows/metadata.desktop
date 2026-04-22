@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Hide Other Windows
+Comment=Minimizes all windows except the active one
+Type=Service
+ServiceTypes=KWin/Script
+X-KDE-PluginInfo-Author=Your Name
+X-KDE-PluginInfo-Email=your.email@example.com
+X-KDE-PluginInfo-Name=XXX
+X-KDE-PluginInfo-Version=12.0
+X-KDE-PluginInfo-Website=
+X-KDE-PluginInfo-Category=Window Management
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+X-KWin-Script-Api-Version=2.0
