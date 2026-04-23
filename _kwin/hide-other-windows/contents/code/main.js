@@ -1,13 +1,3 @@
-/**
-kpackagetool6 --type KWin/Script --install .
-
-dbus-send --print-reply --dest=org.kde.KWin /Scripting org.kde.kwin.Scripting.unloadScript string:"hide-other-windows"
-dbus-send --print-reply --dest=org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript string:"hide-other-windows"
- *
- *
- * @param {*} title
- * @param {*} message
- */
 function notify(title, message) {
   callDBus(
     "org.freedesktop.Notifications",
@@ -50,5 +40,5 @@ registerShortcut(
   "hide-other-windows", // <-- Changed to match metadata.json ID, and removed _id suffix
   "Hide Other Windows Script",
   "Meta+H",
-  hideOtherWindows
+  hideOtherWindows,
 );
