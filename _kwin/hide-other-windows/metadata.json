@@ -1,0 +1,17 @@
+{
+    "KPlugin": {
+        "Name": "Hide Other Windows",
+        "Description": "Minimizes all windows except the active one",
+        "Authors": [
+            {
+                "Name": "SEWA"
+            }
+        ],
+        "Id": "hideotherwindowssewa",
+        "Version": "1.0",
+        "EnabledByDefault": true,
+        "License": "GPL"
+    },
+    "KPackageStructure": "KWin/Script",
+    "X-Plasma-API": "javascript"
+}
