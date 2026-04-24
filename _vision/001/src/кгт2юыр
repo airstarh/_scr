@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Get caret position
+coords=$(python3 /path/to/get_caret_wayland.py 2>/dev/null)
+
+if [[ $coords == "caret,not_found" ]] || [[ -z $coords ]]; then
+    echo "Error: Could not detect text cursor."
+    exit 1
+fi
+
+IFS=',' read -r target_x target_y <<< "$coords"
+
+# Move mouse (Wayland)
+ydotool mousemove --absolute --x "$target_x" --y "$target_y"
+
+echo "Mouse moved to text caret at ($target_x, $target_y)."
