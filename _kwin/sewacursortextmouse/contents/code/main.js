@@ -1,10 +1,13 @@
-// Save as: ~/.local/share/kwin/scripts/cursor_tracker/contents/code/main.js
-
 registerShortcut(
+  "sewacursortextmouse",
   "Move Mouse to Cursor",
-  "Move mouse to text cursor",
   "Ctrl+F1",
   function () {
+    console.log("");
+    console.log("");
+    console.log(
+      "AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA AAA ",
+    );
     // Since we CAN'T get text cursor position directly,
     // we'll use KWin's cursor position as a placeholder
     // and signal the bash script to read from accessibility
@@ -24,6 +27,6 @@ registerShortcut(
   },
 );
 
-function print(message) {
-  print("CursorTracker: " + message);
-}
+// function print(message) {
+//   print("CursorTracker: " + message);
+// }
