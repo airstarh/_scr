@@ -1,0 +1,2 @@
+ydotool mousemove -x -9999 -y 9999
+ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x 120 -y 20
