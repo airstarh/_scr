@@ -1,10 +1,10 @@
 {
     "KPlugin": {
-        "Name": "Sewa Visiob",
-        "Description": "Sewa Visiob",
+        "Name": "Sewa vision",
+        "Description": "Sewa vision",
         "Authors": [
             {
-                "Name": "SEWA"
+                "Name": "Sewa"
             }
         ],
         "Id": "sewacursortextmouse",

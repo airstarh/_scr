@@ -1,4 +1,4 @@
-kpackagetool6 --type KWin/Script --uninstall hide-other-windows
+kpackagetool6 --type KWin/Script --uninstall XXX
 kpackagetool6 --type KWin/Script --install .
 kpackagetool6 --type KWin/Script --upgrade .
 
