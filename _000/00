@@ -1,2 +1,5 @@
 ydotool mousemove -x -9999 -y 9999
-ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x 120 -y 20
+ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x $x -y $y
+
+dbus-monitor --session "type='signal'" 2>/dev/null | grep -i cursor
+

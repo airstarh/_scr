@@ -1,76 +1,109 @@
 #!/bin/bash
-# This script gets the REAL text cursor position via AT-SPI
 
-# Function to get actual text cursor position
+echo "=== SEWA Mouse Cursor Tracker Started ==="
+echo "Monitoring for cursor movement requests..."
+
+# Function to get text cursor position via AT-SPI
 get_caret_position() {
     python3 << 'EOF'
 import dbus
 import sys
 
 try:
+    # Connect to session bus
     bus = dbus.SessionBus()
-    reg = bus.get_object('org.a11y.atspi', '/org/a11y/atspi/accessible/root')
+
+    # Connect to AT-SPI (works with your system)
+    atspi_bus = bus.get_object('org.a11y.Bus', '/org/a11y/bus')
+    atspi_iface = dbus.Interface(atspi_bus, 'org.a11y.Bus')
+    registry_address = atspi_iface.GetAddress()
+
+    # Connect to registry
+    registry_bus = dbus.bus.BusConnection(registry_address)
+    reg = registry_bus.get_object('org.a11y.atspi.Registry', '/org/a11y/atspi/accessible/root')
     iface = dbus.Interface(reg, 'org.a11y.atspi.Accessible')
 
-    # Get active window and focused component
+    # Get desktop
     desktop = iface.GetDesktop(0)
 
-    # Simplified: find focused text component
     def find_focused(obj, depth=0):
-        if depth > 10:
+        if depth > 15:
             return None
         try:
+            # Check if focused
             state_set = obj.GetStateSet()
-            if state_set.Contains(0x80000):  # Focused
-                # Check if it has text
+            if state_set.Contains(0x80000):  # ATSPI_STATE_FOCUSED
+                # Check if text interface exists
                 try:
                     text_iface = dbus.Interface(obj, 'org.a11y.atspi.Text')
                     caret = text_iface.GetCaretOffset()
-                    rect = text_iface.GetCharacterExtents(caret, 0)
-                    x = rect[0] + rect[2]//2
-                    y = rect[1] + rect[3]//2
-                    print(f"{x},{y}")
-                    return obj
+                    if caret >= 0:
+                        rect = text_iface.GetCharacterExtents(caret, 0)
+                        x = rect[0] + (rect[2] // 2)
+                        y = rect[1] + (rect[3] // 2)
+                        print(f"{x},{y}")
+                        return obj
                 except:
                     pass
 
             # Check children
-            for i in range(obj.GetChildCount()):
-                result = find_focused(obj.GetChildAtIndex(i), depth+1)
-                if result:
-                    return result
+            try:
+                child_count = obj.GetChildCount()
+                for i in range(min(child_count, 50)):
+                    child = obj.GetChildAtIndex(i)
+                    result = find_focused(child, depth + 1)
+                    if result:
+                        return result
+            except:
+                pass
         except:
             pass
         return None
 
-    find_focused(desktop)
+    result = find_focused(desktop)
+    if not result:
+        print("no_position")
+
 except Exception as e:
-    sys.stderr.write(f"Error: {e}\n")
-    print("no_position")
+    print(f"error: {e}")
 EOF
 }
 
-echo "CUCbKU"
+# Test if AT-SPI works on startup
+echo "Testing AT-SPI connection..."
+TEST_POS=$(get_caret_position)
+echo "Test result: $TEST_POS"
 
-# Listen for DBus signal from KWin script
-dbus-monitor --session "type='signal',interface='local.CursorTracker',member='MoveRequest'" 2>/dev/null |
-while read -r line; do
-    if [[ $line == *"MoveRequest"* ]]; then
-        echo "Signal received, getting text cursor position..."
+# Listen for ANY DBus activity (simpler approach)
+echo ""
+echo "Now listening for DBus signals..."
+echo "Press Ctrl+Shift+I in any application"
+echo ""
 
-        # Get actual text cursor position
+dbus-monitor --session 2>&1 | while read -r line; do
+    # Look for ANY mention of our shortcut or cursor
+    if echo "$line" | grep -i -E "sewacursortextmouse|cursor|move|Ctrl\+Shift\+I" > /dev/null; then
+        echo ""
+        echo ">>> DBus activity detected at $(date '+%H:%M:%S') <<<"
+        echo "Raw: $line"
+        echo ""
+
+        # Try to get cursor position
         POS=$(get_caret_position)
 
-        if [[ $POS != "no_position" ]] && [[ $POS =~ ^[0-9]+,[0-9]+$ ]]; then
-            X=$(echo $POS | cut -d',' -f1)
-            Y=$(echo $POS | cut -d',' -f2)
+        if [[ "$POS" =~ ^[0-9]+,[0-9]+$ ]]; then
+            X=$(echo "$POS" | cut -d',' -f1)
+            Y=$(echo "$POS" | cut -d',' -f2)
 
-            # Move mouse (requires ydotool)
-            ### ydotool mousemove --absolute $X $Y
-            ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x $X -y $y
-            echo "Moved mouse to text cursor at: $X, $Y"
+            echo "✓ Text cursor found at: $X, $Y"
+
+            # Move mouse with ydotool
+            ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x $X -y $Y
+            echo "✓ Mouse moved to text cursor"
         else
-            echo "Could not find text cursor position"
+            echo "✗ Could not get text cursor position"
+            echo "  Result: $POS"
         fi
+        echo "----------------------------------------"
     fi
 done
