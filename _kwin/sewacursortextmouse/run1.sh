@@ -50,6 +50,8 @@ except Exception as e:
 EOF
 }
 
+echo "CUCbKU"
+
 # Listen for DBus signal from KWin script
 dbus-monitor --session "type='signal',interface='local.CursorTracker',member='MoveRequest'" 2>/dev/null |
 while read -r line; do

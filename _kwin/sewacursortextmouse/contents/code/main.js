@@ -1,6 +1,6 @@
 registerShortcut(
   "sewacursortextmouse",
-  "Move Mouse to Cursor",
+  "Sewa vision 1",
   "Ctrl+F1",
   function () {
     console.log("");
