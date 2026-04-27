@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SOURCE="/home/qqq/Downloads/"
-DEST="/media/qqq/nix_tb/_A002/_downloads/"
+DEST="/run/media/qqq/nix_tb/_A002/_downloads/"
 
 # Validate source exists
 if [ ! -d "$SOURCE" ]; then
