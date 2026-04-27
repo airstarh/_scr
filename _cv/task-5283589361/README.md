@@ -18,7 +18,22 @@ https://voronezh.hh.ru/chat/5283589361
 https://github.com/airstarh/ALINA_BE
 https://github.com/airstarh/ALINA_FE
 
-# Поиск товаров с фильтрами
+# Структура проекта
+
+```text
+
+/product-search-app
+├── api/
+│   └── products.php          # PHP API endpoint
+├── css/
+│   └── style.css           # Стили интерфейса
+├── js/
+│   └── app.js             # JavaScript для работы с API
+├── index.html             # Главная страница с интерфейсом
+└── README.md            # Эта инструкция
+```
+
+# Поиск товаров с фильтрами (Исходная задача)
 
 Реализация API для поиска товаров с фильтрацией, сортировкой и пагинацией на PHP, raw JavaScript и MySQL 8.
 
