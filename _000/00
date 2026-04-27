@@ -1,5 +1,8 @@
 ydotool mousemove -x -9999 -y 9999
 ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x $x -y $y
-
+a.k.a
+qwasZX!1
+qwerty123qwerty
 dbus-monitor --session "type='signal'" 2>/dev/null | grep -i cursor
 
+kwriteconfig5 --file kwinrc --group "Effect-Zoom" --key ModifierKey --type string "None"
