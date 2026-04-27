@@ -6,3 +6,4 @@ qwerty123qwerty
 dbus-monitor --session "type='signal'" 2>/dev/null | grep -i cursor
 
 kwriteconfig5 --file kwinrc --group "Effect-Zoom" --key ModifierKey --type string "None"
+
