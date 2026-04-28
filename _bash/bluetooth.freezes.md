@@ -1,3 +1,32 @@
+It looks like your issue is a persistent system-level conflict or power management setting, as both wired and wireless mice are affected. Here’s how to troubleshoot this via Terminal.
+
+### 1. Disable USB Autosuspend (most likely fix for wired mice)
+The kernel often suspends USB ports to save power, which can cause wired mice to freeze.
+*   **Check current status:** Look for the USB port your mouse is connected to, then check if it's suspended: `lsusb` then `cat /sys/bus/usb/devices/X/power/runtime_status`
+*   **Test temporary fix:** Disable autosuspend for all USB devices: `echo -1 | sudo tee /sys/module/usbcore/parameters/autosuspend`
+*   **Make permanent:** Edit the GRUB file: `sudo nano /etc/default/grub`
+    *   Find the line `GRUB_CMDLINE_LINUX_DEFAULT`. Add `usbcore.autosuspend=-1` inside the quotes.
+    *   Save, then update: `sudo update-grub` and reboot.
+
+### 2. Disable Bluetooth Power Management
+Modern kernels use power-saving features on Bluetooth controllers.
+*   **Permanent fix:** Create a configuration file: `sudo nano /etc/modprobe.d/bluetooth-poweroff.conf`
+*   **Add this line:** `options btusb enable_autosuspend=n`
+*   Save, then restart the Bluetooth service: `sudo systemctl restart bluetooth` (or reboot).
+
+### 3. Reset the Input Subsystem
+If the mouse freezes but the system is still responsive, try resetting the driver without a full reboot.
+*   **For Wired:** Reload the USB HID module: `sudo rmmod usbhid && sudo modprobe usbhid`
+*   **For Bluetooth:** Restart the service: `sudo systemctl restart bluetooth`
+
+### 4. Check for IRQ Conflicts or High Interrupts
+Sometimes other devices hog the system bus. Check if the CPU is dropping interrupts:
+*   `grep -i "irq" /var/log/syslog | tail -20`
+*   `cat /proc/interrupts | grep -i "usb\|mouse"`
+
+**Pro tip:** Even after these fixes, interference (USB 3.0 nearest the dongle, or WiFi on the 2.4GHz band) can cause similar symptoms. Try plugging the receiver into a USB 2.0 port if available, or switching WiFi to 5GHz. Let me know if the Terminal commands reveal any specific errors.
+
+
 This is a frustrating issue, especially since you've already confirmed the hardware is healthy. On Kubuntu (or any Linux distribution), a "freezing" Bluetooth mouse is rarely a sign of a bad signal, but often a sign that the system is having trouble processing the mouse's data stream—specifically its **HID (Human Interface Device) report descriptor** .
 
 Here’s how to diagnose and fix it.
