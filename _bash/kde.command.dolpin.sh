@@ -1,0 +1,1 @@
+bash -c "if qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'dolphin'; then echo 'exists'; else dolphin; fi"

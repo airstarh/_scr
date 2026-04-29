@@ -1,0 +1,17 @@
+{
+    "KPlugin": {
+        "Name": "Sewa Dolphin One App",
+        "Description": "Sewa Dolphin One App",
+        "Authors": [
+            {
+                "Name": "SEWA"
+            }
+        ],
+        "Id": "sewadolphinoneapp",
+        "Version": "1.0",
+        "EnabledByDefault": true,
+        "License": "GPL"
+    },
+    "KPackageStructure": "KWin/Script",
+    "X-Plasma-API": "javascript"
+}
