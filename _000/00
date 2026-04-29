@@ -9,5 +9,6 @@ kwriteconfig5 --file kwinrc --group "Effect-Zoom" --key ModifierKey --type strin
 
 https://update.code.visualstudio.com/1.100.3/linux-deb-x64/stable
 
+mpv rtsp://admin:admin@192.168.1.115
 
 
