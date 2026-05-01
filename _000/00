@@ -13,3 +13,6 @@ mpv rtsp://admin:admin@192.168.1.115
 mpv rtsp://admin:admin@192.168.1.112
 
 
+sudo snap install onvif
+
+sudo mkdir -p /run/media/qqq/nix_tb/docker

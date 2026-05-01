@@ -1,6 +1,7 @@
-# Temp
-### sudo sh -c 'echo on > /sys/bus/usb/devices/1-4.3/power/control'
-### cat /sys/bus/usb/devices/1-4.3/power/control
+# region Temp
+sudo sh -c 'echo on > /sys/bus/usb/devices/1-4.3/power/control'
+cat /sys/bus/usb/devices/1-4.3/power/control
+# endregion Temp
 
 # 3. Fix the Bluetooth driver permanently:
 # Create modprobe config to disable Bluetooth USB autosuspend
