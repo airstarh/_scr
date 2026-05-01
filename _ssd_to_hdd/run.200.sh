@@ -1,50 +1,59 @@
-# ============================================
-# STEP 1: Mount HDD to /osa (already done)
-# ============================================
-# Verify /osa is mounted
+#!/bin/bash
+# COMPLETE MIGRATION SCRIPT - Including ZoneMinder safety
+
+set -e  # Stop on error
+
+echo "========================================="
+echo "STEP 0: Stop services that might be affected"
+echo "========================================="
+sudo systemctl stop zoneminder
+sudo systemctl stop mysql
+sudo systemctl stop docker docker.socket
+
+echo -e "\n✅ Services stopped"
+
+echo "========================================="
+echo "STEP 1: Verify /osa is mounted"
+echo "========================================="
 mount | grep /osa
 
-# ============================================
-# STEP 2: Create FULL path structure on /osa
-# ============================================
-# This mirrors your root filesystem structure
+echo "========================================="
+echo "STEP 2: Create FULL path structure on /osa"
+echo "========================================="
 sudo mkdir -p /osa/home
 sudo mkdir -p /osa/srv
 sudo mkdir -p /osa/var/lib/docker
-sudo mkdir -p /osa/opt            # For future
-sudo mkdir -p /osa/usr/local      # For future
+sudo mkdir -p /osa/opt
+sudo mkdir -p /osa/usr/local
+echo "✅ Directories created"
 
-# ============================================
-# STEP 3: Move /home (root-level, simple)
-# ============================================
+echo "========================================="
+echo "STEP 3: Move /home"
+echo "========================================="
 sudo rsync -avxP --progress /home/ /osa/home/
 sudo mv /home /home.old
 sudo ln -s /osa/home /home
+echo "✅ /home moved to HDD"
 
-# ============================================
-# STEP 4: Move /srv (root-level, simple)
-# ============================================
+echo "========================================="
+echo "STEP 4: Move /srv"
+echo "========================================="
 sudo rsync -avxP --progress /srv/ /osa/srv/
 sudo mv /srv /srv.old
 sudo ln -s /osa/srv /srv
+echo "✅ /srv moved to HDD"
 
-# ============================================
-# STEP 5: Move /var/lib/docker (PRESERVES FULL PATH)
-# ============================================
-sudo systemctl stop docker docker.socket
-
-# Copy to exact same path under /osa
+echo "========================================="
+echo "STEP 5: Move /var/lib/docker"
+echo "========================================="
 sudo rsync -avxP --progress /var/lib/docker/ /osa/var/lib/docker/
-
-# Remove original (after confirming copy worked)
 sudo mv /var/lib/docker /var/lib/docker.old
-
-# Create symlink - NOTE the full path preservation
 sudo ln -s /osa/var/lib/docker /var/lib/docker
+echo "✅ Docker moved to HDD"
 
-# ============================================
-# STEP 6: Docker systemd configuration
-# ============================================
+echo "========================================="
+echo "STEP 6: Docker systemd configuration"
+echo "========================================="
 sudo mkdir -p /etc/systemd/system/docker.service.d/
 sudo tee /etc/systemd/system/docker.service.d/osa-wait.conf << EOF
 [Unit]
@@ -54,11 +63,19 @@ After=local-fs.target
 EOF
 
 sudo systemctl daemon-reload
-sudo systemctl start docker
+echo "✅ Docker configured"
 
-# ============================================
-# STEP 7: Verify path preservation
-# ============================================
+echo "========================================="
+echo "STEP 7: Restart services"
+echo "========================================="
+sudo systemctl start mysql
+sudo systemctl start docker
+sudo systemctl start zoneminder
+echo "✅ Services restarted"
+
+echo "========================================="
+echo "STEP 8: Verification"
+echo "========================================="
 echo "=== Symlink verification ==="
 ls -la / | grep -E "home|srv"
 ls -la /var/lib | grep docker
@@ -69,7 +86,16 @@ ls -la /osa/
 echo -e "\n=== Docker root directory ==="
 docker info | grep "Docker Root Dir"
 
-# ============================================
-# STEP 8: Check disk usage
-# ============================================
+echo -e "\n=== Disk usage ==="
 df -h / /osa
+
+echo -e "\n========================================="
+echo "✅ MIGRATION COMPLETE!"
+echo "========================================="
+echo ""
+echo "IMPORTANT: Log out and log back in for /home changes to take effect!"
+echo ""
+echo "After logging back in, verify:"
+echo "  1. Your files are in ~/ (should show HDD content)"
+echo "  2. ZoneMinder web UI: http://localhost/zm"
+echo "  3. Docker: docker run hello-world"
