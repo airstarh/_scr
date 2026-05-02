@@ -1,3 +1,4 @@
 #!/bin/bash
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-source ./../_ssh/sshkeys.sh
+source "$SCRIPT_DIR/../_ssh/sshkeys.sh"
