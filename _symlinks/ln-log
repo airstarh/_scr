@@ -1,0 +1,36 @@
+=========================================
+     SYSTEM STORAGE MAP (Dynamic)
+=========================================
+
+📀 System device: /dev/sdb2
+📀 Data device: /dev/sda1 at /osa
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔗 REDIRECTIONS (Auto-discovered, up to 4 levels deep)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  [SL] sdb2     ::: /bin                                → sdb2     ::: /usr/bin
+  [SL] sdb2     ::: /etc/mtab                           → unknown  ::: /proc/190980/mounts
+  [SL] sdb2     ::: /etc/printcap                       → tmpfs    ::: /run/cups/printcap
+  [SL] sdb2     ::: /etc/resolv.conf                    → tmpfs    ::: /run/systemd/resolve/stub-resolv.conf
+  [SL] sdb2     ::: /home                               → sda1     ::: /osa/home
+  [SL] sdb2     ::: /lib                                → sdb2     ::: /usr/lib
+  [SL] sdb2     ::: /lib64                              → sdb2     ::: /usr/lib64
+  [SL] sdb2     ::: /sbin                               → sdb2     ::: /usr/sbin
+  [SL] sdb2     ::: /srv                                → sda1     ::: /osa/srv
+  [SL] sdb2     ::: /var/lib/docker                     → sda1     ::: /osa/var/lib/docker
+  [SL] sdb2     ::: /var/lock                           → tmpfs    ::: /run/lock
+  [SL] sdb2     ::: /var/run                            → tmpfs    ::: /run
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SSD (/dev/sdb2): 19G / 55G
+  HDD (/dev/sda1): 48G / 916G
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 SCAN NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  • Scanned symlinks up to 4 levels deep
+  • Bind mounts detected from /proc/self/mountinfo
+  • Data mount auto-detected (no hardcoded paths)
+  • Showing cross-device symlinks and bind mountss
