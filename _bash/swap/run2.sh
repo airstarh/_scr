@@ -35,13 +35,13 @@ echo -e "${GREEN}[INFO]${NC} Available SSD space: ${AVAILABLE_SPACE}GB"
 # Check if swap file already exists
 if [[ -f "$SSD_SWAP" ]]; then
     echo -e "${YELLOW}[WARNING]${NC} Swap file already exists at ${SSD_SWAP}"
-
+    
     # Check if it's currently active
     if swapon --show | grep -q "$SSD_SWAP"; then
         echo -e "${YELLOW}[WARNING]${NC} Disabling existing SSD swap..."
         swapoff "$SSD_SWAP" 2>/dev/null || true
     fi
-
+    
     echo -e "${YELLOW}[WARNING]${NC} Removing existing swap file..."
     rm -f "$SSD_SWAP"
 fi
