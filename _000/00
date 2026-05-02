@@ -18,3 +18,4 @@ sudo snap install onvif
 sudo mkdir -p /run/media/qqq/nix_tb/docker
 
 kcmshell6 kcm_desktoppaths
+Filelight
