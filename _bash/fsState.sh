@@ -1,4 +1,6 @@
 #!/bin/bash
+# DRAFT
+
 # System Layout Visualizer - Shows where your data lives
 
 echo "========================================="
