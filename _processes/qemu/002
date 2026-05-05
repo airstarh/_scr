@@ -1,0 +1,9 @@
+sudo apt install virt-manager --reinstall
+
+
+# Create a standard VM storage location
+sudo mkdir -p /var/lib/libvirt/images
+sudo chown $USER:$USER /var/lib/libvirt/images
+
+# Copy your VM disk (or move it if you prefer)
+cp /osa/home/qqq/qemu/w7x64_HDA.img /var/lib/libvirt/images/

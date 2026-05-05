@@ -1,0 +1,382 @@
+#!/bin/bash
+
+# ============================================
+# Complete QEMU + GUI Tools Installation
+# For Kubuntu 26 - VirtualBox Alternative
+# ============================================
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
+print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+print_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
+print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+echo "=========================================="
+echo "QEMU + GUI Management Tools Installation"
+echo "=========================================="
+echo ""
+
+# Check if running with sudo
+if [[ $EUID -ne 0 ]]; then
+    print_error "This script must be run with sudo!"
+    echo "Please run: sudo $0"
+    exit 1
+fi
+
+# Get real user
+REAL_USER=${SUDO_USER:-$USER}
+REAL_HOME=$(getent passwd $REAL_USER | cut -d: -f6)
+
+print_status "Installing for user: $REAL_USER"
+
+# ============================================
+# 1. Update system
+# ============================================
+print_status "Updating package lists..."
+apt update -qq
+print_success "System updated"
+
+# ============================================
+# 2. Install QEMU and core components
+# ============================================
+print_status "Installing QEMU core packages..."
+apt install -y \
+    qemu-system-x86 \
+    qemu-system-x86-xen \
+    qemu-utils \
+    qemu-kvm \
+    qemu-block-extra \
+    qemu-user \
+    qemu-user-static \
+    qemu-system-data \
+    qemu-system-gui
+
+print_success "QEMU core installed"
+
+# ============================================
+# 3. Install GUI Management Tools
+# ============================================
+print_status "Installing GUI management tools..."
+
+# virt-manager (primary GUI - most like VirtualBox)
+apt install -y \
+    virt-manager \
+    virt-viewer \
+    libvirt-daemon-system \
+    libvirt-clients \
+    libvirt-daemon-driver-qemu \
+    libvirt-daemon-system-systemd \
+    libvirt-daemon-driver-storage-core
+
+# Additional tools for better experience
+apt install -y \
+    spice-vdagent \
+    spice-client-gtk \
+    gir1.2-spiceclientgtk-3.0 \
+    ovmf \
+    vde2 \
+    bridge-utils \
+    dnsmasq-base \
+    libguestfs-tools \
+    libosinfo-bin
+
+print_success "GUI tools installed"
+
+# ============================================
+# 4. Install AQEMU (alternative GUI)
+# ============================================
+print_status "Installing AQEMU (alternative GUI)..."
+apt install -y aqemu 2>/dev/null
+if [ $? -eq 0 ]; then
+    print_success "AQEMU installed"
+else
+    print_warning "AQEMU not available in repositories (optional)"
+fi
+
+# ============================================
+# 5. Install GNOME Boxes (simple GUI)
+# ============================================
+print_status "Installing GNOME Boxes (simple GUI)..."
+if command -v flatpak &>/dev/null; then
+    flatpak install -y flathub org.gnome.Boxes 2>/dev/null
+else
+    apt install -y gnome-boxes 2>/dev/null
+fi
+
+if [ $? -eq 0 ]; then
+    print_success "GNOME Boxes installed"
+else
+    print_warning "GNOME Boxes installation skipped"
+fi
+
+# ============================================
+# 6. Configure libvirt for non-root user
+# ============================================
+print_status "Configuring libvirt permissions..."
+
+# Start and enable libvirtd service
+systemctl enable libvirtd --now
+
+# Create group if it doesn't exist
+groupadd -f libvirt
+
+# Add user to libvirt group
+usermod -a -G libvirt $REAL_USER
+usermod -a -G kvm $REAL_USER 2>/dev/null
+
+# Configure polkit for passwordless management
+cat > /etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage.pkla << 'EOF'
+[libvirt Management Access]
+Identity=unix-user:$REAL_USER
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+EOF
+
+# Configure permissions for /dev/kvm (if exists)
+if [ -e /dev/kvm ]; then
+    chown root:$REAL_USER /dev/kvm
+    chmod 666 /dev/kvm
+fi
+
+print_success "libvirt configured"
+
+# ============================================
+# 7. Create VM storage directories
+# ============================================
+print_status "Creating VM storage directories..."
+
+# Default VM storage location
+mkdir -p /var/lib/libvirt/images
+mkdir -p $REAL_HOME/VMs
+mkdir -p $REAL_HOME/ISOs
+
+# Set permissions
+chown $REAL_USER:$REAL_USER $REAL_HOME/VMs
+chown $REAL_USER:$REAL_USER $REAL_HOME/ISOs
+chown -R $REAL_USER:$REAL_USER /var/lib/libvirt/images 2>/dev/null
+
+print_success "Storage directories created"
+
+# ============================================
+# 8. Configure default network
+# ============================================
+print_status "Configuring default network..."
+
+# Enable default network
+virsh net-start default 2>/dev/null
+virsh net-autostart default 2>/dev/null
+
+print_success "Default network configured"
+
+# ============================================
+# 9. Install Windows 11 bypass script
+# ============================================
+print_status "Creating Windows 11 VM creation helper..."
+
+cat > /usr/local/bin/create-win11-vm.sh << 'EOF'
+#!/bin/bash
+# Simple Windows 11 VM creator for non-VT-x systems
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo "=========================================="
+echo "Windows 11 VM Creator (No VT-x Required)"
+echo "=========================================="
+echo ""
+
+# Get VM name
+read -p "VM Name [win11]: " VM_NAME
+VM_NAME=${VM_NAME:-win11}
+
+# Get ISO path
+read -p "Path to Windows 11 ISO: " ISO_PATH
+if [ ! -f "$ISO_PATH" ]; then
+    echo -e "${RED}ISO file not found!${NC}"
+    exit 1
+fi
+
+# Get disk size
+read -p "Disk size in GB [80]: " DISK_SIZE
+DISK_SIZE=${DISK_SIZE:-80}
+
+# Get RAM in MB
+read -p "RAM in MB [4096]: " RAM
+RAM=${RAM:-4096}
+
+# Get CPU cores
+read -p "CPU cores [2]: " CPU_CORES
+CPU_CORES=${CPU_CORES:-2}
+
+VM_PATH="$HOME/VMs/$VM_NAME"
+mkdir -p "$VM_PATH"
+
+echo ""
+echo -e "${GREEN}Creating VM: $VM_NAME${NC}"
+echo ""
+
+# Create disk image
+echo "Creating disk image..."
+qemu-img create -f qcow2 "$VM_PATH/disk.qcow2" "${DISK_SIZE}G"
+
+# Create VM startup script
+cat > "$VM_PATH/start-vm.sh" << 'VMSCRIPT'
+#!/bin/bash
+cd "$(dirname "$0")"
+
+# Windows 11 without KVM (software emulation)
+qemu-system-x86_64 \
+  -machine pc \
+  -cpu max \
+  -smp CORES \
+  -m RAM_MB \
+  -drive file=disk.qcow2,format=qcow2,if=ide \
+  -cdrom ISO_PATH \
+  -boot order=d \
+  -vga virtio \
+  -display gtk \
+  -usb \
+  -device usb-tablet \
+  -rtc base=localtime \
+  -audiodev pa,id=snd \
+  -device AC97,audiodev=snd
+VMSCRIPT
+
+# Replace placeholders
+sed -i "s|ISO_PATH|$ISO_PATH|g" "$VM_PATH/start-vm.sh"
+sed -i "s|CORES|$CPU_CORES|g" "$VM_PATH/start-vm.sh"
+sed -i "s|RAM_MB|$RAM|g" "$VM_PATH/start-vm.sh"
+
+chmod +x "$VM_PATH/start-vm.sh"
+
+echo ""
+echo -e "${GREEN}VM created successfully!${NC}"
+echo ""
+echo "To start the VM (first boot - will install Windows):"
+echo "  $VM_PATH/start-vm.sh"
+echo ""
+echo "After installation, change the boot order by editing:"
+echo "  $VM_PATH/start-vm.sh"
+echo "  Change -boot order=d to -boot order=c"
+echo ""
+echo -e "${YELLOW}IMPORTANT: During Windows installation${NC}"
+echo "When you see 'This PC can't run Windows 11':"
+echo "  1. Press Shift+F10 to open Command Prompt"
+echo "  2. Type: regedit"
+echo "  3. Navigate to: HKEY_LOCAL_MACHINE\\SYSTEM\\Setup"
+echo "  4. Create key: LabConfig"
+echo "  5. Add DWORDs:"
+echo "     - BypassTPMCheck = 1"
+echo "     - BypassSecureBootCheck = 1"
+echo "     - BypassRAMCheck = 1"
+echo "  6. Close Command Prompt and click Back, then Continue"
+echo ""
+EOF
+
+chmod +x /usr/local/bin/create-win11-vm.sh
+print_success "Windows 11 helper script created"
+
+# ============================================
+# 10. Create desktop shortcuts
+# ============================================
+print_status "Creating desktop shortcuts..."
+
+# Create desktop entry for virt-manager
+cat > /usr/share/applications/virt-manager-fixed.desktop << 'EOF'
+[Desktop Entry]
+Name=Virtual Machine Manager
+Comment=Manage virtual machines
+Exec=/usr/bin/virt-manager
+Icon=virt-manager
+Terminal=false
+Type=Application
+Categories=System;Emulator;
+EOF
+
+print_success "Desktop shortcuts created"
+
+# ============================================
+# 11. Verification
+# ============================================
+echo ""
+print_status "Verifying installation..."
+
+# Check QEMU
+if command -v qemu-system-x86_64 &>/dev/null; then
+    QEMU_VER=$(qemu-system-x86_64 --version | head -1)
+    print_success "QEMU: $QEMU_VER"
+fi
+
+# Check virt-manager
+if command -v virt-manager &>/dev/null; then
+    print_success "virt-manager installed"
+else
+    print_error "virt-manager not found"
+fi
+
+# Check libvirt
+if systemctl is-active --quiet libvirtd; then
+    print_success "libvirtd service running"
+else
+    print_warning "libvirtd service not running"
+fi
+
+# Check groups
+if groups $REAL_USER | grep -q libvirt; then
+    print_success "User in libvirt group"
+else
+    print_warning "User not in libvirt group (re-login required)"
+fi
+
+echo ""
+print_success "=========================================="
+print_success "QEMU + GUI Tools INSTALLATION COMPLETE!"
+print_success "=========================================="
+echo ""
+
+# ============================================
+# 12. Final instructions
+# ============================================
+echo "📋 IMPORTANT NEXT STEPS:"
+echo ""
+echo "1. LOG OUT AND LOG BACK IN (for group permissions to apply)"
+echo ""
+echo "2. Choose your GUI tool:"
+echo "   - ${GREEN}virt-manager${NC} (Most like VirtualBox): Run 'virt-manager'"
+echo "   - ${GREEN}AQEMU${NC} (Qt interface): Run 'aqemu'"
+echo "   - ${GREEN}GNOME Boxes${NC} (Simplest): Run 'gnome-boxes'"
+echo ""
+echo "3. QUICK WINDOWS 11 VM CREATION:"
+echo "   ${YELLOW}sudo create-win11-vm.sh${NC}"
+echo ""
+echo "4. MANUAL VM START (if command-line preferred):"
+echo "   cd ~/VMs/your-vm-name && ./start-vm.sh"
+echo ""
+echo "5. To bypass Windows 11 requirements without VT-x:"
+echo "   Use the instructions shown during VM creation"
+echo ""
+
+# Check if reboot needed
+if [ $(groups $REAL_USER | grep -c libvirt) -eq 0 ]; then
+    print_warning "A LOGOUT/REBOOT IS REQUIRED for full functionality!"
+    read -p "Reboot now? (y/n): " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        print_status "Rebooting in 5 seconds..."
+        sleep 5
+        reboot
+    else
+        print_status "Please reboot later: sudo reboot"
+    fi
+fi
+
+print_success "Installation complete!"

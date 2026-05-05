@@ -1,0 +1,79 @@
+
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
+print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+VM_PATH="/osa/_vbx/w11iot002"
+VM_NAME="w11iot002"
+
+print_status "Starting nuclear cleanup of VirtualBox..."
+
+# Kill all VirtualBox processes
+print_status "Stopping VirtualBox processes..."
+killall VirtualBox VBoxSVC 2>/dev/null
+pkill -f VBoxSVC
+sleep 2
+
+# Remove cache
+print_status "Removing VirtualBox cache..."
+rm -rf ~/.config/VirtualBox
+rm -rf ~/.VirtualBox
+rm -f /tmp/.vbox-*-ipc 2>/dev/null
+
+# Unregister all existing VMs
+print_status "Unregistering existing VMs..."
+VBoxManage list vms | cut -d '"' -f2 | while read vm; do
+    print_status "Unregistering: $vm"
+    VBoxManage unregistervm "$vm" 2>/dev/null
+done
+
+# Verify clean slate
+echo ""
+print_status "Current registered VMs (should be empty):"
+VBoxManage list vms
+echo ""
+
+# Change to VM directory
+cd "$VM_PATH" || {
+    print_error "Cannot find VM directory: $VM_PATH"
+    exit 1
+}
+
+# Backup original config
+print_status "Backing up original .vbox file..."
+cp "$VM_NAME.vbox" "$VM_NAME.vbox.backup.$(date +%Y%m%d_%H%M%S)"
+
+# Generate new UUID
+print_status "Generating new UUID for VM..."
+NEW_UUID=$(uuidgen | tr '[:lower:]' '[:upper:]')
+print_success "New UUID: $NEW_UUID"
+
+# Replace UUID in vbox file
+print_status "Updating UUID in configuration file..."
+sed -i "s/{[0-9A-Fa-f]\{8\}-[0-9A-Fa-f]\{4\}-[0-9A-Fa-f]\{4\}-[0-9A-Fa-f]\{4\}-[0-9A-Fa-f]\{12\}}/{$NEW_UUID}/g" "$VM_NAME.vbox"
+
+# Register the VM
+print_status "Registering VM with new UUID..."
+VBoxManage registervm "$VM_PATH/$VM_NAME.vbox"
+
+if [ $? -eq 0 ]; then
+    print_success "VM registered successfully!"
+    echo ""
+    print_status "Registered VMs:"
+    VBoxManage list vms
+    echo ""
+    print_success "You can now start '$VM_NAME' from VirtualBox GUI"
+    print_status "Or run: VBoxManage startvm '$VM_NAME'"
+else
+    print_error "Failed to register VM"
+    print_status "Restoring backup..."
+    cp "$VM_NAME.vbox.backup" "$VM_NAME.vbox"
+fi

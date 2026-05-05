@@ -1,0 +1,283 @@
+#!/bin/bash
+
+# ============================================
+# VirtualBox Complete Nuclear Reset Script
+# For Kubuntu 26 + KDE Plasma 6
+# ============================================
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
+print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+print_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
+print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+echo "=========================================="
+echo "VirtualBox Nuclear Reset Script"
+echo "=========================================="
+echo ""
+
+# Check if running as root
+if [[ $EUID -ne 0 ]]; then
+    print_error "This script must be run with sudo!"
+    echo "Please run: sudo $0"
+    exit 1
+fi
+
+# Get the actual user (not root)
+REAL_USER=${SUDO_USER:-$USER}
+REAL_HOME=$(getent passwd $REAL_USER | cut -d: -f6)
+
+print_status "Running for user: $REAL_USER"
+print_status "Home directory: $REAL_HOME"
+
+# ============================================
+# PART 1: Stop all VirtualBox processes
+# ============================================
+print_status "Stopping all VirtualBox processes..."
+killall VirtualBox VBoxSVC virtualbox 2>/dev/null
+pkill -f VBoxSVC 2>/dev/null
+pkill -f VirtualBox 2>/dev/null
+sleep 3
+print_success "All VirtualBox processes stopped"
+
+# ============================================
+# PART 2: Remove all VirtualBox configuration
+# ============================================
+print_status "Removing VirtualBox configuration files..."
+rm -rf $REAL_HOME/.config/VirtualBox
+rm -rf $REAL_HOME/.VirtualBox
+rm -rf /tmp/.vbox-*-ipc 2>/dev/null
+rm -rf /tmp/vbox-*.lock 2>/dev/null
+rm -rf /var/lock/vbox* 2>/dev/null
+print_success "Configuration removed"
+
+# ============================================
+# PART 3: Set full permissions for /osa/_vbx
+# ============================================
+print_status "Setting permissions for /osa/_vbx..."
+
+# Create directory if it doesn't exist
+mkdir -p /osa/_vbx
+
+# Set ownership to the real user
+chown -R $REAL_USER:$REAL_USER /osa/_vbx
+
+# Set full permissions (rwx for owner, rx for others)
+chmod -R 755 /osa/_vbx
+
+# Ensure parent directories have proper permissions
+chmod 755 /osa 2>/dev/null
+
+# Verify permissions
+if [ -w "/osa/_vbx" ]; then
+    print_success "/osa/_vbx is writable"
+else
+    print_error "/osa/_vbx is NOT writable"
+fi
+
+# ============================================
+# PART 4: Find all existing VDI disk files
+# ============================================
+print_status "Searching for existing VDI disk files..."
+
+# Search in common locations
+VDI_FILES=$(find /osa /ose $REAL_HOME -name "*.vdi" 2>/dev/null | grep -i "w11\|windows")
+
+if [ -z "$VDI_FILES" ]; then
+    print_warning "No existing VDI files found"
+    VDI_FILE=""
+else
+    print_success "Found VDI files:"
+    echo "$VDI_FILES" | while read line; do
+        echo "  - $line"
+    done
+    # Take the first one
+    VDI_FILE=$(echo "$VDI_FILES" | head -1)
+    print_status "Will use: $VDI_FILE"
+fi
+
+# ============================================
+# PART 5: Clean VirtualBox module and reload
+# ============================================
+print_status "Reloading VirtualBox kernel modules..."
+
+# Remove modules
+modprobe -r vboxdrv vboxnetadp vboxnetflt vboxpci 2>/dev/null
+sleep 2
+
+# Load modules
+modprobe vboxdrv
+modprobe vboxnetadp
+modprobe vboxnetflt
+modprobe vboxpci
+
+# Verify
+if lsmod | grep -q vboxdrv; then
+    print_success "VirtualBox modules loaded"
+else
+    print_error "VirtualBox modules failed to load"
+    print_status "Try: sudo /sbin/vboxconfig"
+fi
+
+# ============================================
+# PART 6: Start VirtualBox service fresh
+# ============================================
+print_status "Starting VirtualBox service..."
+systemctl restart vboxservice 2>/dev/null
+sleep 2
+print_success "Service restarted"
+
+# ============================================
+# PART 7: Create brand new VM
+# ============================================
+print_status "Creating brand new VM configuration..."
+
+VM_NAME="w11iot_rebuilt"
+VM_DIR="/osa/_vbx/$VM_NAME"
+
+# Create VM directory
+mkdir -p "$VM_DIR"
+chown -R $REAL_USER:$REAL_USER "$VM_DIR"
+
+# Create and register VM
+su - $REAL_USER -c "VBoxManage createvm --name '$VM_NAME' --register --basefolder '/osa/_vbx'"
+
+if [ $? -ne 0 ]; then
+    print_error "Failed to create VM"
+    exit 1
+fi
+print_success "VM created and registered"
+
+# Configure VM
+print_status "Configuring VM hardware..."
+
+su - $REAL_USER -c "VBoxManage modifyvm '$VM_NAME' \
+    --memory 8192 \
+    --cpus 4 \
+    --firmware efi \
+    --graphicscontroller vmsvga \
+    --vram 128 \
+    --audio-enabled \
+    --audiocontroller hda \
+    --ioapic on \
+    --rtcuseutc on \
+    --mouse usbtablet \
+    --keyboard usb \
+    --nic1 nat \
+    --cableconnected1 on"
+
+print_success "VM configured"
+
+# Create storage controller
+print_status "Creating storage controller..."
+
+su - $REAL_USER -c "VBoxManage storagectl '$VM_NAME' \
+    --name 'SATA' \
+    --add sata \
+    --bootable on \
+    --portcount 2"
+
+print_success "Storage controller created"
+
+# Attach disk if found
+if [ -n "$VDI_FILE" ] && [ -f "$VDI_FILE" ]; then
+    print_status "Attaching existing disk..."
+    su - $REAL_USER -c "VBoxManage storageattach '$VM_NAME' \
+        --storagectl 'SATA' \
+        --port 0 \
+        --device 0 \
+        --type hdd \
+        --medium '$VDI_FILE'"
+
+    if [ $? -eq 0 ]; then
+        print_success "Existing disk attached"
+    else
+        print_error "Failed to attach existing disk"
+    fi
+else
+    print_warning "No disk found. Creating new 80GB disk..."
+    su - $REAL_USER -c "VBoxManage createmedium disk \
+        --filename '$VM_DIR/$VM_NAME.vdi' \
+        --size 81920 \
+        --format VDI"
+
+    su - $REAL_USER -c "VBoxManage storageattach '$VM_NAME' \
+        --storagectl 'SATA' \
+        --port 0 \
+        --device 0 \
+        --type hdd \
+        --medium '$VM_DIR/$VM_NAME.vdi'"
+    print_success "New disk created and attached"
+fi
+
+# Add DVD drive
+print_status "Adding DVD drive..."
+su - $REAL_USER -c "VBoxManage storagectl '$VM_NAME' \
+    --name 'IDE' \
+    --add ide"
+
+su - $REAL_USER -c "VBoxManage storageattach '$VM_NAME' \
+    --storagectl 'IDE' \
+    --port 0 \
+    --device 0 \
+    --type dvddrive \
+    --medium emptydrive"
+print_success "DVD drive added"
+
+# Enable EFI and Secure Boot features
+print_status "Enabling EFI features..."
+su - $REAL_USER -c "VBoxManage modifyvm '$VM_NAME' --firmware efi"
+su - $REAL_USER -c "setextradata '$VM_NAME' 'VBoxInternal/Devices/efi/0/Config/DmiSystemProduct' 'Windows 11'"
+print_success "EFI configured"
+
+# ============================================
+# PART 8: Verify setup
+# ============================================
+echo ""
+print_status "Verifying setup..."
+echo ""
+
+su - $REAL_USER -c "VBoxManage list vms"
+
+echo ""
+su - $REAL_USER -c "VBoxManage showvminfo '$VM_NAME' | grep -E 'Name:|State|Memory|CPU|SATA|Storage'"
+
+echo ""
+print_success "=========================================="
+print_success "VirtualBox has been completely reset!"
+print_success "=========================================="
+echo ""
+print_status "Your new VM is named: $VM_NAME"
+echo ""
+print_status "To start the VM:"
+echo "  VBoxManage startvm '$VM_NAME'"
+echo "  # OR open VirtualBox GUI"
+echo ""
+print_status "If you have a Windows 11 ISO to install:"
+echo "  VBoxManage storageattach '$VM_NAME' --storagectl 'IDE' --port 0 --device 0 --type dvddrive --medium '/path/to/windows11.iso'"
+echo ""
+print_status "To see all commands again:"
+echo "  VBoxManage --help"
+echo ""
+
+# ============================================
+# PART 9: Optional - Clean up old references
+# ============================================
+if [ -d "/osa/_vbx/w11iot002" ]; then
+    print_warning "Old VM directory detected: /osa/_vbx/w11iot002"
+    read -p "Do you want to archive the old VM directory? (y/n): " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        BACKUP_NAME="w11iot002_backup_$(date +%Y%m%d_%H%M%S)"
+        mv /osa/_vbx/w11iot002 "/osa/_vbx/$BACKUP_NAME"
+        print_success "Old VM archived as: $BACKUP_NAME"
+        print_status "You can delete it later if not needed: rm -rf /osa/_vbx/$BACKUP_NAME"
+    fi
+fi
+
+print_success "Script complete!"

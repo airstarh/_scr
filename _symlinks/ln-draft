@@ -1,0 +1,5 @@
+/home/qqq/.wine/drive_c/Program Files (x86)/Polyvision/CMS/CMS.exe
+
+
+
+wine "/home/qqq/.wine/drive_c/Program Files (x86)/Polyvision/CMS/CMS.exe" 2>&1 | tee wine-log.txt
