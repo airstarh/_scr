@@ -9,4 +9,8 @@ sudo chown $USER:$USER /var/lib/libvirt/images
 cp /osa/home/qqq/qemu/w7x64_HDA.img /var/lib/libvirt/images/
 
 guest additions
+win10
 wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win-0.1.285.iso
+win7
+wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.126-2/virtio-win-0.1.126.iso
+
