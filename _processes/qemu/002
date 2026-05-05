@@ -7,3 +7,6 @@ sudo chown $USER:$USER /var/lib/libvirt/images
 
 # Copy your VM disk (or move it if you prefer)
 cp /osa/home/qqq/qemu/w7x64_HDA.img /var/lib/libvirt/images/
+
+guest additions
+wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win-0.1.285.iso
