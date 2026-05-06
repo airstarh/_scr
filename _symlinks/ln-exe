@@ -7,6 +7,7 @@ qemu-system-x86_64 \
   -smp 1 \
   -m 4096 \
   -drive file=w7x64_HDA.img,format=qcow2,if=ide \
+  -drive file=/home/qqq/Downloads/virtio-win-0.1.190.iso,index=1,media=cdrom \
   -boot order=c \
   -vga std \
   -display gtk \
@@ -14,5 +15,5 @@ qemu-system-x86_64 \
   -device usb-tablet \
   -rtc base=localtime \
   -audiodev pa,id=snd \
-  -device ac97,audiodev=snd
+  -device ac97,audiodev=snd \
   -netdev user,id=net0 -device rtl8139,netdev=net0

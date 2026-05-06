@@ -87,7 +87,7 @@ Laravel, Symfony, legacy‑код.
 
 ## Избранные проекты
 
-### 1. Финансовая практика (NDA)
+### 1. Финансовая практика CRM-система (NDA)
 **Технологии:** Docker, Nginx, MS SQL, MySQL 5.7–8+, PHP 7.4–8+, JavaScript (Backbone, Lodash, jQuery)
 **Роль:** Scrum Master (команда 3–10 чел.), архитектор БД
 
