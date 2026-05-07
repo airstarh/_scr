@@ -1,7 +1,7 @@
 # chmod 700 ~/.ssh
 # chmod 600 ~/.ssh/001
 # chmod 644 ~/.ssh/001.pub
-sshFolderPermissions() {
+borg_ssh() {
     local ssh_dir="$HOME/.ssh"
     local known_hosts="$ssh_dir/known_hosts"
     local config_file="$ssh_dir/config"
@@ -55,5 +55,3 @@ sshFolderPermissions() {
     # 1234
     ssh-add ~/.ssh/004
 }
-
-sshFolderPermissions

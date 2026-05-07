@@ -1,0 +1,2 @@
+mysqldump -u root -pYourPassword --no-data --routines --triggers alina > full_structure.sql
+mysqldump -u root -pYourPassword --routines --triggers --events alina > alina_full_backup.sql
