@@ -1,147 +1,191 @@
 #!/bin/bash
 
-echo "========================================="
-echo "ZoneMinder Docker Diagnostic Tool"
-echo "========================================="
-echo ""
+# Bluetooth Mouse Diagnostic Script
+# Captures logs during mouse freeze events
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
-
-# Check if containers are running
-echo "1. Checking container status..."
-if docker ps | grep -q zoneminder; then
-    echo -e "${GREEN}✓ ZoneMinder container is running${NC}"
-else
-    echo -e "${RED}✗ ZoneMinder container is NOT running${NC}"
-    echo "  Start it with: docker-compose up -d"
+# Check if running with sudo
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run with sudo: sudo $0"
+    echo "Some diagnostic commands require root privileges."
+    exit 1
 fi
 
-if docker ps | grep -q zoneminder-mysql; then
-    echo -e "${GREEN}✓ MySQL container is running${NC}"
-else
-    echo -e "${RED}✗ MySQL container is NOT running${NC}"
-fi
-echo ""
+# Configuration
+LOG_DIR="$HOME/bluetooth_diagnostic_logs"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+MAIN_LOG="$LOG_DIR/bluetooth_monitor_$TIMESTAMP.log"
+EVENT_LOG="$LOG_DIR/bluetooth_events_$TIMESTAMP.log"
+INTERVAL=1  # Check interval in seconds
 
-# Check shared memory
-echo "2. Shared Memory (shm) size and usage..."
-docker exec zoneminder df -h /dev/shm 2>/dev/null || echo -e "${RED}Cannot access container${NC}"
-echo ""
+# Create log directory
+mkdir -p "$LOG_DIR"
 
-# Check zmc processes
-echo "3. Capture processes (zmc) status..."
-ZMC_COUNT=$(docker exec zoneminder ps aux | grep -c "zmc -m" 2>/dev/null)
-if [ "$ZMC_COUNT" -gt 0 ]; then
-    echo -e "${GREEN}✓ Found $ZMC_COUNT zmc process(es):${NC}"
-    docker exec zoneminder ps aux | grep "zmc -m" | grep -v grep
-else
-    echo -e "${RED}✗ No zmc processes found${NC}"
-fi
-echo ""
+# Log file headers
+echo "=== Bluetooth Mouse Diagnostic Monitor ===" > "$MAIN_LOG"
+echo "Started: $(date)" >> "$MAIN_LOG"
+echo "System: $(uname -a)" >> "$MAIN_LOG"
+echo "KDE Plasma: $(plasmashell --version 2>/dev/null)" >> "$MAIN_LOG"
+echo "Kernel: $(uname -r)" >> "$MAIN_LOG"
+echo "=== Initial System State ===" >> "$MAIN_LOG"
 
-# Check zmc stability (looking for restarts in last 5 minutes)
-echo "4. Checking zmc stability (restarts in last 5 minutes)..."
-if [ -f ./data/logs/zmdc.log ]; then
-    RECENT_RESTARTS=$(tail -500 ./data/logs/zmdc.log 2>/dev/null | grep -c "!send_stop so starting 'zmc" || echo "0")
-    if [ "$RECENT_RESTARTS" -gt 0 ]; then
-        echo -e "${RED}✗ Found $RECENT_RESTARTS zmc restarts in recent logs${NC}"
-        echo "  Last 3 restart times:"
-        tail -500 ./data/logs/zmdc.log | grep "!send_stop so starting 'zmc" | tail -3
-    else
-        echo -e "${GREEN}✓ No recent zmc restarts detected${NC}"
+# Capture initial state
+echo "=== USB Devices ===" >> "$MAIN_LOG"
+lsusb >> "$MAIN_LOG" 2>&1
+echo "=== Bluetooth Controllers ===" >> "$MAIN_LOG"
+hciconfig -a >> "$MAIN_LOG" 2>&1
+echo "=== Bluetooth Devices ===" >> "$MAIN_LOG"
+bluetoothctl devices >> "$MAIN_LOG" 2>&1
+echo "=== Connected Bluetooth Devices ===" >> "$MAIN_LOG"
+bluetoothctl info >> "$MAIN_LOG" 2>&1
+
+# Function to check if mouse is frozen
+check_mouse_freeze() {
+    # Try to get mouse input events
+    local mouse_events
+    mouse_events=$(timeout 2 xinput test-xi2 --root 2>/dev/null | grep -i "mouse\|pointer.*button\|motion" | head -1)
+
+    if [ -z "$mouse_events" ]; then
+        return 1  # Mouse appears frozen
     fi
-else
-    echo -e "${YELLOW}⚠ Log file not found at ./data/logs/zmdc.log${NC}"
-fi
-echo ""
+    return 0  # Mouse responding
+}
 
-# Check database connectivity
-echo "5. Database connectivity test..."
-if docker exec zoneminder mysql -h mysql -u zmuser -pzmpass -e "SELECT 1 as test;" 2>/dev/null | grep -q 1; then
-    echo -e "${GREEN}✓ Database connection successful${NC}"
-else
-    echo -e "${RED}✗ Database connection FAILED${NC}"
-    echo "  Attempting to diagnose..."
-    docker exec zoneminder mysql -h mysql -u zmuser -pzmpass -e "SELECT 1;" 2>&1 | head -3
-fi
-echo ""
+# Function to capture comprehensive diagnostics
+capture_diagnostics() {
+    local event_time=$1
+    local event_dir="$LOG_DIR/event_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$event_dir"
 
-# Check PATH_ZMS configuration
-echo "6. Checking ZM_PATH_ZMS configuration..."
-PATH_ZMS=$(docker exec zoneminder mysql -u zmuser -pzmpass zm -e "SELECT Value FROM Config WHERE Name='ZM_PATH_ZMS';" 2>/dev/null | tail -1)
-if [ -n "$PATH_ZMS" ]; then
-    echo -e "${GREEN}✓ ZM_PATH_ZMS = $PATH_ZMS${NC}"
-else
-    echo -e "${RED}✗ Could not retrieve ZM_PATH_ZMS${NC}"
-fi
-echo ""
+    echo "FREEZE EVENT DETECTED at $event_time" | tee -a "$MAIN_LOG" "$EVENT_LOG"
 
-# Check if zms binary exists
-echo "7. Checking zms binary..."
-if docker exec zoneminder test -f /usr/lib/zoneminder/cgi-bin/zms; then
-    echo -e "${GREEN}✓ zms binary exists${NC}"
-    docker exec zoneminder ls -la /usr/lib/zoneminder/cgi-bin/zms 2>/dev/null
-else
-    echo -e "${RED}✗ zms binary NOT found${NC}"
-fi
+    # System logs (using sudo dmesg)
+    echo "=== Kernel Messages (last 50 lines) ===" > "$event_dir/kernel.log"
+    dmesg | tail -50 >> "$event_dir/kernel.log" 2>&1
 
-if docker exec zoneminder test -f /usr/lib/zoneminder/cgi-bin/nph-zms; then
-    echo -e "${GREEN}✓ nph-zms binary exists${NC}"
-else
-    echo -e "${RED}✗ nph-zms binary NOT found${NC}"
-fi
-echo ""
+    # Bluetooth-specific logs
+    echo "=== Bluetooth Daemon Log ===" > "$event_dir/bluetooth.log"
+    journalctl -u bluetooth -n 100 --no-pager >> "$event_dir/bluetooth.log" 2>&1
 
-# Check Apache CGI
-echo "8. Apache CGI module status..."
-docker exec zoneminder apache2ctl -M 2>/dev/null | grep -q cgi
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ CGI module is enabled${NC}"
-else
-    echo -e "${RED}✗ CGI module is NOT enabled${NC}"
-    echo "  Fix with: docker exec zoneminder a2enmod cgi"
-fi
-echo ""
+    # System journal for errors
+    echo "=== System Journal Errors (last 100 lines) ===" > "$event_dir/journal_errors.log"
+    journalctl -n 100 --no-pager -p 3 >> "$event_dir/journal_errors.log" 2>&1
 
-# Check socket directory
-echo "9. Socket directory (/run/zm) status..."
-docker exec zoneminder ls -la /run/zm/ 2>/dev/null
-SOCKET_COUNT=$(docker exec zoneminder ls -la /run/zm/*.sock 2>/dev/null | wc -l)
-if [ "$SOCKET_COUNT" -gt 0 ]; then
-    echo -e "${GREEN}✓ Found $SOCKET_COUNT socket file(s)${NC}"
-else
-    echo -e "${YELLOW}⚠ No socket files found (normal if no streams are being viewed)${NC}"
-fi
-echo ""
+    # USB and Bluetooth hardware state
+    echo "=== USB State ===" > "$event_dir/usb_state.log"
+    lsusb -v >> "$event_dir/usb_state.log" 2>&1
+    echo "=== USB Power Management ===" >> "$event_dir/usb_state.log"
+    for usb_device in /sys/bus/usb/devices/*/power/control; do
+        if [ -f "$usb_device" ]; then
+            echo "$usb_device: $(cat $usb_device 2>/dev/null)" >> "$event_dir/usb_state.log"
+        fi
+    done
 
-# Check recent errors
-echo "10. Recent errors from logs (last 20 lines)..."
-echo "--- zmdc.log ---"
-tail -20 ./data/logs/zmdc.log 2>/dev/null | grep -E "ERR|WAR" | tail -5 || echo "No errors found"
-echo ""
-echo "--- zmc_m1.log ---"
-tail -20 ./data/logs/zmc_m1.log 2>/dev/null | grep -E "ERR|FATAL" | tail -5 || echo "No errors found"
-echo ""
+    # Bluetooth adapter state
+    echo "=== Bluetooth Adapter State ===" > "$event_dir/bluetooth_state.log"
+    if command -v hciconfig &> /dev/null; then
+        hciconfig -a >> "$event_dir/bluetooth_state.log" 2>&1
+    else
+        echo "hciconfig not found (bluez-utils may need installing)" >> "$event_dir/bluetooth_state.log"
+    fi
 
-# Check docker-compose.yml configuration
-echo "11. Checking docker-compose.yml key settings..."
-echo "shm_size:"
-grep "shm_size:" docker-compose.yml 2>/dev/null
-echo "links:"
-grep -A2 "links:" docker-compose.yml 2>/dev/null || echo "  NOT configured (may cause DNS issues)"
-echo "ZM_PATH_ZMS env:"
-grep "ZM_PATH_ZMS" docker-compose.yml 2>/dev/null || echo "  NOT configured"
-echo ""
+    echo "=== Bluetooth Devices ===" >> "$event_dir/bluetooth_state.log"
+    bluetoothctl devices >> "$event_dir/bluetooth_state.log" 2>&1
+    echo "=== Bluetooth Info ===" >> "$event_dir/bluetooth_state.log"
+    bluetoothctl info >> "$event_dir/bluetooth_state.log" 2>&1
 
-# Network connectivity test
-echo "12. Testing container-to-container network..."
-docker exec zoneminder ping -c 2 mysql 2>/dev/null | grep "bytes from" || echo -e "${RED}✗ Cannot ping mysql container${NC}"
-echo ""
+    # Bluetooth adapter details via sysfs
+    echo "=== Bluetooth USB Details ===" >> "$event_dir/bluetooth_state.log"
+    for bt_device in /sys/bus/usb/devices/*/manufacturer; do
+        if [ -f "$bt_device" ]; then
+            echo "$bt_device: $(cat $bt_device 2>/dev/null)" >> "$event_dir/bluetooth_state.log"
+        fi
+    done
 
-echo "========================================="
-echo "Diagnostic complete!"
-echo "========================================="
+    # Power management
+    echo "=== Power Management Settings ===" > "$event_dir/power_management.log"
+    if [ -f /sys/module/usbcore/parameters/autosuspend ]; then
+        echo "USB autosuspend: $(cat /sys/module/usbcore/parameters/autosuspend)" >> "$event_dir/power_management.log"
+    fi
+    if [ -f /sys/module/bluetooth/parameters/disable_esco ]; then
+        echo "Bluetooth disable_esco: $(cat /sys/module/bluetooth/parameters/disable_esco)" >> "$event_dir/power_management.log"
+    fi
+
+    # USB autosuspend status for Bluetooth adapter
+    echo "=== USB Autosuspend Status ===" >> "$event_dir/power_management.log"
+    for usb_power in /sys/bus/usb/devices/*/power/control; do
+        if [ -f "$usb_power" ]; then
+            echo "$usb_power: $(cat $usb_power)" >> "$event_dir/power_management.log"
+        fi
+    done
+
+    # Process list (top CPU consumers)
+    echo "=== Top CPU Processes ===" > "$event_dir/processes.log"
+    ps aux --sort=-%cpu | head -20 >> "$event_dir/processes.log" 2>&1
+
+    # Network/Bluetooth interference
+    echo "=== WiFi Interfaces ===" > "$event_dir/wifi_state.log"
+    if command -v iwconfig &> /dev/null; then
+        iwconfig 2>/dev/null >> "$event_dir/wifi_state.log"
+    else
+        echo "iwconfig not found" >> "$event_dir/wifi_state.log"
+    fi
+
+    # Check for 2.4GHz interference
+    echo "=== Wireless Interference Check ===" >> "$event_dir/wifi_state.log"
+    if command -v iwlist &> /dev/null; then
+        for interface in $(iwconfig 2>/dev/null | grep -o "^[a-z0-9]*" | grep -v "lo"); do
+            echo "Scanning $interface..." >> "$event_dir/wifi_state.log"
+            iwlist $interface scan 2>/dev/null | grep -E "Channel|Frequency|Quality" >> "$event_dir/wifi_state.log"
+        done
+    fi
+
+    # USB bus errors
+    echo "=== Recent USB/Bluetooth Errors ===" > "$event_dir/usb_errors.log"
+    if [ -f /var/log/syslog ]; then
+        grep -i "usb\|bluetooth" /var/log/syslog 2>/dev/null | tail -50 >> "$event_dir/usb_errors.log"
+    fi
+    if [ -f /var/log/kern.log ]; then
+        grep -i "usb\|bluetooth" /var/log/kern.log 2>/dev/null | tail -50 >> "$event_dir/usb_errors.log"
+    fi
+
+    # Input system state
+    echo "=== Input Devices ===" > "$event_dir/input_devices.log"
+    xinput list >> "$event_dir/input_devices.log" 2>&1
+
+    echo "Diagnostics saved to: $event_dir" >> "$MAIN_LOG"
+    echo "Diagnostics saved to: $event_dir" | tee -a "$EVENT_LOG"
+}
+
+# Monitor loop
+echo "Starting monitor loop (checking every ${INTERVAL}s)..." >> "$MAIN_LOG"
+echo "Monitor active. Will capture logs on next freeze." >> "$MAIN_LOG"
+echo "Logs being saved to: $LOG_DIR"
+echo "Monitor PID: $$" >> "$MAIN_LOG"
+
+# Track state
+frozen=false
+freeze_start_time=""
+
+# Signal handling for clean exit
+trap 'echo "Monitor stopped at $(date)" >> "$MAIN_LOG"; exit 0' INT TERM
+
+while true; do
+    if ! check_mouse_freeze; then
+        if [ "$frozen" = false ]; then
+            # Freeze just started
+            frozen=true
+            freeze_start_time=$(date +%s)
+            capture_diagnostics "$(date)"
+        fi
+    else
+        if [ "$frozen" = true ]; then
+            # Freeze ended
+            freeze_duration=$(($(date +%s) - freeze_start_time))
+            echo "FREEZE ENDED after ${freeze_duration}s at $(date)" >> "$MAIN_LOG"
+            echo "Freeze duration: ${freeze_duration}s" >> "$EVENT_LOG"
+            frozen=false
+        fi
+    fi
+
+    sleep $INTERVAL
+done
