@@ -1,14 +1,3 @@
-# /etc/fstab: static file system information.
-UUID=4108-87B2                            /boot/efi      vfat    defaults   0 2
-UUID=b558d9e9-f74d-4187-b46e-fc015a88d84f /              ext4    discard    0 1
-tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
-UUID=dcd6103c-415f-4818-8953-bba4a9578b5f /osa           ext4    defaults,nofail 0 2
-
-# Bind mounts for HDD data
-/osa/var/lib/mysql          /var/lib/mysql          none bind 0 0
-/osa/var/lib/zoneminder     /var/lib/zoneminder     none bind 0 0
-/osa/var/cache/zoneminder   /var/cache/zoneminder   none bind 0 0
-/swapfile none swap sw,pri=10 0 0
-/osa/swapfile none swap sw,pri=5 0 0
-/osa/home /home none bind 0 0
-f
+# Check if there are any backups
+ls -la ~/.config/input-remapper-2*.bak 2>/dev/null
+ls -la /etc/input-remapper*.bak 2>/dev/null

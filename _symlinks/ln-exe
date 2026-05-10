@@ -1,191 +1,33 @@
 #!/bin/bash
 
-# Bluetooth Mouse Diagnostic Script
-# Captures logs during mouse freeze events
+LOG="$HOME/bluetooth_freeze_$(date +%Y%m%d_%H%M%S).log"
 
-# Check if running with sudo
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run with sudo: sudo $0"
-    echo "Some diagnostic commands require root privileges."
-    exit 1
-fi
+trap 'echo "=== STOPPED at $(date) ===" >> "$LOG"; echo "Log saved to: $LOG"; exit 0' INT TERM
 
-# Configuration
-LOG_DIR="$HOME/bluetooth_diagnostic_logs"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-MAIN_LOG="$LOG_DIR/bluetooth_monitor_$TIMESTAMP.log"
-EVENT_LOG="$LOG_DIR/bluetooth_events_$TIMESTAMP.log"
-INTERVAL=1  # Check interval in seconds
+echo "=== Freeze Monitor Started at $(date) ===" > "$LOG"
+echo "Monitoring. When freeze happens, press Ctrl+C to stop and save." >> "$LOG"
 
-# Create log directory
-mkdir -p "$LOG_DIR"
-
-# Log file headers
-echo "=== Bluetooth Mouse Diagnostic Monitor ===" > "$MAIN_LOG"
-echo "Started: $(date)" >> "$MAIN_LOG"
-echo "System: $(uname -a)" >> "$MAIN_LOG"
-echo "KDE Plasma: $(plasmashell --version 2>/dev/null)" >> "$MAIN_LOG"
-echo "Kernel: $(uname -r)" >> "$MAIN_LOG"
-echo "=== Initial System State ===" >> "$MAIN_LOG"
-
-# Capture initial state
-echo "=== USB Devices ===" >> "$MAIN_LOG"
-lsusb >> "$MAIN_LOG" 2>&1
-echo "=== Bluetooth Controllers ===" >> "$MAIN_LOG"
-hciconfig -a >> "$MAIN_LOG" 2>&1
-echo "=== Bluetooth Devices ===" >> "$MAIN_LOG"
-bluetoothctl devices >> "$MAIN_LOG" 2>&1
-echo "=== Connected Bluetooth Devices ===" >> "$MAIN_LOG"
-bluetoothctl info >> "$MAIN_LOG" 2>&1
-
-# Function to check if mouse is frozen
-check_mouse_freeze() {
-    # Try to get mouse input events
-    local mouse_events
-    mouse_events=$(timeout 2 xinput test-xi2 --root 2>/dev/null | grep -i "mouse\|pointer.*button\|motion" | head -1)
-
-    if [ -z "$mouse_events" ]; then
-        return 1  # Mouse appears frozen
-    fi
-    return 0  # Mouse responding
-}
-
-# Function to capture comprehensive diagnostics
-capture_diagnostics() {
-    local event_time=$1
-    local event_dir="$LOG_DIR/event_$(date +%Y%m%d_%H%M%S)"
-    mkdir -p "$event_dir"
-
-    echo "FREEZE EVENT DETECTED at $event_time" | tee -a "$MAIN_LOG" "$EVENT_LOG"
-
-    # System logs (using sudo dmesg)
-    echo "=== Kernel Messages (last 50 lines) ===" > "$event_dir/kernel.log"
-    dmesg | tail -50 >> "$event_dir/kernel.log" 2>&1
-
-    # Bluetooth-specific logs
-    echo "=== Bluetooth Daemon Log ===" > "$event_dir/bluetooth.log"
-    journalctl -u bluetooth -n 100 --no-pager >> "$event_dir/bluetooth.log" 2>&1
-
-    # System journal for errors
-    echo "=== System Journal Errors (last 100 lines) ===" > "$event_dir/journal_errors.log"
-    journalctl -n 100 --no-pager -p 3 >> "$event_dir/journal_errors.log" 2>&1
-
-    # USB and Bluetooth hardware state
-    echo "=== USB State ===" > "$event_dir/usb_state.log"
-    lsusb -v >> "$event_dir/usb_state.log" 2>&1
-    echo "=== USB Power Management ===" >> "$event_dir/usb_state.log"
-    for usb_device in /sys/bus/usb/devices/*/power/control; do
-        if [ -f "$usb_device" ]; then
-            echo "$usb_device: $(cat $usb_device 2>/dev/null)" >> "$event_dir/usb_state.log"
-        fi
-    done
-
-    # Bluetooth adapter state
-    echo "=== Bluetooth Adapter State ===" > "$event_dir/bluetooth_state.log"
-    if command -v hciconfig &> /dev/null; then
-        hciconfig -a >> "$event_dir/bluetooth_state.log" 2>&1
-    else
-        echo "hciconfig not found (bluez-utils may need installing)" >> "$event_dir/bluetooth_state.log"
-    fi
-
-    echo "=== Bluetooth Devices ===" >> "$event_dir/bluetooth_state.log"
-    bluetoothctl devices >> "$event_dir/bluetooth_state.log" 2>&1
-    echo "=== Bluetooth Info ===" >> "$event_dir/bluetooth_state.log"
-    bluetoothctl info >> "$event_dir/bluetooth_state.log" 2>&1
-
-    # Bluetooth adapter details via sysfs
-    echo "=== Bluetooth USB Details ===" >> "$event_dir/bluetooth_state.log"
-    for bt_device in /sys/bus/usb/devices/*/manufacturer; do
-        if [ -f "$bt_device" ]; then
-            echo "$bt_device: $(cat $bt_device 2>/dev/null)" >> "$event_dir/bluetooth_state.log"
-        fi
-    done
-
-    # Power management
-    echo "=== Power Management Settings ===" > "$event_dir/power_management.log"
-    if [ -f /sys/module/usbcore/parameters/autosuspend ]; then
-        echo "USB autosuspend: $(cat /sys/module/usbcore/parameters/autosuspend)" >> "$event_dir/power_management.log"
-    fi
-    if [ -f /sys/module/bluetooth/parameters/disable_esco ]; then
-        echo "Bluetooth disable_esco: $(cat /sys/module/bluetooth/parameters/disable_esco)" >> "$event_dir/power_management.log"
-    fi
-
-    # USB autosuspend status for Bluetooth adapter
-    echo "=== USB Autosuspend Status ===" >> "$event_dir/power_management.log"
-    for usb_power in /sys/bus/usb/devices/*/power/control; do
-        if [ -f "$usb_power" ]; then
-            echo "$usb_power: $(cat $usb_power)" >> "$event_dir/power_management.log"
-        fi
-    done
-
-    # Process list (top CPU consumers)
-    echo "=== Top CPU Processes ===" > "$event_dir/processes.log"
-    ps aux --sort=-%cpu | head -20 >> "$event_dir/processes.log" 2>&1
-
-    # Network/Bluetooth interference
-    echo "=== WiFi Interfaces ===" > "$event_dir/wifi_state.log"
-    if command -v iwconfig &> /dev/null; then
-        iwconfig 2>/dev/null >> "$event_dir/wifi_state.log"
-    else
-        echo "iwconfig not found" >> "$event_dir/wifi_state.log"
-    fi
-
-    # Check for 2.4GHz interference
-    echo "=== Wireless Interference Check ===" >> "$event_dir/wifi_state.log"
-    if command -v iwlist &> /dev/null; then
-        for interface in $(iwconfig 2>/dev/null | grep -o "^[a-z0-9]*" | grep -v "lo"); do
-            echo "Scanning $interface..." >> "$event_dir/wifi_state.log"
-            iwlist $interface scan 2>/dev/null | grep -E "Channel|Frequency|Quality" >> "$event_dir/wifi_state.log"
-        done
-    fi
-
-    # USB bus errors
-    echo "=== Recent USB/Bluetooth Errors ===" > "$event_dir/usb_errors.log"
-    if [ -f /var/log/syslog ]; then
-        grep -i "usb\|bluetooth" /var/log/syslog 2>/dev/null | tail -50 >> "$event_dir/usb_errors.log"
-    fi
-    if [ -f /var/log/kern.log ]; then
-        grep -i "usb\|bluetooth" /var/log/kern.log 2>/dev/null | tail -50 >> "$event_dir/usb_errors.log"
-    fi
-
-    # Input system state
-    echo "=== Input Devices ===" > "$event_dir/input_devices.log"
-    xinput list >> "$event_dir/input_devices.log" 2>&1
-
-    echo "Diagnostics saved to: $event_dir" >> "$MAIN_LOG"
-    echo "Diagnostics saved to: $event_dir" | tee -a "$EVENT_LOG"
-}
-
-# Monitor loop
-echo "Starting monitor loop (checking every ${INTERVAL}s)..." >> "$MAIN_LOG"
-echo "Monitor active. Will capture logs on next freeze." >> "$MAIN_LOG"
-echo "Logs being saved to: $LOG_DIR"
-echo "Monitor PID: $$" >> "$MAIN_LOG"
-
-# Track state
 frozen=false
-freeze_start_time=""
-
-# Signal handling for clean exit
-trap 'echo "Monitor stopped at $(date)" >> "$MAIN_LOG"; exit 0' INT TERM
 
 while true; do
-    if ! check_mouse_freeze; then
+    # Check if mouse is responding by trying to get cursor position
+    if ! timeout 2 xdotool getmouselocation 2>/dev/null | grep -q "x:"; then
         if [ "$frozen" = false ]; then
-            # Freeze just started
             frozen=true
-            freeze_start_time=$(date +%s)
-            capture_diagnostics "$(date)"
+            echo "=== FREEZE DETECTED at $(date) ===" >> "$LOG"
+            echo "=== KERNEL MESSAGES ===" >> "$LOG"
+            dmesg | tail -100 >> "$LOG" 2>&1
+            echo "=== BLUETOOTH STATUS ===" >> "$LOG"
+            systemctl status bluetooth --no-pager -l >> "$LOG" 2>&1
+            echo "=== USB DEVICES ===" >> "$LOG"
+            lsusb >> "$LOG" 2>&1
+            echo "=== BLUETOOTH INFO ===" >> "$LOG"
+            bluetoothctl info >> "$LOG" 2>&1
+            echo "=== FREEZE CAPTURED. Press Ctrl+C to save and exit ===" >> "$LOG"
+            echo "FREEZE CAPTURED. Press Ctrl+C now."
         fi
     else
-        if [ "$frozen" = true ]; then
-            # Freeze ended
-            freeze_duration=$(($(date +%s) - freeze_start_time))
-            echo "FREEZE ENDED after ${freeze_duration}s at $(date)" >> "$MAIN_LOG"
-            echo "Freeze duration: ${freeze_duration}s" >> "$EVENT_LOG"
-            frozen=false
-        fi
+        frozen=false
     fi
-
-    sleep $INTERVAL
+    sleep 1
 done
