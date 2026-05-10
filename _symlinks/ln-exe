@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG="$HOME/bluetooth_freeze_$(date +%Y%m%d_%H%M%S).log"
+LOG="/home/qqq/ln-log"
 
 trap 'echo "=== STOPPED at $(date) ===" >> "$LOG"; echo "Log saved to: $LOG"; exit 0' INT TERM
 
