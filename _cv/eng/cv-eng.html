@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>cv-eng.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+code.hljs {
+  padding: 3px 5px
+}
+/*!
+  Theme: a11y-dark
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/
+.hljs {
+  background: #2b2b2b;
+  color: #f8f8f2
+}
+/* Comment */
+.hljs-comment,
+.hljs-quote {
+  color: #d4d0ab
+}
+/* Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+  color: #ffa07a
+}
+/* Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+  color: #f5ab35
+}
+/* Yellow */
+.hljs-attribute {
+  color: #ffd700
+}
+/* Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+  color: #abe338
+}
+/* Blue */
+.hljs-title,
+.hljs-section {
+  color: #00e0e0
+}
+/* Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #dcc6e0
+}
+.hljs-emphasis {
+  font-style: italic
+}
+.hljs-strong {
+  font-weight: bold
+}
+@media screen and (-ms-high-contrast: active) {
+  .hljs-addition,
+  .hljs-attribute,
+  .hljs-built_in,
+  .hljs-bullet,
+  .hljs-comment,
+  .hljs-link,
+  .hljs-literal,
+  .hljs-meta,
+  .hljs-number,
+  .hljs-params,
+  .hljs-string,
+  .hljs-symbol,
+  .hljs-type,
+  .hljs-quote {
+    color: highlight
+  }
+  .hljs-keyword,
+  .hljs-selector-tag {
+    font-weight: bold
+  }
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="resume-vsevolod-azovsky">Resume: Vsevolod Azovsky</h1>
+<p><strong>Full-stack Developer</strong><br>
+PHP (Laravel, Yii, Symfony) · JavaScript (Vue)</p>
+<p><strong>Date of birth:</strong> 13.02</p>
+<hr>
+<h2 id="contacts">Contacts</h2>
+<ul>
+<li><strong>Email:</strong> vsevolod.azovsky@gmail.com</li>
+<li><strong>Phone / messengers:</strong> <a href="tel:+79601061565">+7 960 106 15 65</a></li>
+<li><strong>Telegram:</strong> <a href="https://t.me/BorgSeva">@BorgSeva</a></li>
+</ul>
+<hr>
+<h2 id="about-me">About Me</h2>
+<p>Full-stack developer with 16+ years of experience, 9 of which were at DataArt. Lead cross-functional teams of up to 10 people as a Scrum Master / Tech Lead.</p>
+<p><strong>I design fault-tolerant architectures</strong> for high-load systems (2,000+ requests/min, financial reporting with 1,000+ forms). <strong>Implement CI/CD</strong>, configure cloud infrastructure (AWS, Yandex Cloud), optimize database and application performance.</p>
+<p>I work with both modern stacks (Vue 3, React, Laravel, Symfony, Node.js) and legacy code. Integrate OAuth 2.0, LDAP, DocuSign, payment systems, and WebRTC.</p>
+<p><strong>Looking for:</strong> full-time employment under the Russian Labor Code or long-term projects via sole proprietorship (IE). Open to Tech Lead / Team Lead / Senior Full-stack Developer roles.</p>
+<p><strong>English:</strong> Intermediate (B1–B2) — read technical documentation, participate in calls with stakeholders.</p>
+<p><strong>Key competencies:</strong></p>
+<ul>
+<li>Application and database architecture design</li>
+<li>Performance and fault tolerance optimization</li>
+<li>Integration with external services and APIs</li>
+<li>CI/CD and DevOps practices</li>
+<li>SPA development, responsive layout</li>
+<li>Attention to detail, fast learning, team communication</li>
+</ul>
+<hr>
+<h2 id="skills">Skills</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Technologies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Programming languages</strong></td>
+<td>PHP, JavaScript, Python, SQL, NoSQL, C</td>
+</tr>
+<tr>
+<td><strong>Frontend frameworks</strong></td>
+<td>Vue.js (2/3), jQuery, Backbone, Underscore/Lodash, Bootstrap, Quasar</td>
+</tr>
+<tr>
+<td><strong>Backend frameworks</strong></td>
+<td>Laravel, Yii, Symfony</td>
+</tr>
+<tr>
+<td><strong>CMS</strong></td>
+<td>WordPress, Drupal</td>
+</tr>
+<tr>
+<td><strong>Frontend technologies</strong></td>
+<td>WebRTC</td>
+</tr>
+<tr>
+<td><strong>Databases</strong></td>
+<td>MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcache</td>
+</tr>
+<tr>
+<td><strong>DevOps &amp; infrastructure</strong></td>
+<td>Docker, AWS, Yandex Cloud, Nginx, Apache, Ubuntu, Fedora, Arch (Manjaro)</td>
+</tr>
+<tr>
+<td><strong>Development tools</strong></td>
+<td>Git, Jenkins, Webpack, Babel, Gulp, Grunt</td>
+</tr>
+<tr>
+<td><strong>Methodologies</strong></td>
+<td>Scrum, CI/CD</td>
+</tr>
+<tr>
+<td><strong>Issue tracking systems</strong></td>
+<td>Jira, Trello, Redmine</td>
+</tr>
+<tr>
+<td><strong>IoT</strong></td>
+<td>Arduino, Raspberry Pi</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="work-experience">Work Experience</h2>
+<p><strong>2023 — present</strong></p>
+<h3 id="sole-proprietor-vsevolod-azovsky">Sole Proprietor Vsevolod Azovsky</h3>
+<p><strong>Role:</strong> Senior Full-stack Web Developer, Tech Lead, Team Lead, Scrum Master</p>
+<p><strong>Collaboration formats:</strong> Employment under Russian Labor Code / Sole proprietorship (IE) for working with corporate clients, startups, and products requiring expert technical expertise.</p>
+<p><strong>Why work with me:</strong></p>
+<ul>
+<li>Design application and database architecture from scratch for high loads</li>
+<li>Optimize performance and fault tolerance of existing solutions</li>
+<li>Implement CI/CD and DevOps practices, configure cloud infrastructure (AWS, Yandex Cloud)</li>
+<li>Develop SPAs, responsive interfaces, and WebRTC video chats</li>
+<li>Integrate with OAuth 2.0, LDAP, Active Directory, DocuSign, cloud storage</li>
+<li>Manage teams as a Scrum Master: planning, quality control, code review, client communication</li>
+<li>Work with both modern stacks (Vue, React, Laravel, Symfony, Node.js) and legacy projects</li>
+</ul>
+<p><strong>Open to:</strong></p>
+<ul>
+<li>Full-time employment (Russian Labor Code)</li>
+<li>Long-term outsourcing/outstaffing projects via IE</li>
+<li>Tech Lead / Team Lead / Senior Full-stack Developer roles</li>
+</ul>
+<hr>
+<p><strong>2014–2023</strong></p>
+<h3 id="dataart-solutions-inc">DataArt Solutions, Inc.</h3>
+<p><strong>Senior Engineer, Tech Lead, Team Lead, Scrum Master</strong></p>
+<p><em>Managing cross-functional teams of 3–10 engineers, full development cycle from architecture to production.</em></p>
+<p><strong>Key responsibilities:</strong></p>
+<ul>
+<li>Design and development of scalable web applications from scratch: server logic, databases, client interfaces</li>
+<li>Scrum processes: daily stand-ups, sprint planning, retrospectives, demos, stakeholder reporting</li>
+<li>Code quality control through reviews, performance analysis, architectural reviews</li>
+<li>Performance optimization, resource consumption, fault tolerance</li>
+<li>Legacy code modernization (PHP, JavaScript) while maintaining backward compatibility</li>
+<li>Integration with external APIs: OAuth 2.0 (Google, Microsoft, Box, DocuSign), Active Directory / LDAP, MS Exchange (NTLM, SOAP), Office365, cloud storage (Google Drive, Yandex Disk, Box), analytics services</li>
+</ul>
+<p><strong>Technology stack:</strong></p>
+<ul>
+<li><strong>Backend:</strong> PHP (Laravel, Yii, Symfony), WordPress, Drupal</li>
+<li><strong>Frontend:</strong> Vue.js 2/3, Backbone, jQuery, WebRTC, Bootstrap, Quasar, SCSS</li>
+<li><strong>Databases:</strong> MySQL, PostgreSQL, MS SQL, Redis, Memcache</li>
+<li><strong>DevOps &amp; infrastructure:</strong> AWS, Yandex Cloud, Docker, Nginx, Apache, Linux (Ubuntu, Fedora, Arch)</li>
+<li><strong>Tools:</strong> Git, Webpack, Grunt, Gulp, Babel, Jira, Trello</li>
+</ul>
+<p><strong>Achievements (examples):</strong></p>
+<ul>
+<li>Built server applications from scratch on AWS and Yandex Cloud</li>
+<li>Designed and optimized relational databases and caching layers</li>
+<li>Implemented RBAC for multi-user applications</li>
+<li>Developed WebRTC video chat</li>
+<li>Conducted security and performance testing (Kali Linux)</li>
+</ul>
+<hr>
+<p><strong>2012–2014</strong></p>
+<h3 id="gallery-chizhova-center-voronezh">Gallery Chizhova Center, Voronezh</h3>
+<p>Web Programmer, IT Department<br>
+Development and support of shopping center web applications.</p>
+<p><strong>2010–2012</strong></p>
+<h3 id="softline-voronezh">Softline, Voronezh</h3>
+<p>System Administrator<br>
+Administration of servers and network infrastructure.</p>
+<p><strong>2008–2010</strong></p>
+<h3 id="log-f-taxi-llc-moscow">Log-F Taxi LLC, Moscow</h3>
+<p>Developer of taxi dispatch management system (Web + 1C)<br>
+Creation of web interface and integration with 1C.</p>
+<p><strong>2006–2008</strong></p>
+<h3 id="katokru-moscow">Katok.Ru, Moscow</h3>
+<p>Senior System Administrator<br>
+Maintenance of IT infrastructure for an ice rink complex.</p>
+<hr>
+<h2 id="selected-projects">Selected Projects</h2>
+<h3 id="1-financial-practice-crm-system-nda">1. Financial Practice CRM System (NDA)</h3>
+<p><strong>Technologies:</strong> Docker, Nginx, MS SQL, MySQL 5.7–8+, PHP 7.4–8+, JavaScript (Backbone, Lodash, jQuery)<br>
+<strong>Role:</strong> Scrum Master (team of 3–10 people), Database Architect</p>
+<p><strong>Results:</strong></p>
+<ul>
+<li>Designed database architecture (MySQL, MS SQL)</li>
+<li>Created over 1,000 interface forms (Backbone.js, Bootstrap)</li>
+<li>Implemented RBAC with 20 roles and 1,000+ permissions</li>
+<li>Integration with LDAP, banks (acquiring), cloud storage (Dropbox, Box API, DocuSign), Google Maps</li>
+<li>Implemented OAuth 2.0 and DocuSign for online contract signing</li>
+<li>Automated financial transactions and business event logging</li>
+</ul>
+<h3 id="2-social-project-for-people-over-60-nda-non-cis">2. Social Project for People Over 60 (NDA, non-CIS)</h3>
+<p><strong>Technologies:</strong> AWS, Ubuntu Server 18, Nginx + Let's Encrypt, MySQL, WordPress, Memcached, Load Balancer<br>
+<strong>Role:</strong> DevOps Engineer, System Administrator</p>
+<p><strong>Results:</strong></p>
+<ul>
+<li>Ensured fault tolerance under load &gt; 2,000 requests/min</li>
+<li>Automated infrastructure updates</li>
+</ul>
+<h3 id="3-saysimsimru--mini-social-network-and-blogosphere-authors-project">3. saysimsim.ru — mini social network and blogosphere (author's project)</h3>
+<p><strong>Technologies:</strong> Yandex Cloud, Ubuntu, Nginx + Let's Encrypt, Node.js, Vue.js 2/3, Bootstrap 4, Laravel, Symfony, MySQL 8+, Redis</p>
+<p><strong>Results:</strong></p>
+<ul>
+<li>Full responsiveness (True Responsive Layout)</li>
+<li>SEO optimization with server-side rendering</li>
+<li>Posting system with WYSIWYG (CKEditor 5+), cross-posting to social networks</li>
+<li>Two-level comments</li>
+<li>Continuous integration (CI)</li>
+</ul>
+<h3 id="4-chatsaysimsimru--webrtc-video-chat">4. chat.saysimsim.ru — WebRTC video chat</h3>
+<p><strong>Role:</strong> Setup, DNS configuration, HTTPS, STUN/TURN servers<br>
+<strong>Result:</strong> Working video chat (used third-party UI with author's permission)</p>
+<h3 id="5-ospl1942ru--wwii-museum">5. ospl1942.ru — WWII Museum</h3>
+<p><strong>Task:</strong> Interactive museum navigation via QR codes<br>
+<strong>Solution:</strong> Web pages with information about battle locations, accessible via QR codes on height markers</p>
+<h3 id="6-mironova45aru--hoa-of-an-apartment-building-voronezh">6. mironova45a.ru — HOA of an apartment building (Voronezh)</h3>
+<p><strong>Task:</strong> Automation of HOA operations<br>
+<strong>Solution:</strong> Web system for tracking residents, payments, and service requests</p>
+<hr>
+<h2 id="education">Education</h2>
+<p><strong>Specialist degree in Biology and Bioengineering</strong><br>
+Timiryazev Russian State Agricultural University, 2009</p>
+<hr>
+<blockquote>
+<p><strong>Note:</strong> Projects marked NDA contain confidential information.<br>
+Additional details about open projects are available upon request.</p>
+</blockquote>
+
+</body>
+</html>
