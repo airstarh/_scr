@@ -1,9 +1,37 @@
-# Check root disk space - should still have ~15GB free
-df -h /
+cat > test_onvif.py << 'EOF'
+import urllib.request
+import base64
 
-# Check that bind mounts are active
-mount | grep -E "cache|log|snap|opt|docker" | wc -l
-# Should show 5 lines
+url = "http://192.168.1.121:8899/onvif/device_service"
+username = "admin"
+password = "admin"
 
-# Quick test of snapped apps (they should work normally)
-snap list 2>/dev/null | head -3
+# Create authentication header
+credentials = base64.b64encode(f"{username}:{password}".encode()).decode()
+headers = {
+    "Authorization": f"Basic {credentials}",
+    "Content-Type": "application/xml"
+}
+
+# SOAP request body
+body = '''<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+  xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+  xmlns:tds="http://www.onvif.org/ver10/device/wsdl">
+  <SOAP-ENV:Body>
+    <tds:GetDeviceInformation />
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>'''
+
+request = urllib.request.Request(url, data=body.encode(), headers=headers, method="POST")
+
+try:
+    with urllib.request.urlopen(request, timeout=10) as response:
+        print("SUCCESS! ONVIF URL is correct.")
+        print("Response:")
+        print(response.read().decode())
+except Exception as e:
+    print(f"FAILED: {e}")
+EOF
+
+python3 test_onvif.py
