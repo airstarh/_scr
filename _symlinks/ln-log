@@ -1,0 +1,6 @@
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb2        55G   38G   15G  72% /
+72
+Name               Version                         Rev    Tracking         Publisher           Notes
+bare               1.0                             5      latest/stable    canonical**         base
+core22             20260225                        2411   latest/stable    canonical**         base

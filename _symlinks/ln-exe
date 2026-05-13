@@ -1,33 +1,9 @@
-#!/bin/bash
+# Check root disk space - should still have ~15GB free
+df -h /
 
-LOG="/home/qqq/ln-log"
+# Check that bind mounts are active
+mount | grep -E "cache|log|snap|opt|docker" | wc -l
+# Should show 5 lines
 
-trap 'echo "=== STOPPED at $(date) ===" >> "$LOG"; echo "Log saved to: $LOG"; exit 0' INT TERM
-
-echo "=== Freeze Monitor Started at $(date) ===" > "$LOG"
-echo "Monitoring. When freeze happens, press Ctrl+C to stop and save." >> "$LOG"
-
-frozen=false
-
-while true; do
-    # Check if mouse is responding by trying to get cursor position
-    if ! timeout 2 xdotool getmouselocation 2>/dev/null | grep -q "x:"; then
-        if [ "$frozen" = false ]; then
-            frozen=true
-            echo "=== FREEZE DETECTED at $(date) ===" >> "$LOG"
-            echo "=== KERNEL MESSAGES ===" >> "$LOG"
-            dmesg | tail -100 >> "$LOG" 2>&1
-            echo "=== BLUETOOTH STATUS ===" >> "$LOG"
-            systemctl status bluetooth --no-pager -l >> "$LOG" 2>&1
-            echo "=== USB DEVICES ===" >> "$LOG"
-            lsusb >> "$LOG" 2>&1
-            echo "=== BLUETOOTH INFO ===" >> "$LOG"
-            bluetoothctl info >> "$LOG" 2>&1
-            echo "=== FREEZE CAPTURED. Press Ctrl+C to save and exit ===" >> "$LOG"
-            echo "FREEZE CAPTURED. Press Ctrl+C now."
-        fi
-    else
-        frozen=false
-    fi
-    sleep 1
-done
+# Quick test of snapped apps (they should work normally)
+snap list 2>/dev/null | head -3
