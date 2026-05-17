@@ -63,7 +63,7 @@ check_command() {
 
 setup_flatpak() {
     print_header "Setting up Flatpak on Kubuntu 26"
-
+    
     # Check if Flatpak is already installed
     if command -v flatpak &> /dev/null; then
         print_success "Flatpak is already installed"
@@ -72,10 +72,10 @@ setup_flatpak() {
     else
         print_warning "Flatpak not found. Installing..."
         log "Installing Flatpak packages"
-
+        
         sudo apt update
         sudo apt install -y flatpak plasma-discover-backend-flatpak kde-config-flatpak
-
+        
         if [ $? -eq 0 ]; then
             print_success "Flatpak installed successfully"
         else
@@ -83,17 +83,17 @@ setup_flatpak() {
             exit 1
         fi
     fi
-
+    
     # Add Flathub repository if not already present
     print_warning "Configuring Flathub repository..."
-
+    
     if flatpak remotes | grep -q "flathub"; then
         print_success "Flathub repository already configured"
     else
         flatpak remote-add --if-not-exists flathub "$FLATHUB_REPO"
         print_success "Flathub repository added"
     fi
-
+    
     log "Flatpak setup completed"
 }
 
@@ -103,7 +103,7 @@ setup_flatpak() {
 
 install_flatpaks() {
     print_header "Installing Flatpak Applications"
-
+    
     # Define common applications to install
     declare -a APPS=(
         "com.github.tchx84.Flatseal"        # Flatpak permission manager
@@ -120,13 +120,13 @@ install_flatpaks() {
         "org.signal.Signal"                 # Signal messenger
         "com.valvesoftware.Steam"           # Steam gaming platform
     )
-
+    
     local installed=0
     local failed=0
-
+    
     for app in "${APPS[@]}"; do
         echo -n "Installing $app... "
-
+        
         if flatpak list | grep -q "$app"; then
             print_success "$app already installed"
             ((installed++))
@@ -142,7 +142,7 @@ install_flatpaks() {
             fi
         fi
     done
-
+    
     echo -e "\n${GREEN}Installation Summary:${NC}"
     echo "  ✓ Installed/Skipped: $installed"
     echo "  ✗ Failed: $failed"
@@ -150,17 +150,17 @@ install_flatpaks() {
 
 install_custom_flatpak() {
     print_header "Install Custom Flatpak Application"
-
+    
     read -p "Enter Flatpak application ID (e.g., org.example.app): " app_id
-
+    
     if [ -z "$app_id" ]; then
         print_error "No application ID provided"
         return 1
     fi
-
+    
     echo "Searching for $app_id..."
     flatpak search "$app_id" --columns=application,name
-
+    
     read -p "Install $app_id? (y/n): " confirm
     if [[ "$confirm" =~ ^[Yy]$ ]]; then
         flatpak install -y flathub "$app_id"
@@ -179,18 +179,18 @@ install_custom_flatpak() {
 
 update_flatpaks() {
     print_header "Updating Flatpak Applications"
-
+    
     log "Checking for Flatpak updates"
-
+    
     # Check for updates first
     local updates=$(flatpak update --dry-run 2>&1 | grep -c "Update:" || true)
-
+    
     if [ "$updates" -eq 0 ]; then
         print_success "All Flatpaks are up to date"
     else
         print_warning "Found $updates available updates"
         flatpak update -y
-
+        
         if [ $? -eq 0 ]; then
             print_success "All Flatpaks updated successfully"
             log "Flatpak update completed"
@@ -202,28 +202,28 @@ update_flatpaks() {
 
 cleanup_flatpaks() {
     print_header "Cleaning Up Flatpak"
-
+    
     log "Removing unused Flatpak packages"
-
+    
     # Remove unused runtimes and extensions
     local removed=$(flatpak uninstall --unused -y 2>&1 | grep -c "removed" || true)
-
+    
     if [ "$removed" -gt 0 ]; then
         print_success "Removed $removed unused packages"
     else
         print_success "No unused packages to remove"
     fi
-
+    
     # Clean up temporary files
     flatpak repair --user
-
+    
     print_success "Cleanup completed"
     log "Cleanup completed"
 }
 
 list_installed() {
     print_header "Installed Flatpak Applications"
-
+    
     if flatpak list --columns=application,name,version,origin | grep -q "."; then
         flatpak list --columns=application,name,version,origin
     else
@@ -233,9 +233,9 @@ list_installed() {
 
 show_permissions() {
     print_header "Flatpak Permission Manager"
-
+    
     print_warning "Opening Flatseal permission manager..."
-
+    
     if flatpak list | grep -q "com.github.tchx84.Flatseal"; then
         flatpak run com.github.tchx84.Flatseal
     else
@@ -272,11 +272,11 @@ show_menu() {
 
 run_maintenance() {
     print_header "Running Complete System Maintenance"
-
+    
     update_flatpaks
     cleanup_flatpaks
     list_installed
-
+    
     print_success "Maintenance completed!"
     log "Full maintenance cycle completed"
 }
@@ -290,11 +290,11 @@ main() {
     if ! sudo -n true 2>/dev/null; then
         print_warning "This script requires sudo privileges for setup operations"
     fi
-
+    
     while true; do
         show_menu
         read choice
-
+        
         case $choice in
             1)
                 setup_flatpak

@@ -1,4 +1,79 @@
-asasdke;lj dlkej
-dedljl;ekhj dedljled ekjdh
-\djlkoehjdlkedlke
-\djlkoehjdlkedlke
+Earlier we added special settings to docker-compose.yaml file to speed up mysql.
+```
+command:
+      - --innodb-buffer-pool-size=2G
+      - --innodb-log-file-size=512M
+      - --innodb-flush-log-at-trx-commit=0
+      - --sync-binlog=0
+      - --innodb-flush-method=O_DIRECT
+      - --innodb-io-capacity=2000
+      - --max-allowed-packet=1G
+      - --skip-log-bin
+```
+
+Now, please add similar settings to speed up mariadb engine.
+I insist: WE DO NOT CARE ON TAKING CARE OF STABILITY!
+WE NEED SPEED. As fast as possible.
+And remove comments in answer.
+I need the ready-to go yaml file.
+
+```
+services:
+  mysql:
+    image: mariadb:10.6
+    container_name: zoneminder-mysql
+    restart: unless-stopped
+    networks:
+      - zm-network
+    environment:
+      MYSQL_ROOT_PASSWORD: zmroot
+      MYSQL_DATABASE: zm
+      MYSQL_USER: zmuser
+      MYSQL_PASSWORD: zmpass
+      TZ: Europe/Moscow
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --bind-address=0.0.0.0
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pzmroot"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+
+  zoneminder:
+    image: zoneminderhq/zoneminder:latest-ubuntu18.04
+    container_name: zoneminder
+    restart: unless-stopped
+    networks:
+      - zm-network
+    ports:
+      - "8080:80"
+      - "8443:443"
+    shm_size: 4G                                    # Keep this
+    privileged: true
+    links:                                          # ADD THIS SECTION
+      - mysql:mysql                                 # Creates hostname alias
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      TZ: Europe/Moscow
+      ZM_DB_HOST: mysql                             # Keep as 'mysql'
+      ZM_DB_PORT: 3306
+      ZM_DB_NAME: zm
+      ZM_DB_USER: zmuser
+      ZM_DB_PASS: zmpass
+      ZM_PATH_ZMS: /zm/cgi-bin/nph-zms              # Keep this
+    volumes:
+      - ./data/events:/var/cache/zoneminder/events
+      - ./data/images:/var/cache/zoneminder/images
+      - ./data/logs:/var/log/zm
+      - ./config/apache/custom.conf:/etc/apache2/conf-enabled/custom.conf
+
+networks:
+  zm-network:
+    driver: bridge
+```
