@@ -20,7 +20,7 @@ RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
-EOF
+EOFа
 
 # Step 4. Apply the service
 sudo systemctl daemon-reload

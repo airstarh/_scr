@@ -24,10 +24,24 @@ else
 fi
 
 if command -v cpupower &> /dev/null; then
-    cpupower frequency-info | grep -E "governor|frequency|energy" | head -10
+    cpupower frequency-info | grep -E "governor|frequency|energy|available" | head -15
 else
     echo "  cpupower not installed — skipping detailed CPU info"
 fi
+
+# Check current frequency for all cores
+echo "  Available frequency steps:"
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies 2>/dev/null | tr ' ' '\n' | head -10 | awk '{print "    " $1 " MHz"}'
+
+echo "  Current CPU frequency (each core):"
+for freq_file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq; do
+    core_name=$(basename $(dirname $(dirname $freq_file)))
+    freq_khz=$(cat $freq_file 2>/dev/null)
+    if [ -n "$freq_khz" ]; then
+        freq_ghz=$(echo "scale=2; $freq_khz / 1000000" | bc 2>/dev/null || echo "N/A")
+        echo "    $core_name: $freq_khz kHz ($freq_ghz GHz)"
+    fi
+done
 
 # 3. USB autosuspend status
 echo ""
@@ -40,6 +54,15 @@ else
     echo "$usb_autosuspend"
 fi
 
+# Check usbcore autosuspend parameter
+echo "  Kernel USB autosuspend parameter:"
+autosuspend_param=$(cat /sys/module/usbcore/parameters/autosuspend 2>/dev/null)
+if [ "$autosuspend_param" = "-1" ]; then
+    echo "    Disabled (-1)"
+else
+    echo "    Enabled ($autosuspend_param)"
+fi
+
 # 4. GRUB configuration check
 echo ""
 echo "[4/6] GRUB Configuration (intel_pstate):"
@@ -47,6 +70,12 @@ if grep -q "intel_pstate=performance" /etc/default/grub; then
     echo "  intel_pstate=performance: FOUND in GRUB"
 else
     echo "  intel_pstate=performance: NOT FOUND in GRUB"
+fi
+
+# Also check for other pstate settings
+pstate_settings=$(grep "intel_pstate" /etc/default/grub 2>/dev/null)
+if [ -n "$pstate_settings" ]; then
+    echo "  Other intel_pstate settings: $pstate_settings"
 fi
 
 # 5. UDev rule check
@@ -63,7 +92,22 @@ fi
 # 6. Recent power‑related log entries
 echo ""
 echo "[6/6] Recent Power/USB Logs (last 20 lines):"
-sudo dmesg | grep -i -E "power|usb|cpu|intel_pstate" | tail -20
+sudo dmesg | grep -i -E "power|usb|cpu|intel_pstate|cpufreq|thermal" | tail -20
+
+# Systemd service status
+echo ""
+echo "[7/6] SYSTEMD SERVICE STATUS:"
+sudo systemctl status set-cpu-performance.service --no-pager 2>/dev/null || echo "Service not found or inactive"
+
+# CPU scaling driver check
+echo ""
+echo "[8/6] CPU SCALING DRIVER:"
+scaling_driver=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver 2>/dev/null)
+if [ -n "$scaling_driver" ]; then
+    echo "  Scaling driver: $scaling_driver"
+else
+    echo "  Scaling driver info not available"
+fi
 
 echo ""
 echo "=== DIAGNOSTIC COMPLETE ==="

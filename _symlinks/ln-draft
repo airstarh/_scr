@@ -1,4 +1,4 @@
-# Clear journal for this service (optional, to remove old errors)
+# Clp/update.shear journal for this service (optional, to remove old errors)
 sudo journalctl --rotate
 sudo journalctl --vacuum-time=1s
 

@@ -1,17 +1,17 @@
 return {
     // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     // DANGER !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    "update.enableWindowsBackgroundUpdates": false,
     "update.mode": "none",
     // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    //
     "vscode_custom_css.imports": [
         // "file:///C:/_A001/STATICA/vscode/001.css"
     ],
     //
     "window.title": "${rootName}",
+    "files.participants.timeout": 0,
     // region workbench.colorCustomizations
     "workbench.colorCustomizations": {
+
         // region ERROR
         // Errors (Ошибки)
         "editorError.background": "#ff0000dd", // Фон области с ошибкой в редакторе (если поддерживается темой)
@@ -19,12 +19,14 @@ return {
         "inputValidation.errorBackground": "#ff0000", // Фон поля ввода с ошибкой
         "panel.errorBackground": "#ff0000", // Фон панели (Problems, Output и т. д.) при наличии ошибок
         "statusBar.errorBackground": "#ff0000", // Фон строки состояния при критической ошибке
+
         // Warnings (Предупреждения)
         "editorWarning.background": "#cf019180", // Фон области с предупреждением в редакторе
         "warningBackground": "#cf019180", // Общий фон для элементов с предупреждениями в UI
         "inputValidation.warningBackground": "#cf019180", // Фон поля ввода с предупреждением
         "panel.warningBackground": "#cf019180", // Фон панели при наличии предупреждений
         "statusBar.warningBackground": "#cf019180", // Фон строки состояния при предупреждении
+
         // Info (Информация/подсказки)
         // "editorInfo.background": "#E3F2FD", // Фон области с информационной подсказкой в редакторе
         // "infoBackground": "#E3F2FD", // Общий фон для информационных элементов в UI
@@ -32,6 +34,7 @@ return {
         // "panel.infoBackground": "#E3F2FD", // Фон панели при наличии информационных сообщений
         // "statusBar.infoBackground": "#1976D2" // Фон строки состояния для информационных уведомлений
         //end region ERROR
+
         "editorCursor.foreground": "#ffffffff",
         "editorWhitespace.foreground": "#333333",
         "editorWhitespace.trailing.foreground": "#FF0000",
@@ -198,6 +201,7 @@ return {
         // endregion NOT EDITOR
     },
     // endregion workbench.colorCustomizations
+
     // region COLOR BY TOKEN
     "editor.tokenColorCustomizations": {
         //"functions": "#a143ff",
@@ -223,6 +227,7 @@ return {
                     "fontStyle": "bold"
                 }
             },
+
             // {
             //     "scope": "entity.name.function",
             //     "settings": {
@@ -230,6 +235,7 @@ return {
             //         "fontStyle": "bold"
             //     }
             // },
+
             {
                 "scope": "variable.other",
                 "settings": {
@@ -243,6 +249,7 @@ return {
                     // "background": "#ffffff33",
                 }
             },
+
             {
                 "scope": [
                     "comment",
@@ -263,9 +270,11 @@ return {
         ]
     },
     // endregion COLOR BY TOKEN
+
     // region HIGHLIGHT
     "highlight.regexes": {
         // region OWN HIGHLIGHTS
+
         "(\\[:.+?:\\]|\\{.*?\\})": {
             // "filterFileRegex": ".php",
             "decorations": [
@@ -277,6 +286,7 @@ return {
                 }
             ]
         },
+
         "([\\s]*)(private.*?|public.*?|protected.*?|static.*?|function.*?|fn.*?)(\\()": {
             // "filterFileRegex": ".php",
             "decorations": [
@@ -289,9 +299,10 @@ return {
                     // "color": "#ffffff88",
                     "fontWeight": "bold",
                 },
-                {}
+                { }
             ]
         },
+
         "(return|throw|exit|die|break|continue|yield)(.*?)": {
             // "filterFileRegex": ".php",
             "decorations": [
@@ -305,19 +316,21 @@ return {
                 }
             ]
         },
+
         "(\\s)(foreach|while|do|switch|case|default|for|region|endregion|unless)(\\ |\\(|\\:)": {
             // "filterFileRegex": ".php",
             "decorations": [
-                {},
+                { },
                 {
                     "overviewRulerColor": "#015897bb",
                     "backgroundColor": "#015897bb",
                     // "color": "#ffffff88",
                     "fontWeight": "bold"
                 },
-                {}
+                { }
             ]
         },
+
         "(console.log|//VA:|plog|xxx|XXX|QQQ|qqq|System::\\$Params|<input|assert|discount)": {
             // "filterFileRegex": ".php",
             "decorations": [
@@ -329,6 +342,7 @@ return {
                 }
             ]
         },
+
         "(onclick|onchange|onsubmit|onfocusout)": {
             // "filterFileRegex": ".php",
             "decorations": [
@@ -340,11 +354,12 @@ return {
                 }
             ]
         },
+
         // PHP CLASS METHODS CALL
         "(->|::)([a-z-A-Z-0-9]{1,}?)[(]": {
             "filterFileRegex": ".php",
             "decorations": [
-                {},
+                { },
                 {
                     "overviewRulerColor": "#a001a040",
                     "backgroundColor": "#ff00ff40",
@@ -422,38 +437,52 @@ return {
     // region CUSTOM
     "bookmarks.navigateThroughAllFiles": false,
     "json.format.keepLines": false,
+
     "workbench.hover.delay": 3000,
     "workbench.sash.hoverDelay": 2000,
     "editor.hover.delay": 10000,
     "editor.hover.hidingDelay": 100,
+
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.wrapTabs": true,
+
     "workbench.tree.indent": 33,
+
     "files.autoSave": "onFocusChange",
+
     "editor.mouseWheelZoom": true,
+
     "editor.renderLineHighlight": "all",
+
     "workbench.tree.expandMode": "doubleClick",
     "workbench.list.openMode": "doubleClick",
+
     "workbench.list.smoothScrolling": true,
     "terminal.integrated.smoothScrolling": true,
+
     "editor.scrollbar.horizontal": "hidden",
-    "editor.mouseWheelScrollSensitivity": 0.3,
+    "editor.mouseWheelScrollSensitivity": 0.9,
     "workbench.tree.stickyScrollMaxItemCount": 33,
     "editor.scrollbar.horizontalScrollbarSize": 5,
     "editor.scrollbar.verticalScrollbarSize": 5,
+
     "workbench.editor.closeOnFileDelete": true,
     "explorer.confirmDelete": false,
     "explorer.confirmPasteNative": false,
     "explorer.confirmDragAndDrop": false,
+
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.formatOnPaste": true,
     "editor.formatOnType": true,
+
     "editor.showFoldingControls": "always",
+
     "editor.smartSelect.selectLeadingAndTrailingWhitespace": false,
     "editor.smartSelect.selectSubwords": false,
     "workbench.tree.renderIndentGuides": "always",
     "workbench.view.alwaysShowHeaderActions": true,
     "explorer.autoReveal": false,
+
     "window.restoreFullscreen": true,
     "editor.autoIndent": "full",
     "workbench.list.horizontalScrolling": true,
@@ -653,18 +682,9 @@ return {
     "code-eol.colors.default.foreground": "#333333",
     "editor.renderWhitespace": "all",
     "alignmenthash.surroundSpace": {
-        "colon": [
-            -1,
-            1
-        ], // The first number specify how much space to add to the left, can be negative. // The second number is how much space to the right, can be negative.
-        "assignment": [
-            1,
-            1
-        ], // 1The same as above.
-        "arrow": [
-            1,
-            -1
-        ], // The same as above.
+        "colon": [ -1, 1 ], // The first number specify how much space to add to the left, can be negative. // The second number is how much space to the right, can be negative.
+        "assignment": [ 1, 1 ], // 1The same as above.
+        "arrow": [ 1, -1 ], // The same as above.
         "comment": 2 // Special how much space to add between the trailing comment and the code. // If this value is negative, it means don't align the trailing comment.
     },
     "phpfmt.passes": [
@@ -689,8 +709,6 @@ return {
         "AlignGroupDoubleArrow"
     ],
     "editor.gotoLocation.multipleDefinitions": "goto",
-    "editor.allowVariableFontsInAccessibilityMode": true,
-    "editor.inlineCompletionsAccessibilityVerbose": true,
     "editor.cursorStyle": "line",
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorWidth": 4,
@@ -703,13 +721,18 @@ return {
     "editor.accessibilityPageSize": 1,
     "gitTreeCompare.diffMode": "full",
     "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
         // "editor.defaultFormatter": "esbenp.prettier-vscode"
         // "editor.defaultFormatter": "vscode.html-language-features"
         // "editor.defaultFormatter": "Vue.volar"
         // "editor.defaultFormatter": "cweijan.vetur-plus"
     },
-    "eslint.codeActionsOnSave.options": {},
-    "debug.javascript.resourceRequestOptions": {},
+    "eslint.codeActionsOnSave.options": {
+
+    },
+    "debug.javascript.resourceRequestOptions": {
+
+    },
     "[css]": {
         "editor.defaultFormatter": "vscode.css-language-features"
     },
@@ -772,5 +795,32 @@ return {
     "files.trimTrailingWhitespaceInRegexAndStrings": false,
     "trailing-spaces.trimOnSave": true,
     "chat.disableAIFeatures": true,
-    "editor.renderRichScreenReaderContent": true,
+    "terminal.integrated.gpuAcceleration": "off",
+    "editor.cursorSurroundingLines": 5,
+    "editor.cursorSurroundingLinesStyle": "all",
+    "accessibility.accessibleView.closeOnKeyPress": false,
+    "accessibility.debugWatchVariableAnnouncements": false,
+    "accessibility.replEditor.readLastExecutionOutput": false,
+    "accessibility.verboseChatProgressUpdates": false,
+    "accessibility.verbosity.debug": false,
+    "accessibility.verbosity.diffEditor": false,
+    "accessibility.verbosity.emptyEditorHint": false,
+    "accessibility.verbosity.find": false,
+    "accessibility.verbosity.hover": false,
+    "accessibility.verbosity.inlineChat": false,
+    "accessibility.verbosity.inlineCompletions": false,
+    "accessibility.verbosity.keybindingsEditor": false,
+    "editor.inlineCompletionsAccessibilityVerbose": true,
+    "accessibility.windowTitleOptimized": false,
+    "accessibility.verbosity.walkthrough": false,
+    "accessibility.verbosity.terminal": false,
+    "accessibility.verbosity.sourceControl": false,
+    "accessibility.verbosity.replEditor": false,
+    "accessibility.verbosity.panelChat": false,
+    "accessibility.verbosity.notification": false,
+    "accessibility.verbosity.notebook": false,
+    "accessibility.verbosity.diffEditorActive": false,
+    "accessibility.replEditor.autoFocusReplExecution": "lastExecution",
+    "terminal.integrated.customGlyphs": false,
+    "markdown-pdf.headerTemplate": "",
 }
