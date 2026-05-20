@@ -1,0 +1,70 @@
+#!/bin/bash
+
+echo "=== POST‑REBOOT DIAGNOSTIC REPORT ==="
+echo "Collecting current power management state..."
+echo ""
+
+# 1. Power profile
+echo "[1/6] Power Profile:"
+current_profile=$(powerprofilesctl get 2>/dev/null)
+if [ -n "$current_profile" ]; then
+    echo "  Current power profile: $current_profile"
+else
+    echo "  Error: Could not retrieve power profile"
+fi
+
+# 2. CPU governor and frequency
+echo ""
+echo "[2/6] CPU Governor and Frequency:"
+if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" ]; then
+    current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null)
+    echo "  CPU governor: $current_governor"
+else
+    echo "  CPU governor file not found (check driver)"
+fi
+
+if command -v cpupower &> /dev/null; then
+    cpupower frequency-info | grep -E "governor|frequency|energy" | head -10
+else
+    echo "  cpupower not installed — skipping detailed CPU info"
+fi
+
+# 3. USB autosuspend status
+echo ""
+echo "[3/6] USB Autosuspend Status:"
+usb_autosuspend=$(grep -r . /sys/bus/usb/devices/*/power/control 2>/dev/null | grep -v on | head -5)
+if [ -z "$usb_autosuspend" ]; then
+    echo "  USB autosuspend: DISABLED (all devices set to 'on')"
+else
+    echo "  Potential USB autosuspend issues found:"
+    echo "$usb_autosuspend"
+fi
+
+# 4. GRUB configuration check
+echo ""
+echo "[4/6] GRUB Configuration (intel_pstate):"
+if grep -q "intel_pstate=performance" /etc/default/grub; then
+    echo "  intel_pstate=performance: FOUND in GRUB"
+else
+    echo "  intel_pstate=performance: NOT FOUND in GRUB"
+fi
+
+# 5. UDev rule check
+echo ""
+echo "[5/6] UDev Rule for USB:"
+USB_RULE_FILE="/etc/udev/rules.d/50-usb-power-save.rules"
+if [ -f "$USB_RULE_FILE" ]; then
+    echo "  UDev rule file exists: $USB_RULE_FILE"
+    cat "$USB_RULE_FILE"
+else
+    echo "  UDev rule file NOT FOUND: $USB_RULE_FILE"
+fi
+
+# 6. Recent power‑related log entries
+echo ""
+echo "[6/6] Recent Power/USB Logs (last 20 lines):"
+sudo dmesg | grep -i -E "power|usb|cpu|intel_pstate" | tail -20
+
+echo ""
+echo "=== DIAGNOSTIC COMPLETE ==="
+echo "Please share this entire output with me for analysis."
