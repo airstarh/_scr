@@ -1,3 +1,13 @@
+
+
+https://www.linkedin.com/in/vazovskiy/
+
+
+
+
+
+
+
 ydotool mousemove -x -9999 -y 9999
 ydotool mousemove -x -9999 -y -9999 && ydotool mousemove -x $x -y $y
 a.k.a

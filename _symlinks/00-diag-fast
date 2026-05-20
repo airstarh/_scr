@@ -1,0 +1,3 @@
+powerprofilesctl get
+cpupower frequency-info
+dmesg | grep -i usb

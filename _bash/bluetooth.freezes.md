@@ -135,3 +135,11 @@ scan on
 ```
 
 **The combination of disabling USB autosuspend + btusb autosuspend should completely fix your issue.** The MX Master 2S is known to be sensitive to power management on Linux. Let me know if you still experience freezes after reboot!
+
+
+
+
+#####
+
+PROCESSOR:::
+sudo cpupower frequency-set -g performance
