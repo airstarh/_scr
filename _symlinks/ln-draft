@@ -1,6 +1,1 @@
-# Clp/update.shear journal for this service (optional, to remove old errors)
-sudo journalctl --rotate
-sudo journalctl --vacuum-time=1s
-
-# Check fresh logs
-sudo journalctl -u set-cpu-performance.service -n 10
+echo "0" | sudo tee /sys/class/bluetooth/hci0/low_latency
