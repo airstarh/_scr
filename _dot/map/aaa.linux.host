@@ -5,6 +5,9 @@ zoneminder
     - "8080:80"
     - "8443:443"
 
+zoneminder
+
+
 ALINA_BE
     /home/qqq/_A001/rep/ALINA_BE/
       - "50080:80"
