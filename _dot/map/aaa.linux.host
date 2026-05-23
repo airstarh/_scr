@@ -1,0 +1,12 @@
+zoneminder
+    v1.36.4
+    /osa/_docker/vzm/
+    http://localhost:8080/zm/
+    - "8080:80"
+    - "8443:443"
+
+ALINA_BE
+    /home/qqq/_A001/rep/ALINA_BE/
+      - "50080:80"
+      - "50443:443"
+      - "53306:3306"

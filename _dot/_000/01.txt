@@ -1,70 +1,62 @@
-Этап 0. Анализ и проектирование (0.5–1 день)
-Уточнить требования (какие данные, права доступа, какие фильтры, сортировка, какой объём).
-Спроектировать структуру БД (новая таблица? связи? индексы под фильтры + пагинацию).Определить Socket.IO события (какие действия пользователя → реальное время? добавление/удаление/изменение записи?).
-Согласовать API (формат запросов/ответов, пагинация — page/offset или cursor?).
-Этап 2. Backend (Yii2 + PostgreSQL) – 2–3 дня
-Миграция: создать/изменить таблицы, индексы для фильтруемых полей, триггеры/notify (если нужен реалтайм через БД).
-Модель + AR (или QueryBuilder для сложных фильтров).
-API Controller (/api/user/events):
-параметры: page, per_page, filters[], sort.
-валидация входных данных.
-использование Paginator Yii2.
-Событийный слой (если данные меняются через другие разделы):
-при изменении (create/update/delete) — отправлять событие в Redis Pub/Sub или в Socket.IO (админ-сервер).
-Rbac/доступ — убедиться, что пользователь видит только свои данные (если нужно).
-Этап 3. Real-time (Socket.IO + Node.js) – 1–1.5 дня
-Настроить Socket.IO server (или интеграцию с существующим).
-Обработчики комнат (каждого пользователя в свою комнату: user:{id}).
-Прослушивание событий от бэкенда (через Redis или HTTP-хук от Yii2).
-Broadcast изменённых данных в комнату пользователя.
-Синхронизация — слать не всю страницу, а только уведомление "data_changed" + опционально ID записи, чтобы фронт сам подтянул изменения.
-Этап 4. Frontend (Vue 2 / Nuxt + Element UI) – 3–4 дня
-Компонент UserEventsList.vue:
-таблица (ElTable) с данными.
-панель фильтров (ElForm + кнопки сброса).
-пагинация (ElPagination).
-Store (Vuex):
-state: items, pagination, filters, loading.
-actions: fetchEvents, updateFilters, changePage.
-Socket.IO плагин/миксин:
-подключение, подписка на events:updated, при событии — перезапросить текущую страницу (или умное обновление конкретной записи).
-Debounce для фильтров (чтобы не слать запрос на каждый ввод).
-Обработка ошибок и лоадеры.
-Этап 5. Интеграция и отладка – 1 день
-Соединить всё в тестовом контуре.
-Проверить реалтайм при изменении данных из другого окна.
-Проверить пагинацию с фильтрами (не терять состояние).
-Нагрузочный мини-тест (если много пользователей — оптимизировать запросы).
-Этап 6. Документация + код-ревью – 0.5 дня
-2. Итоговая оценка по срокам (при полной занятости одного разработчика)
-Этап	Дни
-Анализ + проектирование	0.5–1
-Backend Yii2 + PostgreSQL	2–3
-Real-time слой (Socket.IO)	1–1.5
-Frontend Vue/Nuxt + Element	3–4
-Интеграция/отладка	1
-Документация/ревью	0.5
-Итого	8–10 рабочих дней
-При двух разработчиках (бэк + фронт) — ≈ 5–6 дней параллельной работы.
-3. Важные нюансы (риски и решения)
-Реалтайм через Socket.IO
-Не гонять всю таблицу — только уведомление + ID.
-Иначе при пагинации и фильтрах пользователь увидит неактуальные данные после изменения в другом месте.
-Фильтрация + пагинация
-Использовать ElSelect для enum-полей, текстовые поля — с debounce 500ms.
-Сохранять фильтры в URL (query string) — чтобы можно было поделиться ссылкой.
-Производительность PostgreSQL
-Составные индексы под типичные комбинации фильтров.
-Если данных очень много (>100k записей на пользователя) — рассмотреть cursor пагинацию вместо OFFSET.
-Совместимость Vue 2 / Nuxt
-Проверить, что Element UI версии для Vue 2.
-Socket.IO клиент — установить совместимую версию.
-Обновление без костылей
-При получении сокет-события не просто делать location.reload(), а вызвать fetchEvents с текущими фильтрами/страницей. При этом сохранить скролл (опционально).
-4. Пример сценария работы
-Пользователь заходит в «Мои мероприятия» → подключается Socket.IO → вступает в комнату.
-Выбирает фильтр «только предстоящие» → фронт обновляет URL и запрашивает /api/events?page=1&filter[status]=upcoming.
-Бэкенд отдаёт пагинированный JSON.
-Администратор через другой интерфейс меняет статус мероприятия → бэкенд триггерит событие event_updated(user_id=123, event_id=456).
-Socket.IO шлёт в комнату user:123 событие "refresh_list".
-Фронт тихо перезапрашивает текущую страницу — пользователь видит изменение без перезагрузки.
+version: "3.8"
+services:
+  nginx:
+    restart: unless-stopped
+    env_file: .env
+    container_name: alina_nginx
+    build: ./docker/nginx
+    command: nginx -g "daemon off;"
+    links:
+      - php
+    ports:
+      - "50080:80"
+      - "50443:443"
+    volumes:
+      - ./server/etc/nginx/fastcgi.conf:/etc/nginx/fastcgi.conf
+      - ./server/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./server/etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./server/var/log/nginx:/var/log/nginx
+      - ./server/srv/sewa:/srv/sewa
+      - ./server/var/www:/var/www
+
+  php:
+    restart: unless-stopped
+    env_file: .env
+    container_name: alina_php
+    build: ./docker/php
+    links:
+      - mysql
+    expose:
+      - "9000"
+      - "9001"
+    volumes:
+      # php.ini
+      - ./server/usr/local/etc/php/php.ini:/usr/local/etc/php/php.ini
+      - ./server/var/log/php:/var/log/php
+      ###- ./server/usr/local/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      # /var/www
+      - ./server/var/www:/var/www
+      # ALINA framework
+      - ./server/srv:/srv
+    working_dir: /srv/alina
+
+  mysql:
+    restart: unless-stopped
+    env_file: .env
+    image: mysql:8.0.27
+    container_name: alina_mysql
+    command:
+      - --innodb-buffer-pool-size=2G
+      - --innodb-log-file-size=512M
+      - --innodb-flush-log-at-trx-commit=0
+      - --sync-binlog=0
+      - --innodb-flush-method=O_DIRECT
+      - --innodb-io-capacity=2000
+      - --max-allowed-packet=1G
+      - --skip-log-bin
+    ports:
+      - "53306:3306"
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+      - ~/dumps:/tmp/dumps
+
