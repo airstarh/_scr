@@ -1,0 +1,176 @@
+#! /usr/nin/bash
+
+borg_diag() {
+    echo 1234
+}
+
+borg_diag_virtualiztion() {
+    echo "=== SYSTEM REPORT $(date) ==="
+    echo
+
+    echo "[1] HOSTNAME AND KERNEL"
+    hostname
+    uname -a
+    echo
+
+    echo "[2] CPU DETAILS"
+    echo "--- /proc/cpuinfo ---"
+    grep -E "^model name|^cpu cores|^siblings|^flags" /proc/cpuinfo | uniq
+    echo
+    echo "--- lscpu ---"
+    lscpu | grep -E "Model name|CPU\(s\)|Thread|Core|Vendor|Architecture|Virtualization"
+    echo
+
+    echo "[3] VIRTUALIZATION FLAGS"
+    echo "VT-x/AMD-V check:"
+    grep -Eo "(vmx|svm)" /proc/cpuinfo | sort | uniq -c || echo "No virtualization flags found"
+    echo "KVM status:"
+    if command -v kvm-ok &> /dev/null; then
+        sudo kvm-ok 2>&1
+    else
+        echo "kvm-ok not installed (run: sudo apt install cpu-checker)"
+    fi
+    echo
+
+    echo "[4] MOTHERBOARD AND BIOS"
+    echo "--- dmidecode (system) ---"
+    sudo dmidecode -t system 2>/dev/null | grep -E "Manufacturer|Product|Serial|UUID" || echo "dmidecode: access denied or not available"
+    echo "--- dmidecode (baseboard) ---"
+    sudo dmidecode -t baseboard 2>/dev/null | grep -E "Manufacturer|Product|Version|Serial" || echo "dmidecode: access denied or not available"
+    echo "--- dmidecode (BIOS) ---"
+    sudo dmidecode -t bios 2>/dev/null | grep -E "Vendor|Version|Release" || echo "dmidecode: access denied or not available"
+    echo
+
+    echo "[5] CPU SOCKET AND PHYSICAL INFO"
+    sudo dmidecode -t processor 2>/dev/null | grep -E "Socket|Manufacturer|Version|Max Speed|Current Speed|Core Count|Thread Count" || echo "dmidecode: access denied or not available"
+    echo
+
+    echo "[6] PCI DEVICES (for context)"
+    lspci -nn | head -10
+    echo
+
+    echo "[7] IOMMU/DMAR STATUS"
+    sudo dmesg | grep -i "iommu\|dmar" | tail -15
+    echo
+
+    echo "[8] LSMOD FOR VIRTUALIZATION"
+    lsmod | grep -E "(kvm|vbox)" || echo "No relevant modules loaded"
+    echo
+
+    echo "=== END REPORT ==="
+}
+
+borg_diag_performance() {
+    echo "=== POST‑REBOOT DIAGNOSTIC REPORT ==="
+    echo "Collecting current power management state..."
+    echo ""
+
+    # 1. Power profile
+    echo "[1/6] Power Profile:"
+    current_profile=$(powerprofilesctl get 2>/dev/null)
+    if [ -n "$current_profile" ]; then
+        echo "  Current power profile: $current_profile"
+    else
+        echo "  Error: Could not retrieve power profile"
+    fi
+
+    # 2. CPU governor and frequency
+    echo ""
+    echo "[2/6] CPU Governor and Frequency:"
+    if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" ]; then
+        current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null)
+        echo "  CPU governor: $current_governor"
+    else
+        echo "  CPU governor file not found (check driver)"
+    fi
+
+    if command -v cpupower &> /dev/null; then
+        cpupower frequency-info | grep -E "governor|frequency|energy|available" | head -15
+    else
+        echo "  cpupower not installed — skipping detailed CPU info"
+    fi
+
+    # Check current frequency for all cores
+    echo "  Available frequency steps:"
+    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies 2>/dev/null | tr ' ' '\n' | head -10 | awk '{print "    " $1 " MHz"}'
+
+    echo "  Current CPU frequency (each core):"
+    for freq_file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq; do
+        core_name=$(basename $(dirname $(dirname $freq_file)))
+        freq_khz=$(cat $freq_file 2>/dev/null)
+        if [ -n "$freq_khz" ]; then
+            freq_ghz=$(echo "scale=2; $freq_khz / 1000000" | bc 2>/dev/null || echo "N/A")
+            echo "    $core_name: $freq_khz kHz ($freq_ghz GHz)"
+        fi
+    done
+
+    # 3. USB autosuspend status
+    echo ""
+    echo "[3/6] USB Autosuspend Status:"
+    usb_autosuspend=$(grep -r . /sys/bus/usb/devices/*/power/control 2>/dev/null | grep -v on | head -5)
+    if [ -z "$usb_autosuspend" ]; then
+        echo "  USB autosuspend: DISABLED (all devices set to 'on')"
+    else
+        echo "  Potential USB autosuspend issues found:"
+        echo "$usb_autosuspend"
+    fi
+
+    # Check usbcore autosuspend parameter
+    echo "  Kernel USB autosuspend parameter:"
+    autosuspend_param=$(cat /sys/module/usbcore/parameters/autosuspend 2>/dev/null)
+    if [ "$autosuspend_param" = "-1" ]; then
+        echo "    Disabled (-1)"
+    else
+        echo "    Enabled ($autosuspend_param)"
+    fi
+
+    # 4. GRUB configuration check
+    echo ""
+    echo "[4/6] GRUB Configuration (intel_pstate):"
+    if grep -q "intel_pstate=performance" /etc/default/grub; then
+        echo "  intel_pstate=performance: FOUND in GRUB"
+    else
+        echo "  intel_pstate=performance: NOT FOUND in GRUB"
+    fi
+
+    # Also check for other pstate settings
+    pstate_settings=$(grep "intel_pstate" /etc/default/grub 2>/dev/null)
+    if [ -n "$pstate_settings" ]; then
+        echo "  Other intel_pstate settings: $pstate_settings"
+    fi
+
+    # 5. UDev rule check
+    echo ""
+    echo "[5/6] UDev Rule for USB:"
+    USB_RULE_FILE="/etc/udev/rules.d/50-usb-power-save.rules"
+    if [ -f "$USB_RULE_FILE" ]; then
+        echo "  UDev rule file exists: $USB_RULE_FILE"
+        cat "$USB_RULE_FILE"
+    else
+        echo "  UDev rule file NOT FOUND: $USB_RULE_FILE"
+    fi
+
+    # 6. Recent power‑related log entries
+    echo ""
+    echo "[6/6] Recent Power/USB Logs (last 20 lines):"
+    sudo dmesg | grep -i -E "power|usb|cpu|intel_pstate|cpufreq|thermal" | tail -20
+
+    # Systemd service status
+    echo ""
+    echo "[7/6] SYSTEMD SERVICE STATUS:"
+    sudo systemctl status set-cpu-performance.service --no-pager 2>/dev/null || echo "Service not found or inactive"
+
+    # CPU scaling driver check
+    echo ""
+    echo "[8/6] CPU SCALING DRIVER:"
+    scaling_driver=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver 2>/dev/null)
+    if [ -n "$scaling_driver" ]; then
+        echo "  Scaling driver: $scaling_driver"
+    else
+        echo "  Scaling driver info not available"
+    fi
+
+    echo ""
+    echo "=== DIAGNOSTIC COMPLETE ==="
+    echo "Please share this entire output with me for analysis."
+}
