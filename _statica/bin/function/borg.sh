@@ -1,6 +1,10 @@
 #!/bin/bash
 
 borg() {
+    source ~/.bashrc
+}
+
+borg_log() {
     bash ~/000 > ~/ln-log 2>&1
 }
 
