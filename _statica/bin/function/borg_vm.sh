@@ -14,5 +14,10 @@ qemu-system-x86_64 \
     -device AC97 \
     -usb \
     -device usb-tablet \
-    -monitor stdio
+    -monitor stdio \
+
+    # Новые строки для буфера обмена
+    -chardev qemu-vdagent,id=vdagent,name=vdagent,clipboard=on \
+    -device virtio-serial-pci \
+    -device virtserialport,chardev=vdagent,name=com.redhat.spice.0
 }
