@@ -5,7 +5,7 @@ borg() {
 }
 
 borg_log() {
-    bash ~/000 > ~/ln-log 2>&1
+    sudo bash /home/qqq/000 > /home/qqq/ln-log 2>&1
 }
 
 borg_zm_up() {

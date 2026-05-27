@@ -2,3 +2,5 @@
 git config --global core.excludesfile ~/.gitignore
 
 git config --global pull.rebase false
+
+git config --global core.fileMode false

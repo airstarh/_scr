@@ -1,43 +1,48 @@
 #!/bin/bash
-# 866d8b11-e804-41af-9d9c-a99f5bbb025f
 
-set -e
+echo "=== Bluetooth & Mouse Fix (Input Remapper SAFE) ==="
+echo "Timestamp: $(date)"
+echo
 
-sudo apt update && sudo apt upgrade -y
+# 1. Останавливаем только явно мешающие процессы (оставляем input-remapper)
+echo "[1/6] Stopping interfering processes (leaving input-remapper active)..."
+killall systemsettings 2>/dev/null
+killall obexd 2>/dev/null
+echo "  Done."
 
-# Пробуем скачать скрипт установки напрямую с GitHub
-curl -Ss https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/kickstart.sh -o /tmp/netdata-kickstart.sh
-if [ $? -ne 0 ]; then
-    echo "Failed to download NetData installation script from GitHub" >&2
+# 2. Перезапускаем Bluetooth
+echo "[2/6] Restarting Bluetooth service..."
+sudo systemctl restart bluetooth
+echo "  Done."
+
+# 3. Настройки энергосбережения Bluetooth
+echo "[3/6] Adjusting Bluetooth power settings..."
+echo 1 | sudo tee /sys/module/bluetooth/parameters/disable_ertm > /dev/null 2>&1
+echo "  disable_ertm set to 1"
+
+# 4. Перезагружаем драйвер
+echo "[4/6] Reloading Bluetooth driver..."
+sudo modprobe -r btusb 2>/dev/null
+sudo modprobe btusb
+echo "  Driver reloaded."
+
+# 5. Проверяем состояние адаптера
+echo "[5/6] Verifying Bluetooth adapter status..."
+if ! hciconfig | grep -q "RUNNING"; then
+    echo "  ERROR: Bluetooth adapter is not running"
     exit 1
 fi
+echo "  Adapter is UP and RUNNING"
 
-# Проверяем, что скачали не HTML
-if head -c 100 /tmp/netdata-kickstart.sh | grep -qi "<html>"; then
-    echo "Error: Downloaded HTML instead of shell script. Check your network, DNS, or proxy settings." >&2
-    cat /tmp/netdata-kickstart.sh | head -n 10  # выводим начало файла для диагностики
-    rm -f /tmp/netdata-kickstart.sh
-    exit 1
-fi
+# 6. Применяем настройку для уменьшения задержек мыши (совместимо с input-remapper)
+echo "[6/6] Applying mouse report interval tweak..."
+echo 'options hid_logitech_hidpp report_interval=8' | sudo tee /etc/modprobe.d/hid-logitech.conf > /dev/null 2>&1
+echo "  Tweak applied: reduced report interval for Logitech HID++"
 
-# Запускаем установку
-bash /tmp/netdata-kickstart.sh
-rm -f /tmp/netdata-kickstart.sh
-
-# Ждём немного, чтобы сервис успел зарегистрироваться в systemd
-sleep 5
-
-# Пытаемся запустить и включить сервис, если он появился
-if systemctl list-unit-files | grep -q netdata.service; then
-    sudo systemctl start netdata
-    sudo systemctl enable netdata
-else
-    echo "Warning: netdata.service not found in systemd. Installation may be incomplete." >&2
-fi
-
-# Разрешаем порт в UFW, если он установлен
-if command -v ufw >/dev/null 2>&1; then
-    sudo ufw allow 19999/tcp 2>/dev/null || true
-fi
-
-echo "NetData installation completed. Access at http://localhost:19999"
+echo
+echo "✅ Script completed. Input Remapper was preserved."
+echo "Please test your mouse movement and Bluetooth scanning."
+echo "If problems persist, run the following for diagnostics:"
+echo "  sudo sysctl -w kernel.dmesg_restrict=0"
+echo "  dmesg | grep -i -E '(hid|logitech|bluetooth)' | tail -50"
+echo "=================================================="

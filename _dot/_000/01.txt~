@@ -1,2 +1,164 @@
-License violation
-extension reinstall is required | settings have been saved and will be restored upon reinstall
+=== Bluetooth Adapter Information ===
+
+--- hciconfig output ---
+hci0:   Type: Primary  Bus: USB
+        BD Address: 00:E0:4C:23:99:87  ACL MTU: 1021:6  SCO MTU: 255:12
+        UP RUNNING PSCAN ISCAN INQUIRY
+        RX bytes:74030381 acl:391658 sco:0 events:284603 errors:0
+        TX bytes:377862 acl:9924 sco:0 commands:6271 errors:0
+
+
+--- bluetoothctl devices and adapter ---
+Device AC:40:3B:01:B0:02 P210
+Device C3:68:4E:18:16:BE MX Master 2S
+Device 88:92:CC:83:83:A9 JBL Tune 720BT
+Device 60:3D:61:8F:B8:B5 killerbot
+Controller 00:E0:4C:23:99:87 aaabt [default]
+Controller 00:E0:4C:23:99:87 (public)
+        Manufacturer: 0x005d (93)
+        Version: 0x0a (10)
+        Name: aaa
+        Alias: aaabt
+        Class: 0x006c0104 (7078148)
+        Powered: yes
+        PowerState: on
+        Discoverable: yes
+        DiscoverableTimeout: 0x00000000 (0)
+        Pairable: yes
+        UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+        UUID: Handsfree Audio Gateway   (0000111f-0000-1000-8000-00805f9b34fb)
+        UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+        UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+        UUID: Audio Source              (0000110a-0000-1000-8000-00805f9b34fb)
+        UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+        UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+        UUID: Phonebook Access Client   (0000112e-0000-1000-8000-00805f9b34fb)
+        UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+        UUID: Vendor specific           (185f3df4-3268-4e3f-9fca-d4d5059915bd)
+        UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)
+        UUID: Vendor specific           (03b80e5a-ede8-4b33-a751-6ce34ec4c700)
+        UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
+        Modalias: usb:v1D6Bp0246d0555
+        Discovering: yes
+        Roles: central
+        Roles: peripheral
+Advertising Features:
+        ActiveInstances: 0x00 (0)
+        SupportedInstances: 0x04 (4)
+        SupportedIncludes: tx-power
+        SupportedIncludes: appearance
+        SupportedIncludes: local-name
+        SupportedSecondaryChannels: 1M
+        SupportedSecondaryChannels: 2M
+        SupportedSecondaryChannels: Coded
+        SupportedCapabilities.MinTxPower: 0xffffffed (-19)
+        SupportedCapabilities.MaxTxPower: 0x0017 (23)
+        SupportedCapabilities.MaxAdvLen: 0xfb (251)
+        SupportedCapabilities.MaxScnRspLen: 0xfb (251)
+        SupportedFeatures: CanSetTxPower
+        SupportedFeatures: HardwareOffload
+
+--- DBus adapter properties ---
+method return time=1779879720.878758 sender=:1.0 -> destination=:1.359 serial=306360 reply_serial=2
+   array [
+      dict entry(
+         string "Address"
+         variant             string "00:E0:4C:23:99:87"
+      )
+      dict entry(
+         string "AddressType"
+         variant             string "public"
+      )
+      dict entry(
+         string "Name"
+         variant             string "aaa"
+      )
+      dict entry(
+         string "Alias"
+         variant             string "aaabt"
+      )
+      dict entry(
+         string "Class"
+         variant             uint32 7078148
+      )
+      dict entry(
+         string "Connectable"
+         variant             boolean true
+      )
+      dict entry(
+         string "Powered"
+         variant             boolean true
+      )
+      dict entry(
+         string "PowerState"
+         variant             string "on"
+      )
+      dict entry(
+         string "Discoverable"
+         variant             boolean true
+      )
+      dict entry(
+         string "DiscoverableTimeout"
+         variant             uint32 0
+      )
+      dict entry(
+         string "Pairable"
+         variant             boolean true
+      )
+      dict entry(
+         string "PairableTimeout"
+         variant             uint32 0
+      )
+      dict entry(
+         string "Discovering"
+         variant             boolean true
+      )
+      dict entry(
+         string "UUIDs"
+         variant             array [
+               string "0000110e-0000-1000-8000-00805f9b34fb"
+               string "0000111f-0000-1000-8000-00805f9b34fb"
+               string "00001200-0000-1000-8000-00805f9b34fb"
+               string "0000110b-0000-1000-8000-00805f9b34fb"
+               string "0000110a-0000-1000-8000-00805f9b34fb"
+               string "0000110c-0000-1000-8000-00805f9b34fb"
+               string "00001800-0000-1000-8000-00805f9b34fb"
+               string "0000112e-0000-1000-8000-00805f9b34fb"
+               string "00001801-0000-1000-8000-00805f9b34fb"
+               string "185f3df4-3268-4e3f-9fca-d4d5059915bd"
+               string "0000180a-0000-1000-8000-00805f9b34fb"
+               string "03b80e5a-ede8-4b33-a751-6ce34ec4c700"
+               string "0000111e-0000-1000-8000-00805f9b34fb"
+            ]
+      )
+      dict entry(
+         string "Modalias"
+         variant             string "usb:v1D6Bp0246d0555"
+      )
+      dict entry(
+         string "Roles"
+         variant             array [
+               string "central"
+               string "peripheral"
+            ]
+      )
+      dict entry(
+         string "Manufacturer"
+         variant             uint16 93
+      )
+      dict entry(
+         string "Version"
+         variant             byte 10
+      )
+   ]
+
+--- Kernel (sysfs) info ---
+Adapter: hci0
+  Address:
+  Powered:
+Adapter: hci0:16
+  Address:
+  Powered:
+
+=== Done ===
+qqq@aaa:/osa/_docker/mey$

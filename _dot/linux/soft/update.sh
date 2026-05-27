@@ -1,5 +1,5 @@
 #
-# apt list --upgradable
+# sudo apt list --upgradable
 # sudo apt-mark hold code
 
 sudo apt update

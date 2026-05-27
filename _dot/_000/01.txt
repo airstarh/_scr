@@ -1,62 +1,11 @@
-version: "3.8"
-services:
-  nginx:
-    restart: unless-stopped
-    env_file: .env
-    container_name: alina_nginx
-    build: ./docker/nginx
-    command: nginx -g "daemon off;"
-    links:
-      - php
-    ports:
-      - "50080:80"
-      - "50443:443"
-    volumes:
-      - ./server/etc/nginx/fastcgi.conf:/etc/nginx/fastcgi.conf
-      - ./server/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./server/etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./server/var/log/nginx:/var/log/nginx
-      - ./server/srv/sewa:/srv/sewa
-      - ./server/var/www:/var/www
+docker build --build-arg MOTION_VERSION=4.1.1 --build-arg MOTIONEYE_VERSION=0.39.3 -t hurlenko\motioneye:arm64 -f Dockerfile .
 
-  php:
-    restart: unless-stopped
-    env_file: .env
-    container_name: alina_php
-    build: ./docker/php
-    links:
-      - mysql
-    expose:
-      - "9000"
-      - "9001"
-    volumes:
-      # php.ini
-      - ./server/usr/local/etc/php/php.ini:/usr/local/etc/php/php.ini
-      - ./server/var/log/php:/var/log/php
-      ###- ./server/usr/local/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      # /var/www
-      - ./server/var/www:/var/www
-      # ALINA framework
-      - ./server/srv:/srv
-    working_dir: /srv/alina
+8751597563ba60c90b0f263df709470cdac2d914a36d07f6429b8f02fcaf3a6d
 
-  mysql:
-    restart: unless-stopped
-    env_file: .env
-    image: mysql:8.0.27
-    container_name: alina_mysql
-    command:
-      - --innodb-buffer-pool-size=2G
-      - --innodb-log-file-size=512M
-      - --innodb-flush-log-at-trx-commit=0
-      - --sync-binlog=0
-      - --innodb-flush-method=O_DIRECT
-      - --innodb-io-capacity=2000
-      - --max-allowed-packet=1G
-      - --skip-log-bin
-    ports:
-      - "53306:3306"
-    volumes:
-      - ./database/mysql:/var/lib/mysql
-      - ~/dumps:/tmp/dumps
+7aa5688b826cmotionEye
 
+
+mey:
+motionEye Version	0.44.0b2
+Motion Version	4.7.1
+OS Version	Linux 7.0.0-15-generic
