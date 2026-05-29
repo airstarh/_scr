@@ -1,6 +1,34 @@
-Deleted archived journal /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde/user-1000@e366939c32fe4300803ee97b2ecfded6-00000000000e4f84-0006523ba8fc8e6c.journal (39.2M).
-Deleted archived journal /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde/system@e366939c32fe4300803ee97b2ecfded6-0000000000114ad0-0006529609b3d395.journal (44.5M).
-Vacuuming done, freed 83.7M of archived journals from /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde.
-Vacuuming done, freed 0B of archived journals from /var/log/journal.
-Vacuuming done, freed 0B of archived journals from /run/log/journal.
-Все логи очищены.
+=== Запуск диагностики HDD: тесты на реальном диске ===
+Проверка точки монтирования /tmp:
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           7.8G  2.0G  5.8G  26% /tmp
+
+Поиск подходящего раздела для тестов...
+Для тестов выбран раздел: sda1 (931.5G)
+Очищаем кэш...
+Создаём тестовый файл 931.5G/fio_hdd_test (1 ГБ)...
+Ошибка: не удалось создать тестовый файл на 931.5G. Проверяем альтернативный путь...
+Пробуем создать файл в /var/tmp...
+Тест fio: последовательная запись (500 МБ)...
+Тест fio: последовательное чтение (500 МБ)...
+Тест fio: случайная запись (4K, 500 МБ)...
+Тест fio: случайное чтение (4K, 500 МБ)...
+--- Результаты fio ---
+Результаты из /tmp/fio_rand_read.log:
+  read: IOPS=3352, BW=13.1MiB/s (13.7MB/s)(393MiB/30001msec)
+   READ: bw=13.1MiB/s (13.7MB/s), 13.1MiB/s-13.1MiB/s (13.7MB/s-13.7MB/s), io=393MiB (412MB), run=30001-30001msec
+
+Результаты из /tmp/fio_rand_write.log:
+  write: IOPS=16.8k, BW=65.8MiB/s (69.0MB/s)(1975MiB/30001msec); 0 zone resets
+  WRITE: bw=65.8MiB/s (69.0MB/s), 65.8MiB/s-65.8MiB/s (69.0MB/s-69.0MB/s), io=1975MiB (2071MB), run=30001-30001msec
+
+Результаты из /tmp/fio_seq_read.log:
+  read: IOPS=212, BW=213MiB/s (223MB/s)(6379MiB/30002msec)
+   READ: bw=213MiB/s (223MB/s), 213MiB/s-213MiB/s (223MB/s-223MB/s), io=6379MiB (6689MB), run=30002-30002msec
+
+Результаты из /tmp/fio_seq_write.log:
+  write: IOPS=69, BW=69.1MiB/s (72.4MB/s)(2073MiB/30008msec); 0 zone resets
+  WRITE: bw=69.1MiB/s (72.4MB/s), 69.1MiB/s-69.1MiB/s (72.4MB/s-72.4MB/s), io=2073MiB (2174MB), run=30008-30008msec
+
+Удаляем тестовый файл...
+=== Тестирование завершено ===
