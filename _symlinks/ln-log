@@ -1,5 +1,15 @@
-=== Поиск USB-устройств с ошибкой -71 (только свежие логи) ===
-Очищаем буфер ядра для новых логов...
-Мониторинг в течение 30 секунд: подключите проблемное USB-устройство...
-(Если ошибка -71 жива, она появится в логах за это время)
-Ошибки USB -71 не зафиксированы за период мониторинга.
+Оптимизация журналирования для максимальной производительности...
+Создана резервная копия: /etc/systemd/journald.conf.perf_backup_*
+Конфигурация записана в /etc/systemd/journald.conf
+Перезапуск systemd-journald...
+Очистка дисковых журналов...
+Vacuuming done, freed 0B of archived journals from /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde.
+Vacuuming done, freed 0B of archived journals from /run/log/journal.
+Vacuuming done, freed 0B of archived journals from /var/log/journal.
+=== Настройки применены для максимальной производительности ===
+Хранение: Storage=volatile
+Максимальный объём: SystemMaxUse=50M
+Уровень логирования: MaxLevelStore=err
+Подавление дубликатов: RateLimitIntervalSec=10s
+RateLimitBurst=100
+Готово. Система теперь тратит минимум ресурсов на журналирование.
