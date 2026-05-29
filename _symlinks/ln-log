@@ -1,22 +1,5 @@
-==eye-eye-= Bluetooth & Mouse Fix (Input Remapper SAFE) ===
-Timestamp: ср 27 май 2026 21:51:38 MSK
-
-[1/6] Stopping interfering processes (leaving input-remapper active)...
-  Done.
-[2/6] Restarting Bluetooth service...
-  Done.
-[3/6] Adjusting Bluetooth power settings...
-  disable_ertm set to 1
-[4/6] Reloading Bluetooth driver...
-  Driver reloaded.
-[5/6] Verifying Bluetooth adapter status...
-  Adapter is UP and RUNNING
-[6/6] Applying mouse report interval tweak...
-  Tweak applied: reduced report interval for Logitech HID++
-
-✅ Script completed. Input Remapper was preserved.
-Please test your mouse movement and Bluetooth scanning.
-If problems persist, run the following for diagnostics:
-  sudo sysctl -w kernel.dmesg_restrict=0
-  dmesg | grep -i -E '(hid|logitech|bluetooth)' | tail -50
-==================================================
+=== Поиск USB-устройств с ошибкой -71 (только свежие логи) ===
+Очищаем буфер ядра для новых логов...
+Мониторинг в течение 30 секунд: подключите проблемное USB-устройство...
+(Если ошибка -71 жива, она появится в логах за это время)
+Ошибки USB -71 не зафиксированы за период мониторинга.

@@ -1,48 +1,61 @@
 #!/bin/bash
 
-echo "=== Bluetooth & Mouse Fix (Input Remapper SAFE) ==="
-echo "Timestamp: $(date)"
-echo
+echo "=== Поиск USB-устройств с ошибкой -71 (только свежие логи) ==="
 
-# 1. Останавливаем только явно мешающие процессы (оставляем input-remapper)
-echo "[1/6] Stopping interfering processes (leaving input-remapper active)..."
-killall systemsettings 2>/dev/null
-killall obexd 2>/dev/null
-echo "  Done."
+# Очищаем буфер dmesg (нужны права root)
+echo "Очищаем буфер ядра для новых логов..."
+sudo dmesg -C
 
-# 2. Перезапускаем Bluetooth
-echo "[2/6] Restarting Bluetooth service..."
-sudo systemctl restart bluetooth
-echo "  Done."
+# Ждём немного и просим ядро выдать базовую информацию — это «прогреет» логи
+sleep 2
+sudo dmesg > /dev/null
 
-# 3. Настройки энергосбережения Bluetooth
-echo "[3/6] Adjusting Bluetooth power settings..."
-echo 1 | sudo tee /sys/module/bluetooth/parameters/disable_ertm > /dev/null 2>&1
-echo "  disable_ertm set to 1"
+echo "Мониторинг в течение 30 секунд: подключите проблемное USB-устройство..."
+echo "(Если ошибка -71 жива, она появится в логах за это время)"
 
-# 4. Перезагружаем драйвер
-echo "[4/6] Reloading Bluetooth driver..."
-sudo modprobe -r btusb 2>/dev/null
-sudo modprobe btusb
-echo "  Driver reloaded."
+# Запускаем мониторинг dmesg в фоновом режиме на 30 сек: ищем ошибки -71 и сразу записываем
+sudo timeout 30s dmesg --follow | grep -i "error.*-71" > /tmp/usb_error_71_fresh.log &
 
-# 5. Проверяем состояние адаптера
-echo "[5/6] Verifying Bluetooth adapter status..."
-if ! hciconfig | grep -q "RUNNING"; then
-    echo "  ERROR: Bluetooth adapter is not running"
-    exit 1
+# PID фонового процесса, чтобы потом его убить, если нужно
+follow_pid=$!
+
+# Ждём 30 секунд — дайте системе время поймать ошибку
+sleep 30
+
+# Останавливаем фоновый мониторинг (если он ещё бежит)
+kill $follow_pid 2>/dev/null || true
+
+# Читаем то, что успели поймать
+error_lines=$(cat /tmp/usb_error_71_fresh.log 2>/dev/null)
+
+# Убираем временный файл
+rm -f /tmp/usb_error_71_fresh.log
+
+if [ -z "$error_lines" ]; then
+    echo "Ошибки USB -71 не зафиксированы за период мониторинга."
+    exit 0
 fi
-echo "  Adapter is UP and RUNNING"
 
-# 6. Применяем настройку для уменьшения задержек мыши (совместимо с input-remapper)
-echo "[6/6] Applying mouse report interval tweak..."
-echo 'options hid_logitech_hidpp report_interval=8' | sudo tee /etc/modprobe.d/hid-logitech.conf > /dev/null 2>&1
-echo "  Tweak applied: reduced report interval for Logitech HID++"
+echo "$error_lines" | while read -r line; do
+    # Извлекаем идентификатор устройства (например, "1-4" из "usb 1-4")
+    device_id=$(echo "$line" | grep -oP 'usb\s+\K[0-9]+-[0-9]+' || echo "")
+    if [ -n "$device_id" ]; then
+        echo "--- Обнаружена ошибка для устройства $device_id ---"
+        echo "Лог: $line"
 
-echo
-echo "✅ Script completed. Input Remapper was preserved."
-echo "Please test your mouse movement and Bluetooth scanning."
-echo "If problems persist, run the following for diagnostics:"
-echo "  sudo sysctl -w kernel.dmesg_restrict=0"
-echo "  dmesg | grep -i -E '(hid|logitech|bluetooth)' | tail -50"
-echo "=================================================="
+        # Ищем это устройство в lsusb
+        lsusb_match=$(lsusb | grep -oP "Bus\s+\d+\s+Device\s+\d+.*$device_id.*")
+        if [ -n "$lsusb_match" ]; then
+            echo "В lsusb: $lsusb_match"
+        else
+            echo "В lsusb устройство не найдено (возможно, не прошло инициализацию)."
+        fi
+
+        # Пытаемся получить более подробную информацию через usb-devices
+        echo "Детали из usb-devices:"
+        usb-devices | grep -A 5 -B 5 "$device_id" | head -20
+        echo ""
+    fi
+done
+
+echo "Поиск завершён."

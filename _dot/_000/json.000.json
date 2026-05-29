@@ -1,0 +1,66 @@
+[
+    {
+        "Id": "sha256:6f77fbed47f99c5c7e9dc0f4e15c0a4fc243b9d4e28f17ef8a01105b5887d93e",
+        "RepoTags": [
+            "ghcr.io/motioneye-project/motioneye:0.44.0b2"
+        ],
+        "RepoDigests": [
+            "ghcr.io/motioneye-project/motioneye@sha256:6f77fbed47f99c5c7e9dc0f4e15c0a4fc243b9d4e28f17ef8a01105b5887d93e"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-05-23T15:28:26.39578581Z",
+        "Config": {
+            "ExposedPorts": {
+                "8765/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/entrypoint.sh"
+            ],
+            "Volumes": {
+                "/etc/motioneye": {},
+                "/var/lib/motioneye": {}
+            },
+            "Labels": {
+                "maintainer": "Marcus Klein <himself@kleini.org>",
+                "org.opencontainers.image.created": "2026-05-23T15:27:13.956Z",
+                "org.opencontainers.image.description": "A web frontend for the motion daemon.",
+                "org.opencontainers.image.licenses": "GPL-3.0",
+                "org.opencontainers.image.revision": "ca23eb2abc72c4fbe9760c52401dd3fec5fc0911",
+                "org.opencontainers.image.source": "https://github.com/motioneye-project/motioneye",
+                "org.opencontainers.image.title": "motioneye",
+                "org.opencontainers.image.url": "https://github.com/motioneye-project/motioneye",
+                "org.opencontainers.image.version": "0.44.0b2"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 261564815,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:219a998c60509502b47b97f1158067d5dd62640d2d689560d32cfd5594f6bc40",
+                "sha256:0c3e7dc51e816490c132193c13131bc5ace57e0e3cca6f1e10d7fd7d67f2a249",
+                "sha256:d29b9334f2b95bfef5b9f37cb82b4d684df04688c0fb0a4d578877f5f9f6d952",
+                "sha256:42be5e3162761333e197e03ea4eb73859ab83df181932e135840c5c58f10bdda"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-05-26T15:17:29.918152596Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:6f77fbed47f99c5c7e9dc0f4e15c0a4fc243b9d4e28f17ef8a01105b5887d93e",
+            "size": 3140
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "ghcr.io/motioneye-project/motioneye"
+                }
+            ]
+        }
+    }
+]
