@@ -1,34 +1,113 @@
-=== Запуск диагностики HDD: тесты на реальном диске ===
-Проверка точки монтирования /tmp:
-Filesystem      Size  Used Avail Use% Mounted on
-tmpfs           7.8G  2.0G  5.8G  26% /tmp
+=========================================
+Input Remapper & Mouse Diagnostic Report
+=========================================
 
-Поиск подходящего раздела для тестов...
-Для тестов выбран раздел: sda1 (931.5G)
-Очищаем кэш...
-Создаём тестовый файл 931.5G/fio_hdd_test (1 ГБ)...
-Ошибка: не удалось создать тестовый файл на 931.5G. Проверяем альтернативный путь...
-Пробуем создать файл в /var/tmp...
-Тест fio: последовательная запись (500 МБ)...
-Тест fio: последовательное чтение (500 МБ)...
-Тест fio: случайная запись (4K, 500 МБ)...
-Тест fio: случайное чтение (4K, 500 МБ)...
---- Результаты fio ---
-Результаты из /tmp/fio_rand_read.log:
-  read: IOPS=3352, BW=13.1MiB/s (13.7MB/s)(393MiB/30001msec)
-   READ: bw=13.1MiB/s (13.7MB/s), 13.1MiB/s-13.1MiB/s (13.7MB/s-13.7MB/s), io=393MiB (412MB), run=30001-30001msec
+--- 1. Input Remapper Version ---
+input-remapper-daemon/resolute,resolute,now 2.2.0-1 all [installed,automatic]
+input-remapper-gtk/resolute,resolute,now 2.2.0-1 all [installed,automatic]
+input-remapper/resolute,resolute,now 2.2.0-1 all [installed]
 
-Результаты из /tmp/fio_rand_write.log:
-  write: IOPS=16.8k, BW=65.8MiB/s (69.0MB/s)(1975MiB/30001msec); 0 zone resets
-  WRITE: bw=65.8MiB/s (69.0MB/s), 65.8MiB/s-65.8MiB/s (69.0MB/s-69.0MB/s), io=1975MiB (2071MB), run=30001-30001msec
+--- 2. Input Remapper Service Status ---
+● input-remapper-daemon.service - Service to inject keycodes without the GUI application
+     Loaded: loaded (/usr/lib/systemd/system/input-remapper-daemon.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-05-29 22:04:31 MSK; 3h 31min ago
+ Invocation: 0868cf83400543b6bfb9395ea2e703a3
+   Main PID: 1580 (input-remapper-)
+      Tasks: 7 (limit: 16758)
+     Memory: 47.2M (peak: 59.8M)
+        CPU: 1min 35.402s
+     CGroup: /system.slice/input-remapper-daemon.service
+             ├─1580 /usr/bin/python3 /usr/bin/input-remapper-service
+             ├─1704 /usr/bin/python3 /usr/bin/input-remapper-service
+             └─3699 /usr/bin/python3 /usr/bin/input-remapper-service
 
-Результаты из /tmp/fio_seq_read.log:
-  read: IOPS=212, BW=213MiB/s (223MB/s)(6379MiB/30002msec)
-   READ: bw=213MiB/s (223MB/s), 213MiB/s-213MiB/s (223MB/s-223MB/s), io=6379MiB (6689MB), run=30002-30002msec
+мая 30 01:21:45 aaa input-remapper-service[14038]: read loop for /dev/input/event25 stopped
+мая 30 01:21:47 aaa input-remapper-service[1580]: Loaded config from "/home/qqq/.config/input-remapper-2/config.json"
+мая 30 01:21:49 aaa input-remapper-service[1580]: Loaded config from "/home/qqq/.config/input-remapper-2/config.json"
+мая 30 01:21:49 aaa input-remapper-service[1580]: Request to start injecting for "Logitech Wireless Mouse MX Master 2S"
+мая 30 01:21:49 aaa input-remapper-service[1580]: Found "Logitech Wireless Mouse MX Master 2S", "input-remapper DragonRise Inc.   Generic   USB  Joystick   forwarded", "input-remapper mouse", "solaar-keyboard", "LogiOps Virtual Input", "ydotoold virtual device", "Video Bus", "HP WMI hotkeys", "DragonRise Inc.   Generic   USB  Joystick  ", "Razer Razer Ornata V2", "Sleep Button"
+мая 30 01:21:49 aaa input-remapper-service[1580]: Loading preset from "/home/qqq/.config/input-remapper-2/presets/Logitech Wireless Mouse MX Master 2S/new preset.json"
+мая 30 01:21:49 aaa input-remapper-service[1580]: Stopping injecting keycodes for group "Logitech Wireless Mouse MX Master 2S"
+мая 30 01:21:49 aaa input-remapper-service[14583]: Starting injecting the preset for "Logitech Wireless Mouse MX Master 2S"
+мая 30 01:21:51 aaa input-remapper-service[1580]: Stopping injecting keycodes for group "Logitech Wireless Mouse MX Master 2S"
+мая 30 01:21:51 aaa input-remapper-service[14583]: read loop for /dev/input/event25 stopped
 
-Результаты из /tmp/fio_seq_write.log:
-  write: IOPS=69, BW=69.1MiB/s (72.4MB/s)(2073MiB/30008msec); 0 zone resets
-  WRITE: bw=69.1MiB/s (72.4MB/s), 69.1MiB/s-69.1MiB/s (72.4MB/s-72.4MB/s), io=2073MiB (2174MB), run=30008-30008msec
+--- 3. Recent Service Logs (last 50 lines) ---
+-- No entries --
 
-Удаляем тестовый файл...
-=== Тестирование завершено ===
+--- 4. Current Session Type ---
+
+
+--- 5. Kernel Version ---
+7.0.0-15-generic
+
+--- 6. Logitech Kernel Modules ---
+hid_logitech_hidpp     73728  0
+usbhid                 86016  1 hid_logitech_hidpp
+hid                   278528  9 usbhid,hid_generic,hid_dr,uhid,hid_logitech_hidpp
+
+--- 7. USB Devices (Logitech) ---
+
+--- 8. Recent Kernel Messages (last 30 lines) ---
+[ 4073.706664] br-95999b105dc8: port 1(vethc39c9cd) entered forwarding state
+[ 4073.926816] evm: overlay not supported
+[ 4939.824925] perf: interrupt took too long (2537 > 2500), lowering kernel.perf_event_max_sample_rate to 78000
+[ 5109.838131] workqueue: i915_hotplug_work_func [i915] hogged CPU for >10000us 4 times, consider switching to WQ_UNBOUND
+[ 5110.872149] workqueue: i915_hotplug_work_func [i915] hogged CPU for >10000us 5 times, consider switching to WQ_UNBOUND
+[ 7507.458749] perf: interrupt took too long (3174 > 3171), lowering kernel.perf_event_max_sample_rate to 63000
+[ 8712.700196] audit: type=1400 audit(1780090173.834:271): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cupsd" name="/etc/paperspecs" pid=8607 comm="cupsd" requested_mask="r" denied_mask="r" fsuid=0 ouid=0
+[ 8712.714848] audit: type=1400 audit(1780090173.848:272): apparmor="DENIED" operation="capable" class="cap" profile="/usr/sbin/cupsd" pid=8607 comm="cupsd" capability=12  capname="net_admin"
+[ 9467.702472] input: Logitech Wireless Mouse MX Master 2S as /devices/virtual/misc/uhid/0005:046D:B019.0007/input/input30
+[ 9467.702715] logitech-hidpp-device 0005:046D:B019.0007: input,hidraw5: BLUETOOTH HID v0.06 Keyboard [Logitech Wireless Mouse MX Master 2S] on 00:e0:4c:23:99:87
+[ 9467.738330] logitech-hidpp-device 0005:046D:B019.0007: HID++ 4.5 device connected.
+[ 9469.005894] input: input-remapper Logitech Wireless Mouse MX Master 2S forwarded as /devices/virtual/input/input31
+[ 9912.604485] perf: interrupt took too long (3968 > 3967), lowering kernel.perf_event_max_sample_rate to 50000
+[10561.416298] perf: interrupt took too long (5043 > 4960), lowering kernel.perf_event_max_sample_rate to 39000
+[11180.157251] input: Logitech Wireless Mouse MX Master 2S as /devices/virtual/misc/uhid/0005:046D:B019.0008/input/input32
+[11180.161514] logitech-hidpp-device 0005:046D:B019.0008: input,hidraw5: BLUETOOTH HID v0.06 Keyboard [Logitech Wireless Mouse MX Master 2S] on 00:e0:4c:23:99:87
+[11180.201710] logitech-hidpp-device 0005:046D:B019.0008: HID++ 4.5 device connected.
+[11181.620876] input: input-remapper Logitech Wireless Mouse MX Master 2S forwarded as /devices/virtual/input/input33
+[11302.153729] input: solaar-keyboard as /devices/virtual/input/input34
+[11735.323934] perf: interrupt took too long (6345 > 6303), lowering kernel.perf_event_max_sample_rate to 31000
+[11766.283232] input: Logitech Wireless Mouse MX Master 2S as /devices/virtual/misc/uhid/0005:046D:B019.0009/input/input35
+[11766.283587] logitech-hidpp-device 0005:046D:B019.0009: input,hidraw5: BLUETOOTH HID v0.06 Keyboard [Logitech Wireless Mouse MX Master 2S] on 00:e0:4c:23:99:87
+[11766.344374] logitech-hidpp-device 0005:046D:B019.0009: HID++ 4.5 device connected.
+[11769.362986] input: input-remapper Logitech Wireless Mouse MX Master 2S forwarded as /devices/virtual/input/input36
+[11848.538947] input: input-remapper Logitech Wireless Mouse MX Master 2S forwarded as /devices/virtual/input/input37
+[12713.499491] perf: interrupt took too long (7974 > 7931), lowering kernel.perf_event_max_sample_rate to 25000
+[12729.025186] audit: type=1400 audit(1780094190.114:273): apparmor="DENIED" operation="open" class="file" profile="lsusb" name="/sys/devices/pci0000:00/0000:00:14.0/uevent" pid=15908 comm="lsusb" requested_mask="r" denied_mask="r" fsuid=0 ouid=0
+[12729.025304] audit: type=1400 audit(1780094190.114:274): apparmor="DENIED" operation="open" class="file" profile="lsusb" name="/sys/devices/pci0000:00/uevent" pid=15908 comm="lsusb" requested_mask="r" denied_mask="r" fsuid=0 ouid=0
+[12729.028245] audit: type=1400 audit(1780094190.117:275): apparmor="DENIED" operation="open" class="file" profile="lsusb" name="/sys/devices/pci0000:00/0000:00:14.0/uevent" pid=15908 comm="lsusb" requested_mask="r" denied_mask="r" fsuid=0 ouid=0
+[12729.028325] audit: type=1400 audit(1780094190.117:276): apparmor="DENIED" operation="open" class="file" profile="lsusb" name="/sys/devices/pci0000:00/uevent" pid=15908 comm="lsusb" requested_mask="r" denied_mask="r" fsuid=0 ouid=0
+
+--- 9. Mouse/Input Devices ---
+⎡ Virtual core pointer                    	id=2	[master pointer  (3)]
+⎜   ↳ Virtual core XTEST pointer              	id=4	[slave  pointer  (2)]
+⎜   ↳ xwayland-pointer:10                     	id=6	[slave  pointer  (2)]
+⎜   ↳ xwayland-relative-pointer:10            	id=7	[slave  pointer  (2)]
+⎜   ↳ xwayland-pointer-gestures:10            	id=8	[slave  pointer  (2)]
+⎣ Virtual core keyboard                   	id=3	[master keyboard (2)]
+    ↳ Virtual core XTEST keyboard             	id=5	[slave  keyboard (3)]
+    ↳ xwayland-keyboard:10                    	id=9	[slave  keyboard (3)]
+
+--- 10. Bluetooth Status (if applicable) ---
+● bluetooth.service - Bluetooth service
+     Loaded: loaded (/usr/lib/systemd/system/bluetooth.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-05-29 22:04:31 MSK; 3h 31min ago
+ Invocation: 4d6481aedfc942b58477d033609f6f48
+       Docs: man:bluetoothd(8)
+
+--- 11. USB Autosuspend Status ---
+-1
+
+--- 12. Running Input Remapper Processes ---
+root        1580  0.0  0.3 304876 52400 ?        Ssl  мая29   0:00 /usr/bin/python3 /usr/bin/input-remapper-service
+root        1704  0.0  0.2  74136 33968 ?        S    мая29   0:00 /usr/bin/python3 /usr/bin/input-remapper-service
+root        3699  0.1  0.2 303852 37768 ?        S    мая29   0:24 /usr/bin/python3 /usr/bin/input-remapper-service
+qqq        14167  1.3  0.7 1267012 114800 ?      Ssl  01:21   0:12 /usr/bin/python3 /usr/bin/input-remapper-gtk
+root       14214  0.0  0.2 146184 47960 ?        S    01:21   0:00 /usr/bin/python3 /usr/bin/input-remapper-reader-service
+root       14583  0.0  0.0      0     0 ?        Z    01:21   0:00 [input-remapper-] <defunct>
+
+=========================================
+Diagnostic complete. Please share all output above.
+=========================================
