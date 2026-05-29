@@ -1,15 +1,6 @@
-Оптимизация журналирования для максимальной производительности...
-Создана резервная копия: /etc/systemd/journald.conf.perf_backup_*
-Конфигурация записана в /etc/systemd/journald.conf
-Перезапуск systemd-journald...
-Очистка дисковых журналов...
-Vacuuming done, freed 0B of archived journals from /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde.
-Vacuuming done, freed 0B of archived journals from /run/log/journal.
+Deleted archived journal /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde/user-1000@e366939c32fe4300803ee97b2ecfded6-00000000000e4f84-0006523ba8fc8e6c.journal (39.2M).
+Deleted archived journal /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde/system@e366939c32fe4300803ee97b2ecfded6-0000000000114ad0-0006529609b3d395.journal (44.5M).
+Vacuuming done, freed 83.7M of archived journals from /var/log/journal/f9c3391fe83c4b2394103bf4d888bbde.
 Vacuuming done, freed 0B of archived journals from /var/log/journal.
-=== Настройки применены для максимальной производительности ===
-Хранение: Storage=volatile
-Максимальный объём: SystemMaxUse=50M
-Уровень логирования: MaxLevelStore=err
-Подавление дубликатов: RateLimitIntervalSec=10s
-RateLimitBurst=100
-Готово. Система теперь тратит минимум ресурсов на журналирование.
+Vacuuming done, freed 0B of archived journals from /run/log/journal.
+Все логи очищены.
