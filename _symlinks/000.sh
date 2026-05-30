@@ -1,58 +1,117 @@
 #!/bin/bash
+# HDD Diagnostic Script for Kubuntu Wayland
+# Checks disk load, top I/O processes, health, and system state
 
-echo "========================================="
-echo "Input Remapper & Mouse Diagnostic Report"
-echo "========================================="
+echo "=== HDD DIAGNOSTICS START === $(date)"
+echo "System: $(uname -sr), Host: $(hostname)"
 echo ""
 
-echo "--- 1. Input Remapper Version ---"
-apt list --installed 2>/dev/null | grep input-remapper
+# Check if running as root, warn but continue
+if [ "$EUID" -ne 0 ]; then
+    echo "[WARNING] Not running as root; some data may be limited."
+    echo "For best results, run with sudo: sudo $0"
+    echo ""
+fi
+
+# 1. Overall disk stats (iostat)
+echo "--- OVERALL DISK STATISTICS ---"
+if command -v iostat &> /dev/null; then
+    iostat -x 2 2 | grep -v '^$' | grep -v avg-cpu
+else
+    echo "iostat not found. Install sysstat: sudo apt install sysstat"
+fi
 echo ""
 
-echo "--- 2. Input Remapper Service Status ---"
-sudo systemctl status input-remapper --no-pager -l
+# 2. Real-time top I/O consumers (iotop)
+echo "--- TOP I/O CONSUMERS (10s snapshot) ---"
+if command -v iotop &> /dev/null; then
+    sudo timeout 10 iotop -b -n 10 -o -P 2>/dev/null | tail -15
+else
+    echo "iotop not found. Install it: sudo apt install iotop"
+    echo "Alternatively, use 'sudo pidstat -d 2 5' for similar data."
+fi
 echo ""
 
-echo "--- 3. Recent Service Logs (last 50 lines) ---"
-sudo journalctl -u input-remapper -n 50 --no-pager
+# 3. Current disk usage and mount points
+echo "--- DISK USAGE AND MOUNTS ---"
+df -h | grep -E '^Filesystem|/dev/'
 echo ""
 
-echo "--- 4. Current Session Type ---"
-echo $XDG_SESSION_TYPE
+# 4. Detailed block device info
+echo "--- BLOCK DEVICE DETAILS ---"
+lsblk -f -o NAME,FSTYPE,SIZE,MOUNTPOINT,MODEL
 echo ""
 
-echo "--- 5. Kernel Version ---"
-uname -r
+# 5. Kernel I/O errors and disk messages
+echo "--- KERNEL I/O ERRORS AND DISK MESSAGES ---"
+dmesg | grep -i -e 'ata' -e 'sd' -e 'disk' -e 'error' | tail -20
 echo ""
 
-echo "--- 6. Logitech Kernel Modules ---"
-lsmod | grep -E "(logitech|hid_logitech)" || echo "None found"
+# 6. SMART health summary for all disks
+echo "--- SMART HEALTH SUMMARY ---"
+for disk in /dev/sd? /dev/nvme?n?; do
+    if [ -b "$disk" ]; then
+        echo "Checking $disk:"
+        smartctl -H "$disk" 2>/dev/null | grep "SMART overall-health" || echo "  SMART data not available"
+    fi
+done
 echo ""
 
-echo "--- 7. USB Devices (Logitech) ---"
-lsusb | grep -i logitech
+# 7. SMART attributes for all detected disks (key indicators)
+echo "--- SMART KEY ATTRIBUTES FOR ALL DISKS ---"
+for disk in /dev/sd? /dev/nvme?n?; do
+    if [ -b "$disk" ]; then
+        echo "=== $disk ==="
+        if smartctl -A "$disk" &> /dev/null; then
+            sudo smartctl -A "$disk" | grep -E "(Reallocated_Sector_Ct|Current_Pending_Sector|Seek_Error_Rate|Power_On_Hours|Raw_Read_Error_Rate)"
+        else
+            echo "SMART not accessible for $disk. Check device or install smartmontools: sudo apt install smartmontools"
+        fi
+        echo ""
+    fi
+done
+
+# 8. SMART self-test log for all detected disks
+echo "--- SMART SELF-TEST LOG FOR ALL DISKS ---"
+for disk in /dev/sd? /dev/nvme?n?; do
+    if [ -b "$disk" ]; then
+        echo "=== $disk ==="
+        if smartctl -l selftest "$disk" &> /dev/null; then
+            sudo smartctl -l selftest "$disk" | tail -10
+        else
+            echo "Cannot access SMART self-test log for $disk"
+        fi
+        echo ""
+    fi
+done
+
+# 9. System services and their disk footprint (systemd)
+echo "--- SYSTEMD SERVICES WITH HIGH I/O (if available) ---"
+systemctl list-units --type=service --state=active 2>/dev/null | head -15
 echo ""
 
-echo "--- 8. Recent Kernel Messages (last 30 lines) ---"
-dmesg | tail -30
+# 10. Find large/frequently modified files (potential culprits)
+echo "--- LARGE AND FREQUENTLY MODIFIED FILES (last 24h) ---"
+sudo find / -type f -mtime -1 -size +10M 2>/dev/null | head -10
 echo ""
 
-echo "--- 9. Mouse/Input Devices ---"
-xinput list 2>/dev/null || echo "xinput not available (try: sudo apt install xinput)"
+# 11. Swap usage (swappiness can affect disk load)
+echo "--- SWAP STATUS ---"
+swapon --show
+cat /proc/sys/vm/swappiness
 echo ""
 
-echo "--- 10. Bluetooth Status (if applicable) ---"
-systemctl status bluetooth --no-pager -l 2>/dev/null | head -5 || echo "Bluetooth not active"
+# 12. Journalctl logs (recent system events)
+echo "--- RECENT SYSTEM LOGS (journalctl) ---"
+journalctl -n 50 --no-pager 2>/dev/null | grep -i -e 'io' -e 'disk' -e 'write' -e 'read' | tail -10
 echo ""
 
-echo "--- 11. USB Autosuspend Status ---"
-cat /sys/module/usbcore/parameters/autosuspend 2>/dev/null || echo "Not available"
+# Final summary and next steps
+echo "=== DIAGNOSTICS END === $(date)"
 echo ""
-
-echo "--- 12. Running Input Remapper Processes ---"
-ps aux | grep -E "(input-remapper|key-mapper)" | grep -v grep
-echo ""
-
-echo "========================================="
-echo "Diagnostic complete. Please share all output above."
-echo "========================================="
+echo "NEXT STEPS:"
+echo "1. If iotop shows high I/O: identify the process PID and check what it's doing."
+echo "2. If dmesg or SMART shows errors: backup data and plan disk replacement."
+echo "3. If swap is active: consider increasing RAM or tuning swappiness."
+echo "4. For continuous monitoring: run 'sudo iotop' or 'sudo nmon' in another terminal."
+echo "5. Schedule periodic SMART tests: 'sudo smartctl -t long /dev/sda' monthly."
