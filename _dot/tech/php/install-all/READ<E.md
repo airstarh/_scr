@@ -442,3 +442,227 @@ All versions coexist peacefully, each with its own:
 - Log files: `/var/log/php{version}-fpm.log`
 
 This setup gives you complete flexibility to run different PHP versions for different domains, subdirectories, or even individual scripts.
+
+I'll provide a clear, step-by-step guide for installing Composer for each of your PHP versions (7.4, 8.0, 8.3, 8.4, 8.5) on Kubuntu 26.04.
+
+## The Simple Answer: You Only Install Composer Once
+
+**You don't actually need to install separate Composer binaries.** Composer is just a PHP script - the same script works with any PHP version. You control which PHP version Composer uses by specifying it when you run the command.
+
+However, for convenience, you can create separate wrapper scripts or aliases. Here are three approaches, from simplest to most complete:
+
+## Approach 1: Shell Aliases (Quickest & Most Common)
+
+Add these lines to your `~/.bashrc` or `~/.zshrc` file:
+
+```bash
+# PHP-specific Composer aliases
+alias composer74='/usr/bin/php7.4 /usr/local/bin/composer'
+alias composer80='/usr/bin/php8.0 /usr/local/bin/composer'
+alias composer83='/usr/bin/php8.3 /usr/local/bin/composer'
+alias composer84='/usr/bin/php8.4 /usr/local/bin/composer'
+alias composer85='/usr/bin/php8.5 /usr/local/bin/composer'
+```
+
+Then reload your shell:
+```bash
+source ~/.bashrc  # or source ~/.zshrc
+```
+
+**Usage:**
+```bash
+cd /var/www/legacy-app
+composer74 install
+
+cd /var/www/modern-app
+composer85 require laravel/framework
+```
+
+## Approach 2: Separate Composer Binaries (More Robust)
+
+This creates actual executable files for each PHP version:
+
+```bash
+#!/bin/bash
+# Run as sudo
+
+# First, install the global Composer if not already present
+if [ ! -f /usr/local/bin/composer ]; then
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    rm composer-setup.php
+fi
+
+# Now create version-specific wrappers
+for version in 7.4 8.0 8.3 8.4 8.5; do
+    cat > /usr/local/bin/composer${version} <<EOF
+#!/bin/bash
+/usr/bin/php${version} /usr/local/bin/composer "\$@"
+EOF
+    chmod +x /usr/local/bin/composer${version}
+    echo "Created: composer${version}"
+done
+```
+
+After running this script, you can use:
+```bash
+composer74 install
+composer85 update
+composer83 require guzzlehttp/guzzle
+```
+
+## Approach 3: Complete Multi-Composer Installer Script
+
+Here's a complete script that validates PHP installations, downloads Composer properly, and sets up all version-specific wrappers:
+
+```bash
+#!/bin/bash
+# multi-composer-setup.sh
+# Run with: sudo ./multi-composer-setup.sh
+
+set -e
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo -e "${GREEN}========================================${NC}"
+echo -e "${GREEN}Multi-PHP Composer Installer${NC}"
+echo -e "${GREEN}========================================${NC}"
+
+# Check running as root
+if [[ $EUID -ne 0 ]]; then
+   echo -e "${RED}This script must be run as root (use sudo)${NC}"
+   exit 1
+fi
+
+PHP_VERSIONS="7.4 8.0 8.3 8.4 8.5"
+
+# Verify each PHP version is installed
+echo -e "${YELLOW}Step 1: Verifying PHP installations...${NC}"
+for version in $PHP_VERSIONS; do
+    if command -v php${version} &> /dev/null; then
+        echo -e "${GREEN}✓ PHP $version found${NC}"
+    else
+        echo -e "${RED}✗ PHP $version not found. Please install it first.${NC}"
+        exit 1
+    fi
+done
+
+# Download and install global Composer using default PHP
+echo -e "${YELLOW}Step 2: Installing global Composer...${NC}"
+
+# Clean up any previous failed installations
+rm -f composer-setup.php
+
+# Download with default PHP
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+# Verify installer signature
+SIGNATURE_EXPECTED="$(curl -s https://composer.github.io/installer.sig)"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '$SIGNATURE_EXPECTED') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); exit(1); }" || exit 1
+
+# Install globally
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+rm composer-setup.php
+
+echo -e "${GREEN}✓ Global Composer installed${NC}"
+
+# Create version-specific wrappers
+echo -e "${YELLOW}Step 3: Creating PHP-specific Composer wrappers...${NC}"
+
+for version in $PHP_VERSIONS; do
+    WRAPPER="/usr/local/bin/composer${version}"
+
+    cat > $WRAPPER <<EOF
+#!/bin/bash
+# Composer wrapper for PHP $version
+/usr/bin/php${version} /usr/local/bin/composer "\$@"
+EOF
+
+    chmod +x $WRAPPER
+    echo -e "${GREEN}✓ Created: composer${version}${NC}"
+done
+
+# Verify all wrappers work
+echo -e "${YELLOW}Step 4: Testing installation...${NC}"
+for version in $PHP_VERSIONS; do
+    if composer${version} --version > /dev/null 2>&1; then
+        echo -e "${GREEN}✓ composer${version} works${NC}"
+    else
+        echo -e "${RED}✗ composer${version} failed${NC}"
+    fi
+done
+
+echo -e "${GREEN}========================================${NC}"
+echo -e "${GREEN}Installation Complete!${NC}"
+echo -e "${GREEN}========================================${NC}"
+echo -e "\nAvailable commands:"
+for version in $PHP_VERSIONS; do
+    echo "  composer${version} [command]"
+done
+echo -e "\nExamples:"
+echo "  composer74 install"
+echo "  composer85 require laravel/framework"
+echo "  composer83 update"
+```
+
+**To run it:**
+```bash
+chmod +x multi-composer-setup.sh
+sudo ./multi-composer-setup.sh
+```
+
+## Project-Level Configuration (Recommended)
+
+For each project, lock the PHP version in `composer.json` to ensure compatibility:
+
+```bash
+cd /var/www/your-project
+composer83 config platform.php 8.3.0
+```
+
+This adds to your `composer.json`:
+```json
+{
+    "config": {
+        "platform": {
+            "php": "8.3.0"
+        }
+    }
+}
+```
+
+## Which Approach Should You Use?
+
+| Approach | Pros | Cons | Best For |
+|----------|------|------|----------|
+| **Aliases (Approach 1)** | Quick, no extra files | Aliases don't work in cron/CI scripts | Interactive terminal use |
+| **Separate binaries (Approach 2)** | Works everywhere, explicit | Requires setup script | Most production scenarios |
+| **Complete installer (Approach 3)** | Validates everything, production-ready | Slightly overkill for simple setups | Teams, CI/CD, multiple servers |
+
+## Verification Commands
+
+After setup, verify each version works:
+
+```bash
+# Check which PHP version each Composer command uses
+composer74 --version   # Should show PHP 7.4.x
+composer85 --version   # Should show PHP 8.5.x
+
+# Test actual functionality
+cd /tmp
+composer83 create-project laravel/laravel test-project --prefer-dist
+rm -rf test-project
+```
+
+## Important Notes
+
+1. **Don't rely on the system `composer` command alone** - it uses whatever PHP is in your `$PATH`, which may not be what you expect
+
+2. **Always use the wrapper commands explicitly** in scripts and cron jobs for consistency
+
+3. **The global Composer binary works for all PHP versions** - you're just changing which PHP interpreter runs it
+
+4. **Update Composer once** (via `sudo composer self-update`) and all version wrappers automatically use the updated version
