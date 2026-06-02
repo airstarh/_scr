@@ -56,5 +56,4 @@ borg_ssh() {
     ssh-add ~/.ssh/003
     # 1234
     ssh-add ~/.ssh/004
-    ssh-add ~/.ssh/005.pub
 }

@@ -1,243 +1,39 @@
-=== HDD DIAGNOSTICS START === сб 30 май 2026 02:54:45 MSK
-System: Linux 7.0.0-15-generic, Host: aaa
 
---- OVERALL DISK STATISTICS ---
-Linux 7.0.0-15-generic (aaa) 	30.05.2026 	_x86_64_	(4 CPU)
-          28.41    0.10    7.06    8.42    0.00   56.01
-Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
-loop0            0.01      0.02     0.00   0.00    0.14     1.21    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop1            0.44      1.53     0.00   0.00    0.17     3.49    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop10           0.66      2.15     0.00   0.00    0.07     3.27    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop11           0.77      2.44     0.00   0.00    0.07     3.17    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop12           0.03      0.07     0.00   0.00    0.14     2.50    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop13           0.65      2.14     0.00   0.00    0.11     3.28    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop14           0.03      0.07     0.00   0.00    0.66     2.48    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop15           0.07      0.69     0.00   0.00    0.89    10.38    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop16           2.67      7.24     0.00   0.00    0.06     2.71    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop17           0.08      0.72     0.00   0.00    0.57     9.23    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop18           0.73      2.29     0.00   0.00    0.11     3.12    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop19           1.07      3.00     0.00   0.00    0.08     2.79    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop2            0.35      1.31     0.00   0.00    0.17     3.71    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop20           1.37      3.04     0.00   0.00    0.10     2.22    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop21           0.06      0.36     0.00   0.00    0.77     6.02    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop22           0.05      0.64     0.00   0.00    0.81    13.13    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop23           0.06      0.36     0.00   0.00    0.57     5.95    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop24           0.05      0.71     0.00   0.00    0.82    13.75    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop25           0.09      0.75     0.00   0.00    0.74     7.96    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop26           0.09      0.77     0.00   0.00    0.58     8.33    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop27           0.01      0.01     0.00   0.00    0.10     1.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop3            0.45      1.54     0.00   0.00    0.11     3.46    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-loop4            0.05      0.66     0.00   0.00    0.95    12.43    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop5            0.36      1.31     0.00   0.00    0.15     3.65    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop6            0.07      0.68     0.00   0.00    0.56    10.26    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop7            0.05      0.65     0.00   0.00    0.48    13.31    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop8            0.04      0.34     0.00   0.00    0.45     7.72    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop9            2.84      7.06     0.00   0.00    0.05     2.48    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.01
-sda             56.96   2396.14    43.82  43.48   24.75    42.07   17.40    884.49    23.54  57.51   31.21    50.85    0.00      0.00     0.00   0.00    0.00     0.00    4.15   37.84    2.11  23.05
-sdb             97.31   1968.50    41.75  30.02    0.33    20.23    1.72     23.24     2.78  61.75    1.32    13.50    0.16     26.84     0.00   0.00    7.82   164.86    0.55    0.54    0.04   1.89
-          18.40    0.00    3.93    1.52    0.00   76.14
-Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
-loop0            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop1            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop10           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop11           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop12           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop13           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop14           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop15           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop16           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop17           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop18           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop19           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop2            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop20           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop21           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop22           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop23           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop24           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop25           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop26           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop27           0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop3            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop4            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop5            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop6            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop7            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop8            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-loop9            0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
-sda              0.00      0.00     0.00   0.00    0.00     0.00   28.00    210.00    17.00  37.78    3.75     7.50    0.00      0.00     0.00   0.00    0.00     0.00    3.00   20.17    0.17   7.05
-sdb              0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    0.00   0.00
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
---- TOP I/O CONSUMERS (10s snapshot) ---
-    PID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND
-   8133 ?dif qqq         0.00 B/s   18.17 K/s ?unavailable?  chrome
-Total DISK READ:         0.00 B/s | Total DISK WRITE:        52.52 K/s
-Current DISK READ:       0.00 B/s | Current DISK WRITE:      33.76 K/s
-    PID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND
-    474 be/3 root        0.00 B/s   26.26 K/s ?unavailable?  [jbd2/sda1-8]
-   8133 ?dif qqq         0.00 B/s   18.76 K/s ?unavailable?  chrome
-   2306 ?dif qqq         0.00 B/s    7.50 K/s ?unavailable?  kwin_wayland --wayland-fd 7 --socket wayland-0 --xwayland-fd 8 --xwayland-fd 9 --xwayland-display :0 --xwayland-xauthority /run/user/1000/xauth_StxnCn --xwayland
-Total DISK READ:       193.11 K/s | Total DISK WRITE:       204.25 K/s
-Current DISK READ:     193.11 K/s | Current DISK WRITE:     126.26 K/s
-    PID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND
-   2941 ?dif qqq        18.57 K/s  141.12 K/s ?unavailable?  plasmashell --no-respawn
-   3811 be/4 qqq         0.00 B/s   51.99 K/s ?unavailable?  yandex_browser --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --user-id=f52533ed-fc8b-44f5-befd-45496176194c --brand-id=yandex --crashpad-handler-pid=3767 --enable-crash-reporter=1c2a2172-757b-4031-b940-bac3bc6e1d74,stable --change-stack-guard-on-fork=enable --process-name=Network Service --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5405523440837859318,6786165509018525818,524288 --field-trial-handle=3,i,7150338939490153145,3918711574545691045,262144 --disable-features=EyeDropper --variations-seed-version --trace-process-track-uuid=3190708989122997041
-    474 be/3 root        0.00 B/s   11.14 K/s ?unavailable?  [jbd2/sda1-8]
-   2306 ?dif qqq       174.54 K/s    0.00 B/s ?unavailable?  kwin_wayland --wayland-fd 7 --socket wayland-0 --xwayland-fd 8 --xwayland-fd 9 --xwayland-display :0 --xwayland-xauthority /run/user/1000/xauth_StxnCn --xwayland
+Hit:1 http://archive.ubuntu.com/ubuntu resolute InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu resolute-updates InRelease
+Get:3 http://repository.netdata.cloud/repos/edge/ubuntu resolute/ InRelease [2057 B]
+Hit:4 http://archive.ubuntu.com/ubuntu resolute-backports InRelease
+Hit:5 http://repository.netdata.cloud/repos/repoconfig/ubuntu resolute/ InRelease
+Hit:6 https://dl.winehq.org/wine-builds/ubuntu resolute InRelease
+Get:7 http://repository.netdata.cloud/repos/edge/ubuntu resolute/ Packages [41.5 kB]
+Hit:8 http://security.ubuntu.com/ubuntu resolute-security InRelease
+Hit:9 https://dl.google.com/linux/chrome-stable/deb stable InRelease
+Hit:10 https://dbeaver.io/debs/dbeaver-ce  InRelease
+Hit:11 https://download.docker.com/linux/ubuntu resolute InRelease
+Hit:12 https://packages.microsoft.com/repos/code stable InRelease
+Fetched 43.6 kB in 7s (5845 B/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+19 packages can be upgraded. Run 'apt list --upgradable' to see them.
 
---- DISK USAGE AND MOUNTS ---
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/sdb2        55G   45G  6.7G  88% /
-tmpfs           7.8G   86M  7.7G   2% /dev/shm
-/dev/sdb1       300M   36M  264M  12% /boot/efi
-/dev/sda1       916G  135G  735G  16% /osa
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
---- BLOCK DEVICE DETAILS ---
-NAME   FSTYPE     SIZE MOUNTPOINT                       MODEL
-loop0  squashfs     4K /osa/snap/bare/5                 
-loop1  squashfs  73.9M /osa/snap/core22/2133            
-loop2  squashfs  66.8M /osa/snap/core24/1587            
-loop3  squashfs    74M /osa/snap/core22/2411            
-loop4  squashfs 184.9M /osa/snap/element-desktop/203    
-loop5  squashfs  66.8M /osa/snap/core24/1643            
-loop6  squashfs 247.5M /osa/snap/firefox/8339           
-loop7  squashfs 183.7M /osa/snap/element-desktop/197    
-loop8  squashfs  62.2M /osa/snap/ffmpeg-2204/126        
-loop9  squashfs  91.7M /osa/snap/gtk-common-themes/1535 
-loop10 squashfs 516.2M /osa/snap/gnome-42-2204/226      
-loop11 squashfs 606.1M /osa/snap/gnome-46-2404/153      
-loop12 squashfs   264K /osa/snap/gtk-theme-breeze/5     
-loop13 squashfs 531.4M /osa/snap/gnome-42-2204/247      
-loop14 squashfs   264K /osa/snap/gtk-theme-breeze/8     
-loop15 squashfs 247.6M /osa/snap/firefox/8364           
-loop16 squashfs   1.5G /osa/snap/kf5-core22/3           
-loop17 squashfs   395M /osa/snap/mesa-2404/1165         
-loop18 squashfs 371.5M /osa/snap/krita/109              
-loop19 squashfs 317.3M /osa/snap/onvif/78               
-loop20 squashfs  13.2M /osa/snap/icon-theme-breeze/5    
-loop21 squashfs  48.4M /osa/snap/snapd/26382            
-loop22 squashfs  86.2M /osa/snap/telegram-desktop/6986  
-loop23 squashfs  49.3M /osa/snap/snapd/26865            
-loop24 squashfs  86.2M /osa/snap/telegram-desktop/6994  
-loop25 squashfs 227.8M /osa/snap/thunderbird/1104       
-loop26 squashfs 227.7M /osa/snap/thunderbird/1117       
-sda             931.5G                                  ST31000524AS
-└─sda1 ext4     931.5G /osa                             
-sdb              55.9G                                  OCZ-AGILITY3
-├─sdb1 vfat       300M /boot/efi                        
-└─sdb2 ext4      55.6G /                                
+Reading package lists...
+Building dependency tree...
+Reading state information...
+flatpak is already the newest version (1.16.6-1).
+Solving dependencies...
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14                   linux-modules-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic           linux-tools-7.0.0-14
+  linux-image-7.0.0-14-generic             linux-tools-7.0.0-14-generic
+  linux-main-modules-zfs-7.0.0-14-generic
+Use 'sudo apt autoremove' to remove them.
 
---- KERNEL I/O ERRORS AND DISK MESSAGES ---
-[    1.762770] input: Razer Razer Ornata V2 as /devices/pci0000:00/0000:00:14.0/usb1/1-1/1-1:1.1/0003:1532:025D.0002/input/input5
-[    1.763110] hid-generic 0003:1532:025D.0002: input,hidraw1: USB HID v1.11 Keyboard [Razer Razer Ornata V2] on usb-0000:00:14.0-1/input1
-[    1.763552] input: Razer Razer Ornata V2 as /devices/pci0000:00/0000:00:14.0/usb1/1-1/1-1:1.2/0003:1532:025D.0003/input/input6
-[    1.764136] hid-generic 0003:1532:025D.0003: input,hidraw2: USB HID v1.11 Mouse [Razer Razer Ornata V2] on usb-0000:00:14.0-1/input2
-[    1.764968] input: Razer Razer Ornata V2 Consumer Control as /devices/pci0000:00/0000:00:14.0/usb1/1-1/1-1:1.3/0003:1532:025D.0004/input/input7
-[    1.816229] hid-generic 0003:1532:025D.0004: input,hiddev0,hidraw3: USB HID v1.11 Device [Razer Razer Ornata V2] on usb-0000:00:14.0-1/input3
-[    2.468140] EXT4-fs (sdb2): orphan cleanup on readonly fs
-[    2.468885] EXT4-fs (sdb2): mounted filesystem b558d9e9-f74d-4187-b46e-fc015a88d84f ro with ordered data mode. Quota mode: none.
-[    3.027258] systemd[1]: systemd 259.5-0ubuntu3 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE)
-[    3.676576] systemd[1]: Expecting device dev-disk-by\x2duuid-4108\x2d87B2.device - /dev/disk/by-uuid/4108-87B2...
-[    3.676586] systemd[1]: Expecting device dev-disk-by\x2duuid-dcd6103c\x2d415f\x2d4818\x2d8953\x2dbba4a9578b5f.device - /dev/disk/by-uuid/dcd6103c-415f-4818-8953-bba4a9578b5f...
-[    3.781641] EXT4-fs (sdb2): re-mounted b558d9e9-f74d-4187-b46e-fc015a88d84f r/w.
-[    3.801153] systemd[1]: systemd-hwdb-update.service - Rebuild Hardware Database skipped, unmet condition check ConditionNeedsUpdate=/etc
-[    4.825797] EXT4-fs (sda1): mounted filesystem dcd6103c-415f-4818-8953-bba4a9578b5f r/w with ordered data mode. Quota mode: none.
-[    6.798470] ACPI BIOS Error (bug): Attempt to CreateField of length zero (20251212/dsopcode-133)
-[    6.798536] ACPI Error: Aborting method \_SB.WMID.WQBD due to previous error (AE_AML_OPERAND_VALUE) (20251212/psparse-529)
-[   10.482789] ACPI BIOS Error (bug): AE_AML_BUFFER_LIMIT, Index (0x000000050) is beyond end of object (length 0x50) (20251212/exoparg2-393)
-[   10.482869] ACPI Error: Aborting method \_SB.WMID.WQBE due to previous error (AE_AML_BUFFER_LIMIT) (20251212/psparse-529)
-[   10.484301] hp_bioscfg: Returned error 0x3, "Invalid command value/Feature not supported"
-[   34.905280] audit: type=1400 audit(1780097857.942:271): apparmor="DENIED" operation="getattr" class="posix_mqueue" info="Failed name lookup - disconnected IPC path" error=-13 profile="plasmashell" pid=2941 comm="plasmashell" requested="getattr" denied="getattr" class="posix_mqueue" fsuid=1000 ouid=0
+Summary:
+  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 19
+error: Can't load uri https://flathub.org/repo/flathub.flatpakrepo: While fetching https://flathub.org/repo/flathub.flatpakrepo: [28] Timeout was reached
 
---- SMART HEALTH SUMMARY ---
-Checking /dev/sda:
-SMART overall-health self-assessment test result: PASSED
-Checking /dev/sdb:
-SMART overall-health self-assessment test result: PASSED
-
---- SMART KEY ATTRIBUTES FOR ALL DISKS ---
-=== /dev/sda ===
-  1 Raw_Read_Error_Rate     0x000f   117   099   006    Pre-fail  Always       -       165043556
-  5 Reallocated_Sector_Ct   0x0033   100   100   036    Pre-fail  Always       -       0
-  7 Seek_Error_Rate         0x000f   084   060   030    Pre-fail  Always       -       248237028
-  9 Power_On_Hours          0x0032   084   084   000    Old_age   Always       -       14297
-197 Current_Pending_Sector  0x0012   100   100   000    Old_age   Always       -       0
-
-=== /dev/sdb ===
-  1 Raw_Read_Error_Rate     0x000f   110   110   050    Pre-fail  Always       -       0/29903789
-  9 Power_On_Hours_and_Msec 0x0032   000   000   000    Old_age   Always       -       113693h+10m+37.600s
-
---- SMART SELF-TEST LOG FOR ALL DISKS ---
-=== /dev/sda ===
-smartctl 7.5 2025-04-30 r5714 [x86_64-linux-7.0.0-15-generic] (local build)
-Copyright (C) 2002-25, Bruce Allen, Christian Franke, www.smartmontools.org
-
-=== START OF READ SMART DATA SECTION ===
-SMART Self-test log structure revision number 1
-Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
-# 1  Extended offline    Completed without error       00%     14296         -
-
-
-=== /dev/sdb ===
-smartctl 7.5 2025-04-30 r5714 [x86_64-linux-7.0.0-15-generic] (local build)
-Copyright (C) 2002-25, Bruce Allen, Christian Franke, www.smartmontools.org
-
-=== START OF READ SMART DATA SECTION ===
-SMART Self-test Log not supported
-
-
---- SYSTEMD SERVICES WITH HIGH I/O (if available) ---
-  UNIT                                                                                      LOAD   ACTIVE SUB     DESCRIPTION
-  accounts-daemon.service                                                                   loaded active running Accounts Service
-  alsa-restore.service                                                                      loaded active exited  Save/Restore Sound Card State
-  AmneziaVPN.service                                                                        loaded active running AmneziaVPN Service
-  apparmor.service                                                                          loaded active exited  Load AppArmor profiles
-  avahi-daemon.service                                                                      loaded active running Avahi mDNS/DNS-SD Stack
-  blk-availability.service                                                                  loaded active exited  Availability of block devices
-  bluetooth.service                                                                         loaded active running Bluetooth service
-  chrony.service                                                                            loaded active running chrony, an NTP client/server
-  colord.service                                                                            loaded active running Manage, Install and Generate Color Profiles
-  console-setup.service                                                                     loaded active exited  Set console font and keymap
-  containerd.service                                                                        loaded active running containerd container runtime
-  cpupower-performance.service                                                              loaded active exited  Set CPU governor to performance
-  cron.service                                                                              loaded active running Regular background program processing daemon
-  cups-browsed.service                                                                      loaded active running Make remote CUPS printers available locally
-
---- LARGE AND FREQUENTLY MODIFIED FILES (last 24h) ---
-/proc/kcore
-/sys/devices/pci0000:00/0000:00:02.0/resource2_wc
-/sys/devices/pci0000:00/0000:00:02.0/resource2
-/sys/devices/pci0000:00/0000:00:02.0/resource0
-/usr/libexec/netdata/plugins.d/otel-signal-viewer-plugin
-/usr/libexec/netdata/plugins.d/scripts.d.plugin
-/usr/libexec/netdata/plugins.d/otel-plugin
-/usr/libexec/netdata/plugins.d/go.d.plugin
-/usr/sbin/netdata
-/home/qqq/.config/google-chrome/component_crx_cache/172092e78465ce152fbf3b65035b95fd1f1b3fee40135bb98e3760f617908ccb
-
---- SWAP STATUS ---
-NAME          TYPE SIZE USED PRIO
-/swapfile     file   8G   0B   10
-/osa/swapfile file  20G   0B    5
-60
-
---- RECENT SYSTEM LOGS (journalctl) ---
-мая 30 02:54:57 aaa sudo[9475]: pam_unix(sudo:session): session opened for user root(uid=0) by qqq(uid=0)
-мая 30 02:54:57 aaa sudo[9475]: pam_unix(sudo:session): session closed for user root
-мая 30 02:54:57 aaa sudo[9486]: pam_unix(sudo:session): session opened for user root(uid=0) by qqq(uid=0)
-мая 30 02:54:57 aaa sudo[9486]: pam_unix(sudo:session): session closed for user root
-мая 30 02:54:57 aaa sudo[9497]: pam_unix(sudo:session): session opened for user root(uid=0) by qqq(uid=0)
-мая 30 02:54:58 aaa sudo[9497]: pam_unix(sudo:session): session closed for user root
-мая 30 02:54:58 aaa sudo[9508]: pam_unix(sudo:session): session opened for user root(uid=0) by qqq(uid=0)
-мая 30 02:54:58 aaa sudo[9508]: pam_unix(sudo:session): session closed for user root
-мая 30 02:54:58 aaa sudo[9520]: pam_unix(sudo:session): session opened for user root(uid=0) by qqq(uid=0)
-мая 30 02:55:15 aaa sudo[9520]: pam_unix(sudo:session): session closed for user root
-
-=== DIAGNOSTICS END === сб 30 май 2026 02:55:15 MSK
-
-NEXT STEPS:
-1. If iotop shows high I/O: identify the process PID and check what it's doing.
-2. If dmesg or SMART shows errors: backup data and plan disk replacement.
-3. If swap is active: consider increasing RAM or tuning swappiness.
-4. For continuous monitoring: run 'sudo iotop' or 'sudo nmon' in another terminal.
-5. Schedule periodic SMART tests: 'sudo smartctl -t long /dev/sda' monthly.
