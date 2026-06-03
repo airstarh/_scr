@@ -126,7 +126,10 @@ class TestClass
     private $privateProperty = 'private';
     public static $staticProperty = 'static';
 
-    // Конструктор
+    /**
+     * Summary of __construct
+     * @param mixed $param
+     */
     public function __construct($param = null)
     {
         $this->publicProperty = $param ?? 'default';
