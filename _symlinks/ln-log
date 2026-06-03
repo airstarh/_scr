@@ -1,39 +1,156 @@
+● NetworkManager.service - Network Manager
+     Loaded: loaded (/usr/lib/systemd/system/NetworkManager.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-06-03 05:28:26 MSK; 1h 8min ago
+ Invocation: b513b4f848794014bd52ac55713e9e13
+       Docs: man:NetworkManager(8)
+   Main PID: 1001 (NetworkManager)
+      Tasks: 4 (limit: 16758)
+     Memory: 9.1M (peak: 9.9M)
+        CPU: 7.130s
+     CGroup: /system.slice/NetworkManager.service
+             └─1001 /usr/sbin/NetworkManager --no-daemon
 
-WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0783] device (amn0): state change: disconnected -> prepare (reason 'none', managed-type: 'external')
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0786] device (amn0): state change: prepare -> config (reason 'none', managed-type: 'external')
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0787] device (amn0): state change: config -> ip-config (reason 'none', managed-type: 'external')
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0855] device (amn0): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.1299] device (amn0): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.1302] device (amn0): state change: secondaries -> activated (reason 'none', managed-type: 'external')
+июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.1313] device (amn0): Activation: successful, device activated.
+июн 03 05:44:17 aaa NetworkManager[1001]: <info>  [1780454657.9349] device (amn0): state change: activated -> unmanaged (reason 'unmanaged', managed-type: 'removed')
+июн 03 05:44:59 aaa NetworkManager[1001]: <info>  [1780454699.7564] audit: op="statistics" interface="enp4s0" ifindex=2 args="2000" pid=3149 uid=1000 result="success"
+июн 03 05:44:59 aaa NetworkManager[1001]: <info>  [1780454699.7706] audit: op="statistics" interface="enp4s0" ifindex=2 args="500" pid=3368 uid=1000 result="success"
+NAME                UUID                                  TYPE      DEVICE          
+Wired connection 1  c9d04120-2711-3a1f-b1e6-f3b2a93c6c0b  ethernet  enp4s0          
+br-8e6116d13f52     ee2333f5-a972-4f77-943d-34ba26206d5a  bridge    br-8e6116d13f52 
+lo                  71488383-7d49-49af-82cb-7a2bc40b3a5c  loopback  lo              
+br-6c1bf06d7861     f854a333-8740-4c05-9657-8015b1a3a4c9  bridge    br-6c1bf06d7861 
+docker0             0e337629-9df2-4b59-96f5-91e19a7eda11  bridge    docker0         
+virbr0              46f15f0f-5878-41ba-9088-46474644ef1a  bridge    virbr0          
+DEVICE           TYPE      STATE                   CONNECTION         
+enp4s0           ethernet  connected               Wired connection 1 
+br-8e6116d13f52  bridge    connected (externally)  br-8e6116d13f52    
+lo               loopback  connected (externally)  lo                 
+br-6c1bf06d7861  bridge    connected (externally)  br-6c1bf06d7861    
+docker0          bridge    connected (externally)  docker0            
+virbr0           bridge    connected (externally)  virbr0             
+veth76f28fc      ethernet  unmanaged               --                 
+vethc424944      ethernet  unmanaged               --                 
+vethf7912d4      ethernet  unmanaged               --                 
+GENERAL.DEVICE:                         enp4s0
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         3C:52:82:5B:48:8D
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected)
+GENERAL.CONNECTION:                     Wired connection 1
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/2
+WIRED-PROPERTIES.CARRIER:               on
+IP4.ADDRESS[1]:                         192.168.1.86/24
+IP4.GATEWAY:                            192.168.1.254
+IP4.ROUTE[1]:                           dst = 192.168.1.0/24, nh = 0.0.0.0, mt = 100
+IP4.ROUTE[2]:                           dst = 0.0.0.0/0, nh = 192.168.1.254, mt = 100
+IP4.DNS[1]:                             192.168.1.254
+IP6.ADDRESS[1]:                         fe80::ecf:cb8f:4c25:b344/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 1024
 
-Hit:1 http://archive.ubuntu.com/ubuntu resolute InRelease
-Hit:2 http://archive.ubuntu.com/ubuntu resolute-updates InRelease
-Get:3 http://repository.netdata.cloud/repos/edge/ubuntu resolute/ InRelease [2057 B]
-Hit:4 http://archive.ubuntu.com/ubuntu resolute-backports InRelease
-Hit:5 http://repository.netdata.cloud/repos/repoconfig/ubuntu resolute/ InRelease
-Hit:6 https://dl.winehq.org/wine-builds/ubuntu resolute InRelease
-Get:7 http://repository.netdata.cloud/repos/edge/ubuntu resolute/ Packages [41.5 kB]
-Hit:8 http://security.ubuntu.com/ubuntu resolute-security InRelease
-Hit:9 https://dl.google.com/linux/chrome-stable/deb stable InRelease
-Hit:10 https://dbeaver.io/debs/dbeaver-ce  InRelease
-Hit:11 https://download.docker.com/linux/ubuntu resolute InRelease
-Hit:12 https://packages.microsoft.com/repos/code stable InRelease
-Fetched 43.6 kB in 7s (5845 B/s)
-Reading package lists...
-Building dependency tree...
-Reading state information...
-19 packages can be upgraded. Run 'apt list --upgradable' to see them.
+GENERAL.DEVICE:                         br-8e6116d13f52
+GENERAL.TYPE:                           bridge
+GENERAL.HWADDR:                         CA:4B:DC:94:63:DA
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     br-8e6116d13f52
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/6
+IP4.ADDRESS[1]:                         172.18.0.1/16
+IP4.GATEWAY:                            --
+IP4.ROUTE[1]:                           dst = 172.18.0.0/16, nh = 0.0.0.0, mt = 0
+IP6.ADDRESS[1]:                         fe80::c84b:dcff:fe94:63da/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
 
-WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+GENERAL.DEVICE:                         lo
+GENERAL.TYPE:                           loopback
+GENERAL.HWADDR:                         00:00:00:00:00:00
+GENERAL.MTU:                            65536
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     lo
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/1
+IP4.ADDRESS[1]:                         127.0.0.1/8
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         ::1/128
+IP6.GATEWAY:                            --
 
-Reading package lists...
-Building dependency tree...
-Reading state information...
-flatpak is already the newest version (1.16.6-1).
-Solving dependencies...
-The following packages were automatically installed and are no longer required:
-  linux-headers-7.0.0-14                   linux-modules-7.0.0-14-generic
-  linux-headers-7.0.0-14-generic           linux-tools-7.0.0-14
-  linux-image-7.0.0-14-generic             linux-tools-7.0.0-14-generic
-  linux-main-modules-zfs-7.0.0-14-generic
-Use 'sudo apt autoremove' to remove them.
+GENERAL.DEVICE:                         br-6c1bf06d7861
+GENERAL.TYPE:                           bridge
+GENERAL.HWADDR:                         C6:DE:24:A0:2D:42
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     br-6c1bf06d7861
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/5
+IP4.ADDRESS[1]:                         172.20.0.1/16
+IP4.GATEWAY:                            --
+IP4.ROUTE[1]:                           dst = 172.20.0.0/16, nh = 0.0.0.0, mt = 0
+IP6.GATEWAY:                            --
 
-Summary:
-  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 19
-error: Can't load uri https://flathub.org/repo/flathub.flatpakrepo: While fetching https://flathub.org/repo/flathub.flatpakrepo: [28] Timeout was reached
+GENERAL.DEVICE:                         docker0
+GENERAL.TYPE:                           bridge
+GENERAL.HWADDR:                         9E:EA:DD:14:4C:8C
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     docker0
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/4
+IP4.ADDRESS[1]:                         172.17.0.1/16
+IP4.GATEWAY:                            --
+IP4.ROUTE[1]:                           dst = 172.17.0.0/16, nh = 0.0.0.0, mt = 0
+IP6.GATEWAY:                            --
 
+GENERAL.DEVICE:                         virbr0
+GENERAL.TYPE:                           bridge
+GENERAL.HWADDR:                         52:54:00:8B:50:F3
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     virbr0
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/3
+IP4.ADDRESS[1]:                         192.168.122.1/24
+IP4.GATEWAY:                            --
+IP4.ROUTE[1]:                           dst = 192.168.122.0/24, nh = 0.0.0.0, mt = 0
+IP6.GATEWAY:                            --
+
+GENERAL.DEVICE:                         veth76f28fc
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         7E:C1:7D:DA:1C:3D
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+WIRED-PROPERTIES.CARRIER:               on
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         fe80::7cc1:7dff:feda:1c3d/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
+
+GENERAL.DEVICE:                         vethc424944
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         EA:21:2A:29:58:F8
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+WIRED-PROPERTIES.CARRIER:               on
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         fe80::e821:2aff:fe29:58f8/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
+
+GENERAL.DEVICE:                         vethf7912d4
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         6A:BD:CD:81:07:5A
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+WIRED-PROPERTIES.CARRIER:               on
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         fe80::68bd:cdff:fe81:75a/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256

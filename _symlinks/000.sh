@@ -1,6 +1,11 @@
-#!/bin/bash
-# Install GitFourchette via Flatpak
-sudo apt update
-sudo apt install -y flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub org.gitfourchette.gitfourchette
+# Check if NetworkManager is even running
+systemctl status NetworkManager
+
+# See your active connections (what's connected RIGHT NOW)
+nmcli connection show
+
+# See all devices and their current state
+nmcli device status
+
+# See if NetworkManager is managing your interfaces
+nmcli device show
