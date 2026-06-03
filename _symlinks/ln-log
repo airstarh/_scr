@@ -1,156 +1,301 @@
-● NetworkManager.service - Network Manager
-     Loaded: loaded (/usr/lib/systemd/system/NetworkManager.service; enabled; preset: enabled)
-     Active: active (running) since Wed 2026-06-03 05:28:26 MSK; 1h 8min ago
- Invocation: b513b4f848794014bd52ac55713e9e13
-       Docs: man:NetworkManager(8)
-   Main PID: 1001 (NetworkManager)
-      Tasks: 4 (limit: 16758)
-     Memory: 9.1M (peak: 9.9M)
-        CPU: 7.130s
-     CGroup: /system.slice/NetworkManager.service
-             └─1001 /usr/sbin/NetworkManager --no-daemon
-
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0783] device (amn0): state change: disconnected -> prepare (reason 'none', managed-type: 'external')
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0786] device (amn0): state change: prepare -> config (reason 'none', managed-type: 'external')
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0787] device (amn0): state change: config -> ip-config (reason 'none', managed-type: 'external')
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.0855] device (amn0): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.1299] device (amn0): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.1302] device (amn0): state change: secondaries -> activated (reason 'none', managed-type: 'external')
-июн 03 05:43:45 aaa NetworkManager[1001]: <info>  [1780454625.1313] device (amn0): Activation: successful, device activated.
-июн 03 05:44:17 aaa NetworkManager[1001]: <info>  [1780454657.9349] device (amn0): state change: activated -> unmanaged (reason 'unmanaged', managed-type: 'removed')
-июн 03 05:44:59 aaa NetworkManager[1001]: <info>  [1780454699.7564] audit: op="statistics" interface="enp4s0" ifindex=2 args="2000" pid=3149 uid=1000 result="success"
-июн 03 05:44:59 aaa NetworkManager[1001]: <info>  [1780454699.7706] audit: op="statistics" interface="enp4s0" ifindex=2 args="500" pid=3368 uid=1000 result="success"
-NAME                UUID                                  TYPE      DEVICE          
-Wired connection 1  c9d04120-2711-3a1f-b1e6-f3b2a93c6c0b  ethernet  enp4s0          
-br-8e6116d13f52     ee2333f5-a972-4f77-943d-34ba26206d5a  bridge    br-8e6116d13f52 
-lo                  71488383-7d49-49af-82cb-7a2bc40b3a5c  loopback  lo              
-br-6c1bf06d7861     f854a333-8740-4c05-9657-8015b1a3a4c9  bridge    br-6c1bf06d7861 
-docker0             0e337629-9df2-4b59-96f5-91e19a7eda11  bridge    docker0         
-virbr0              46f15f0f-5878-41ba-9088-46474644ef1a  bridge    virbr0          
-DEVICE           TYPE      STATE                   CONNECTION         
-enp4s0           ethernet  connected               Wired connection 1 
-br-8e6116d13f52  bridge    connected (externally)  br-8e6116d13f52    
-lo               loopback  connected (externally)  lo                 
-br-6c1bf06d7861  bridge    connected (externally)  br-6c1bf06d7861    
-docker0          bridge    connected (externally)  docker0            
-virbr0           bridge    connected (externally)  virbr0             
-veth76f28fc      ethernet  unmanaged               --                 
-vethc424944      ethernet  unmanaged               --                 
-vethf7912d4      ethernet  unmanaged               --                 
-GENERAL.DEVICE:                         enp4s0
-GENERAL.TYPE:                           ethernet
-GENERAL.HWADDR:                         3C:52:82:5B:48:8D
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          100 (connected)
-GENERAL.CONNECTION:                     Wired connection 1
-GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/2
-WIRED-PROPERTIES.CARRIER:               on
+connection.id:                          Wired connection 1
+connection.uuid:                        c9d04120-2711-3a1f-b1e6-f3b2a93c6c0b
+connection.stable-id:                   --
+connection.type:                        802-3-ethernet
+connection.interface-name:              enp4s0
+connection.autoconnect:                 yes
+connection.autoconnect-priority:        -999
+connection.autoconnect-retries:         -1 (default)
+connection.multi-connect:               0 (default)
+connection.auth-retries:                -1
+connection.timestamp:                   1780453711
+connection.permissions:                 --
+connection.zone:                        --
+connection.controller:                  --
+connection.master:                      --
+connection.slave-type:                  --
+connection.port-type:                   --
+connection.autoconnect-slaves:          -1 (default)
+connection.autoconnect-ports:           -1 (default)
+connection.down-on-poweroff:            -1 (default)
+connection.secondaries:                 --
+connection.gateway-ping-timeout:        0
+connection.ip-ping-timeout:             0
+connection.ip-ping-addresses:           --
+connection.ip-ping-addresses-require-all:-1 (default)
+connection.metered:                     unknown
+connection.lldp:                        default
+connection.mdns:                        -1 (default)
+connection.llmnr:                       -1 (default)
+connection.dns-over-tls:                -1 (default)
+connection.mptcp-flags:                 0x0 (default)
+connection.wait-device-timeout:         -1
+connection.wait-activation-delay:       -1
+802-3-ethernet.port:                    --
+802-3-ethernet.speed:                   0
+802-3-ethernet.duplex:                  --
+802-3-ethernet.auto-negotiate:          no
+802-3-ethernet.mac-address:             --
+802-3-ethernet.cloned-mac-address:      --
+802-3-ethernet.generate-mac-address-mask:--
+802-3-ethernet.mac-address-denylist:    --
+802-3-ethernet.mtu:                     auto
+802-3-ethernet.s390-subchannels:        --
+802-3-ethernet.s390-nettype:            --
+802-3-ethernet.s390-options:            --
+802-3-ethernet.wake-on-lan:             default
+802-3-ethernet.wake-on-lan-password:    --
+802-3-ethernet.accept-all-mac-addresses:-1 (default)
+ipv4.method:                            auto
+ipv4.dns:                               --
+ipv4.dns-search:                        --
+ipv4.dns-options:                       --
+ipv4.dns-priority:                      0
+ipv4.addresses:                         --
+ipv4.gateway:                           --
+ipv4.routes:                            --
+ipv4.route-metric:                      -1
+ipv4.route-table:                       0 (unspec)
+ipv4.routing-rules:                     --
+ipv4.replace-local-rule:                -1 (default)
+ipv4.dhcp-send-release:                 -1 (default)
+ipv4.routed-dns:                        -1 (default)
+ipv4.ignore-auto-routes:                no
+ipv4.ignore-auto-dns:                   no
+ipv4.dhcp-client-id:                    --
+ipv4.dhcp-iaid:                         --
+ipv4.dhcp-dscp:                         --
+ipv4.dhcp-timeout:                      0 (default)
+ipv4.dhcp-send-hostname-deprecated:     yes
+ipv4.dhcp-send-hostname:                -1 (default)
+ipv4.forwarding:                        -1 (default)
+ipv4.dhcp-hostname:                     --
+ipv4.dhcp-fqdn:                         --
+ipv4.dhcp-hostname-flags:               0x0 (none)
+ipv4.never-default:                     no
+ipv4.may-fail:                          yes
+ipv4.required-timeout:                  -1 (default)
+ipv4.dad-timeout:                       -1 (default)
+ipv4.dhcp-vendor-class-identifier:      --
+ipv4.dhcp-ipv6-only-preferred:          -1 (default)
+ipv4.link-local:                        0 (default)
+ipv4.dhcp-reject-servers:               --
+ipv4.auto-route-ext-gw:                 -1 (default)
+ipv4.shared-dhcp-range:                 --
+ipv4.shared-dhcp-lease-time:            0 (default)
+ipv6.method:                            auto
+ipv6.dns:                               --
+ipv6.dns-search:                        --
+ipv6.dns-options:                       --
+ipv6.dns-priority:                      0
+ipv6.addresses:                         --
+ipv6.gateway:                           --
+ipv6.routes:                            --
+ipv6.route-metric:                      -1
+ipv6.route-table:                       0 (unspec)
+ipv6.routing-rules:                     --
+ipv6.replace-local-rule:                -1 (default)
+ipv6.dhcp-send-release:                 -1 (default)
+ipv6.routed-dns:                        -1 (default)
+ipv6.ignore-auto-routes:                no
+ipv6.ignore-auto-dns:                   no
+ipv6.never-default:                     no
+ipv6.may-fail:                          yes
+ipv6.required-timeout:                  -1 (default)
+ipv6.ip6-privacy:                       -1 (default)
+ipv6.temp-valid-lifetime:               0 (default)
+ipv6.temp-preferred-lifetime:           0 (default)
+ipv6.addr-gen-mode:                     default
+ipv6.ra-timeout:                        0 (default)
+ipv6.mtu:                               auto
+ipv6.dhcp-pd-hint:                      --
+ipv6.dhcp-duid:                         --
+ipv6.dhcp-iaid:                         --
+ipv6.dhcp-timeout:                      0 (default)
+ipv6.dhcp-send-hostname-deprecated:     yes
+ipv6.dhcp-send-hostname:                -1 (default)
+ipv6.dhcp-hostname:                     --
+ipv6.dhcp-hostname-flags:               0x0 (none)
+ipv6.auto-route-ext-gw:                 -1 (default)
+ipv6.token:                             --
+proxy.method:                           none
+proxy.browser-only:                     no
+proxy.pac-url:                          --
+proxy.pac-script:                       --
+GENERAL.NAME:                           Wired connection 1
+GENERAL.UUID:                           c9d04120-2711-3a1f-b1e6-f3b2a93c6c0b
+GENERAL.DEVICES:                        enp4s0
+GENERAL.IP-IFACE:                       enp4s0
+GENERAL.STATE:                          activated
+GENERAL.DEFAULT:                        yes
+GENERAL.DEFAULT6:                       no
+GENERAL.SPEC-OBJECT:                    --
+GENERAL.VPN:                            no
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/ActiveConnection/2
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/Settings/2
+GENERAL.ZONE:                           --
+GENERAL.MASTER-PATH:                    --
 IP4.ADDRESS[1]:                         192.168.1.86/24
 IP4.GATEWAY:                            192.168.1.254
 IP4.ROUTE[1]:                           dst = 192.168.1.0/24, nh = 0.0.0.0, mt = 100
 IP4.ROUTE[2]:                           dst = 0.0.0.0/0, nh = 192.168.1.254, mt = 100
 IP4.DNS[1]:                             192.168.1.254
+DHCP4.OPTION[1]:                        dhcp_client_identifier = 01:3c:52:82:5b:48:8d
+DHCP4.OPTION[2]:                        dhcp_lease_time = 25200
+DHCP4.OPTION[3]:                        dhcp_server_identifier = 192.168.1.254
+DHCP4.OPTION[4]:                        domain_name_servers = 192.168.1.254
+DHCP4.OPTION[5]:                        expiry = 1780478911
+DHCP4.OPTION[6]:                        ip_address = 192.168.1.86
+DHCP4.OPTION[7]:                        requested_broadcast_address = 1
+DHCP4.OPTION[8]:                        requested_domain_name = 1
+DHCP4.OPTION[9]:                        requested_domain_name_servers = 1
+DHCP4.OPTION[10]:                       requested_domain_search = 1
+DHCP4.OPTION[11]:                       requested_host_name = 1
+DHCP4.OPTION[12]:                       requested_interface_mtu = 1
+DHCP4.OPTION[13]:                       requested_ms_classless_static_routes = 1
+DHCP4.OPTION[14]:                       requested_nis_domain = 1
+DHCP4.OPTION[15]:                       requested_nis_servers = 1
+DHCP4.OPTION[16]:                       requested_ntp_servers = 1
+DHCP4.OPTION[17]:                       requested_rfc3442_classless_static_routes = 1
+DHCP4.OPTION[18]:                       requested_root_path = 1
+DHCP4.OPTION[19]:                       requested_routers = 1
+DHCP4.OPTION[20]:                       requested_static_routes = 1
+DHCP4.OPTION[21]:                       requested_subnet_mask = 1
+DHCP4.OPTION[22]:                       requested_time_offset = 1
+DHCP4.OPTION[23]:                       requested_wpad = 1
+DHCP4.OPTION[24]:                       routers = 192.168.1.254
+DHCP4.OPTION[25]:                       subnet_mask = 255.255.255.0
 IP6.ADDRESS[1]:                         fe80::ecf:cb8f:4c25:b344/64
 IP6.GATEWAY:                            --
 IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 1024
 
-GENERAL.DEVICE:                         br-8e6116d13f52
-GENERAL.TYPE:                           bridge
-GENERAL.HWADDR:                         CA:4B:DC:94:63:DA
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          100 (connected (externally))
-GENERAL.CONNECTION:                     br-8e6116d13f52
-GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/6
-IP4.ADDRESS[1]:                         172.18.0.1/16
-IP4.GATEWAY:                            --
-IP4.ROUTE[1]:                           dst = 172.18.0.0/16, nh = 0.0.0.0, mt = 0
-IP6.ADDRESS[1]:                         fe80::c84b:dcff:fe94:63da/64
-IP6.GATEWAY:                            --
-IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
+#####
 
-GENERAL.DEVICE:                         lo
-GENERAL.TYPE:                           loopback
-GENERAL.HWADDR:                         00:00:00:00:00:00
-GENERAL.MTU:                            65536
-GENERAL.STATE:                          100 (connected (externally))
-GENERAL.CONNECTION:                     lo
-GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/1
-IP4.ADDRESS[1]:                         127.0.0.1/8
-IP4.GATEWAY:                            --
-IP6.ADDRESS[1]:                         ::1/128
-IP6.GATEWAY:                            --
+ipv4.method:                            auto
+ipv4.dns:                               --
+ipv4.dns-search:                        --
+ipv4.dns-options:                       --
+ipv4.dns-priority:                      0
+ipv4.addresses:                         --
+ipv4.gateway:                           --
+ipv4.routes:                            --
+ipv4.route-metric:                      -1
+ipv4.route-table:                       0 (unspec)
+ipv4.routing-rules:                     --
+ipv4.replace-local-rule:                -1 (default)
+ipv4.dhcp-send-release:                 -1 (default)
+ipv4.routed-dns:                        -1 (default)
+ipv4.ignore-auto-routes:                no
+ipv4.ignore-auto-dns:                   no
+ipv4.dhcp-client-id:                    --
+ipv4.dhcp-iaid:                         --
+ipv4.dhcp-dscp:                         --
+ipv4.dhcp-timeout:                      0 (default)
+ipv4.dhcp-send-hostname-deprecated:     yes
+ipv4.dhcp-send-hostname:                -1 (default)
+ipv4.forwarding:                        -1 (default)
+ipv4.dhcp-hostname:                     --
+ipv4.dhcp-fqdn:                         --
+ipv4.dhcp-hostname-flags:               0x0 (none)
+ipv4.never-default:                     no
+ipv4.may-fail:                          yes
+ipv4.required-timeout:                  -1 (default)
+ipv4.dad-timeout:                       -1 (default)
+ipv4.dhcp-vendor-class-identifier:      --
+ipv4.dhcp-ipv6-only-preferred:          -1 (default)
+ipv4.link-local:                        0 (default)
+ipv4.dhcp-reject-servers:               --
+ipv4.auto-route-ext-gw:                 -1 (default)
+ipv4.shared-dhcp-range:                 --
+ipv4.shared-dhcp-lease-time:            0 (default)
+ipv6.method:                            auto
+ipv6.dns:                               --
+ipv6.dns-search:                        --
+ipv6.dns-options:                       --
+ipv6.dns-priority:                      0
+ipv6.addresses:                         --
+ipv6.gateway:                           --
+ipv6.routes:                            --
+ipv6.route-metric:                      -1
+ipv6.route-table:                       0 (unspec)
+ipv6.routing-rules:                     --
+ipv6.replace-local-rule:                -1 (default)
+ipv6.dhcp-send-release:                 -1 (default)
+ipv6.routed-dns:                        -1 (default)
+ipv6.ignore-auto-routes:                no
+ipv6.ignore-auto-dns:                   no
+ipv6.never-default:                     no
+ipv6.may-fail:                          yes
+ipv6.required-timeout:                  -1 (default)
+ipv6.ip6-privacy:                       -1 (default)
+ipv6.temp-valid-lifetime:               0 (default)
+ipv6.temp-preferred-lifetime:           0 (default)
+ipv6.addr-gen-mode:                     default
+ipv6.ra-timeout:                        0 (default)
+ipv6.mtu:                               auto
+ipv6.dhcp-pd-hint:                      --
+ipv6.dhcp-duid:                         --
+ipv6.dhcp-iaid:                         --
+ipv6.dhcp-timeout:                      0 (default)
+ipv6.dhcp-send-hostname-deprecated:     yes
+ipv6.dhcp-send-hostname:                -1 (default)
+ipv6.dhcp-hostname:                     --
+ipv6.dhcp-hostname-flags:               0x0 (none)
+ipv6.auto-route-ext-gw:                 -1 (default)
+ipv6.token:                             --
 
-GENERAL.DEVICE:                         br-6c1bf06d7861
-GENERAL.TYPE:                           bridge
-GENERAL.HWADDR:                         C6:DE:24:A0:2D:42
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          100 (connected (externally))
-GENERAL.CONNECTION:                     br-6c1bf06d7861
-GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/5
-IP4.ADDRESS[1]:                         172.20.0.1/16
-IP4.GATEWAY:                            --
-IP4.ROUTE[1]:                           dst = 172.20.0.0/16, nh = 0.0.0.0, mt = 0
-IP6.GATEWAY:                            --
+#####
 
-GENERAL.DEVICE:                         docker0
-GENERAL.TYPE:                           bridge
-GENERAL.HWADDR:                         9E:EA:DD:14:4C:8C
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          100 (connected (externally))
-GENERAL.CONNECTION:                     docker0
-GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/4
-IP4.ADDRESS[1]:                         172.17.0.1/16
-IP4.GATEWAY:                            --
-IP4.ROUTE[1]:                           dst = 172.17.0.0/16, nh = 0.0.0.0, mt = 0
-IP6.GATEWAY:                            --
-
-GENERAL.DEVICE:                         virbr0
-GENERAL.TYPE:                           bridge
-GENERAL.HWADDR:                         52:54:00:8B:50:F3
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          100 (connected (externally))
-GENERAL.CONNECTION:                     virbr0
-GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/3
-IP4.ADDRESS[1]:                         192.168.122.1/24
-IP4.GATEWAY:                            --
-IP4.ROUTE[1]:                           dst = 192.168.122.0/24, nh = 0.0.0.0, mt = 0
-IP6.GATEWAY:                            --
-
-GENERAL.DEVICE:                         veth76f28fc
-GENERAL.TYPE:                           ethernet
-GENERAL.HWADDR:                         7E:C1:7D:DA:1C:3D
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          10 (unmanaged)
-GENERAL.CONNECTION:                     --
-GENERAL.CON-PATH:                       --
-WIRED-PROPERTIES.CARRIER:               on
-IP4.GATEWAY:                            --
-IP6.ADDRESS[1]:                         fe80::7cc1:7dff:feda:1c3d/64
-IP6.GATEWAY:                            --
-IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
-
-GENERAL.DEVICE:                         vethc424944
-GENERAL.TYPE:                           ethernet
-GENERAL.HWADDR:                         EA:21:2A:29:58:F8
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          10 (unmanaged)
-GENERAL.CONNECTION:                     --
-GENERAL.CON-PATH:                       --
-WIRED-PROPERTIES.CARRIER:               on
-IP4.GATEWAY:                            --
-IP6.ADDRESS[1]:                         fe80::e821:2aff:fe29:58f8/64
-IP6.GATEWAY:                            --
-IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
-
-GENERAL.DEVICE:                         vethf7912d4
-GENERAL.TYPE:                           ethernet
-GENERAL.HWADDR:                         6A:BD:CD:81:07:5A
-GENERAL.MTU:                            1500
-GENERAL.STATE:                          10 (unmanaged)
-GENERAL.CONNECTION:                     --
-GENERAL.CON-PATH:                       --
-WIRED-PROPERTIES.CARRIER:               on
-IP4.GATEWAY:                            --
-IP6.ADDRESS[1]:                         fe80::68bd:cdff:fe81:75a/64
-IP6.GATEWAY:                            --
-IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 256
+connection.id:                          Wired connection 1
+connection.uuid:                        c9d04120-2711-3a1f-b1e6-f3b2a93c6c0b
+connection.type:                        802-3-ethernet
+connection.interface-name:              enp4s0
+connection.autoconnect-priority:        -999
+connection.timestamp:                   1780453711
+ipv4.method:                            auto
+ipv6.method:                            auto
+GENERAL.NAME:                           Wired connection 1
+GENERAL.UUID:                           c9d04120-2711-3a1f-b1e6-f3b2a93c6c0b
+GENERAL.DEVICES:                        enp4s0
+GENERAL.IP-IFACE:                       enp4s0
+GENERAL.STATE:                          activated
+GENERAL.DEFAULT:                        yes
+GENERAL.DEFAULT6:                       no
+GENERAL.SPEC-OBJECT:                    --
+GENERAL.VPN:                            no
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/ActiveConnection/2
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/Settings/2
+GENERAL.ZONE:                           --
+GENERAL.MASTER-PATH:                    --
+IP4.ADDRESS[1]:                         192.168.1.86/24
+IP4.GATEWAY:                            192.168.1.254
+IP4.ROUTE[1]:                           dst = 192.168.1.0/24, nh = 0.0.0.0, mt = 100
+IP4.ROUTE[2]:                           dst = 0.0.0.0/0, nh = 192.168.1.254, mt = 100
+IP4.DNS[1]:                             192.168.1.254
+DHCP4.OPTION[1]:                        dhcp_client_identifier = 01:3c:52:82:5b:48:8d
+DHCP4.OPTION[2]:                        dhcp_lease_time = 25200
+DHCP4.OPTION[3]:                        dhcp_server_identifier = 192.168.1.254
+DHCP4.OPTION[4]:                        domain_name_servers = 192.168.1.254
+DHCP4.OPTION[5]:                        expiry = 1780478911
+DHCP4.OPTION[6]:                        ip_address = 192.168.1.86
+DHCP4.OPTION[7]:                        requested_broadcast_address = 1
+DHCP4.OPTION[8]:                        requested_domain_name = 1
+DHCP4.OPTION[9]:                        requested_domain_name_servers = 1
+DHCP4.OPTION[10]:                       requested_domain_search = 1
+DHCP4.OPTION[11]:                       requested_host_name = 1
+DHCP4.OPTION[12]:                       requested_interface_mtu = 1
+DHCP4.OPTION[13]:                       requested_ms_classless_static_routes = 1
+DHCP4.OPTION[14]:                       requested_nis_domain = 1
+DHCP4.OPTION[15]:                       requested_nis_servers = 1
+DHCP4.OPTION[16]:                       requested_ntp_servers = 1
+DHCP4.OPTION[17]:                       requested_rfc3442_classless_static_routes = 1
+DHCP4.OPTION[18]:                       requested_root_path = 1
+DHCP4.OPTION[19]:                       requested_routers = 1
+DHCP4.OPTION[20]:                       requested_static_routes = 1
+DHCP4.OPTION[21]:                       requested_subnet_mask = 1
+DHCP4.OPTION[22]:                       requested_time_offset = 1
+DHCP4.OPTION[23]:                       requested_wpad = 1
+DHCP4.OPTION[24]:                       routers = 192.168.1.254
+DHCP4.OPTION[25]:                       subnet_mask = 255.255.255.0
+IP6.ADDRESS[1]:                         fe80::ecf:cb8f:4c25:b344/64
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 1024
