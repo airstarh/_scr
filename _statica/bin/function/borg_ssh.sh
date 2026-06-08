@@ -57,3 +57,12 @@ borg_ssh() {
     # 1234
     ssh-add ~/.ssh/004
 }
+
+borg_sshsss() {
+    ssh sewa@saysimsim.ru
+}
+
+borg_sftpsss() {
+    mkdir -p ~/remote_alina_be
+    sshfs sewa@saysimsim.ru:/home/sewa/_A001/rep/ALINA_BE ~/remote_alina_be
+}
