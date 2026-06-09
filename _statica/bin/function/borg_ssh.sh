@@ -59,7 +59,7 @@ borg_ssh() {
 }
 
 borg_ssh_sss() {
-    ssh sewa@saysimsim.ru
+    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 sewa@saysimsim.ru
 }
 
 borg_sftp_sss() {
