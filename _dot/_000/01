@@ -1,14 +1,169 @@
-total 80
-drwxrwxrwx  4 www-data www-data  4096 Jun  8 15:27 .
-drwxrwxrwx 10 www-data www-data  4096 Jun  8 07:03 ..
--rwxrwxrwx  1 www-data www-data 15448 Jun  8 07:03 favicon.ico
--rwxrwxrwx  1 www-data www-data  3518 Jun  8 07:03 favicon.svg
--rwxrwxrwx  1 www-data www-data   640 Jun  8 07:03 index-env.php
--rwxrwxrwx  1 www-data www-data  1067 Jun  8 07:03 index.php
-drwxrwxrwx 10 www-data www-data  4096 Jun  8 07:03 kiss
--rwxrwxrwx  1 www-data www-data   299 Jun  8 07:03 manifest.json
--rwxrwxrwx  1 www-data www-data 20994 Jun  8 07:03 noimage.png
--rwxrwxrwx  1 www-data www-data    35 Jun  8 07:03 notext.txt
--rwxrwxrwx  1 www-data www-data    65 Jun  8 07:03 robots.txt
-drwxrwxrwx  3 root     root      4096 Jun  8 15:27 uploads
-sewa@borg-002:~/_A001/rep/ALINA_BE$
+Current really working docker config.
+file: dc.yml
+```
+x-vol-nginx: &vol-nginx
+  # PHP FAST CGI
+  - ./server/etc/nginx/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
+  # NGINX CONF
+  - ./server/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  - ./server/etc/nginx/conf.d/:/etc/nginx/conf.d/:rw
+  # LETSECTYPT, CERTS
+  - ./server/etc/letsencrypt/:/etc/letsencrypt/
+  - ./server/srv/sewa/:/srv/sewa/:ro
+  # LOG
+  - ./server/var/log/nginx/:/var/log/nginx/:rw
+  - ./server/var/log/letsencrypt/:/var/log/letsencrypt/:rw
+  # WEB
+  - ./server/var/www/:/var/www/:rw
+  - ./server/var/www/certbot/:/var/www/certbot/:rw
+
+services:
+  nginx:
+    restart: unless-stopped
+    env_file: .env
+    container_name: alina_nginx
+    build: ./docker/nginx
+    command: nginx -g "daemon off;"
+    links:
+      - php
+    ports:
+      - "50080:80"
+      - "50443:443"
+    volumes: *vol-nginx
+    depends_on:
+      - php
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETUID
+      - SETGID
+      - FOWNER
+      - KILL
+
+  php:
+    restart: unless-stopped
+    env_file: .env
+    container_name: alina_php
+    build: ./docker/php
+    links:
+      - mysql
+    expose:
+      - "9000"
+      - "9001"
+    volumes:
+      # php.ini
+      - ./server/usr/local/etc/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./server/var/log/php/:/var/log/php/:rw
+      ###- ./server/usr/local/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      # /var/www
+      - ./server/var/www/:/var/www/:rw
+      # ALINA framework
+      - ./server/srv/:/srv/:rw
+    working_dir: /srv/alina
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETUID
+      - SETGID
+    read_only: true
+    tmpfs:
+      - /tmp
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    restart: unless-stopped
+    env_file: .env
+    image: mysql:8.0.27
+    container_name: alina_mysql
+    command:
+      - --innodb-buffer-pool-size=2G
+      - --innodb-log-file-size=512M
+      - --innodb-flush-log-at-trx-commit=0
+      - --sync-binlog=0
+      - --innodb-flush-method=O_DIRECT
+      - --innodb-io-capacity=2000
+      - --max-allowed-packet=1G
+      - --skip-log-bin
+    ports:
+      - "53306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - ./database/mysql/:/var/lib/mysql/
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETUID
+      - SETGID
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/mysqld
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+      interval: 10s
+      start_period: 30s
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: alina_certbot
+    depends_on:
+      - nginx
+    volumes: *vol-nginx
+
+```
+
+here is dc.prod.yml:
+```
+services:
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"
+
+  mysql:
+    ports:
+      - "53306:3306"
+
+```
+
+Here the command I request certificates;
+file: a.prod.cert.sh
+```
+#! /bin/bash
+
+docker compose \
+  -f dc.yml \
+  -f dc.prod.yml \
+  run --rm \
+  certbot \
+  certonly \
+  --webroot \
+  --webroot-path=/var/www/certbot \
+  --email vsevolod.azovsky@gmail.com \
+  --agree-tos \
+  --no-eff-email \
+  -d saysimsim.ru \
+  -d mironova45a.ru \
+  -d ospl1942.ru \
+  -d stage.saysimsim.ru \
+
+# docker compose -f dc.yml exec nginx nginx -s reload
+```
+
+Does this command restart containers?
