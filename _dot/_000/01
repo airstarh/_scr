@@ -1,4 +1,5 @@
 sudo cp -rf --no-preserve=mode,ownership,timestamps /var/www/chat/* /home/sewa/_A001/rep/ALINA_BE/server/var/www/chat/
 sudo mv -rf --no-preserve=mode,ownership,timestamps /var/www/saysimsim.ru/uploads/* /home/sewa/_A001/rep/ALINA_BE/server/var/www/saysimsim.ru/uploads/
 git rm -r --cached ./server/var/www/chat
-
+вувуву
+docker exec -it alina_mysql mysql -u root -p"qwaszxQWASZX!@123456789"
