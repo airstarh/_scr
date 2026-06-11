@@ -1,2 +1,45 @@
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+CONSTANTS RETRIEVED
+
+
+sending incremental file list
+rsync: [generator] failed to set times on "/home/qqq/_A001/rep/ALINA_BE/server/var/www/zero.home/.": Operation not permitted (1)
+*deleting   zzz
+.d..t...... ./
+>f.st...... index.php
+
+sent 2,635 bytes  received 62 bytes  5,394.00 bytes/sec
+total size is 6,368,977  speedup is 2,361.50
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1356) [sender=3.4.1]
+sending incremental file list
+rsync: [generator] failed to set times on "/home/qqq/_A001/rep/ALINA_BE/server/var/www/stage/.": Operation not permitted (1)
+*deleting   zzz
+.d..t...... ./
+
+sent 1,598 bytes  received 39 bytes  3,274.00 bytes/sec
+total size is 6,370,531  speedup is 3,891.59
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1356) [sender=3.4.1]
+sending incremental file list
+rsync: [generator] failed to set times on "/home/qqq/_A001/rep/ALINA_BE/server/var/www/saysimsim.ru/.": Operation not permitted (1)
+*deleting   zzz
+.d..t...... ./
+
+sent 1,795 bytes  received 45 bytes  3,680.00 bytes/sec
+total size is 6,350,805  speedup is 3,451.52
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1356) [sender=3.4.1]
+sending incremental file list
+rsync: [generator] failed to set times on "/home/qqq/_A001/rep/ALINA_BE/server/var/www/m45a/.": Operation not permitted (1)
+*deleting   zzz
+.d..t...... ./
+
+sent 1,731 bytes  received 40 bytes  3,542.00 bytes/sec
+total size is 6,705,491  speedup is 3,786.27
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1356) [sender=3.4.1]
+sending incremental file list
+rsync: [generator] failed to set times on "/home/qqq/_A001/rep/ALINA_BE/server/var/www/vov/.": Operation not permitted (1)
+*deleting   zzz
+.d..t...... ./
+
+sent 1,735 bytes  received 44 bytes  3,558.00 bytes/sec
+total size is 6,512,498  speedup is 3,660.76
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1356) [sender=3.4.1]
