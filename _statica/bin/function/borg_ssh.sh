@@ -63,9 +63,9 @@ borg_ssh_sss() {
 }
 
 borg_sftp_sss() {
-    mkdir -p ~/remote_alina_be
     sshfs \
-        -o allow_other,uid=$(id -u),gid=$(id -g),reconnect,IdentityFile=~/.ssh/id_rsa \
-        sewa@saysimsim.ru:/home/sewa/_A001/rep/ALINA_BE \
-        ~/remote_alina_be
+    -o allow_other,idmap=user,reconnect,IdentityFile=~/.ssh/id_rsa \
+    sewa@saysimsim.ru:/home/sewa/_A001/rep/ALINA_BE \
+    ~/remote_alina_be
+
 }

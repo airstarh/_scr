@@ -1,0 +1,36 @@
+Infrastructure:
+
+!!! TIME_ZONE aming all services
+docker exec alina_php date
+
+
+
+
+
+    php
+        php.ini date.timezone = Europe/Moscow
+    mysql
+        docker exec -it alina_mysql mysql -u root -p -e "SELECT NOW() AS current_datetime;"
+
+!!! LOGs among all services
+!!! FILE PERMISSIONS / OWNERS
+
+nginx
+    certificates
+mysql
+    SECURITY db credentials
+    SECURITY connection from home
+    backup/restore
+    !!! install
+    !!! update structure
+php
+    modes
+        mode PROD
+        mode DEV
+        mode MAINTAIN
+    404/403 HTTP CODES
+    uploads
+    database exception
+docker
+    dev/prod
+    perms
