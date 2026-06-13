@@ -1,2 +1,3 @@
-docker compose -f dc.yml -f dc.dev.yml run --rm php-cs-fixer fix server/srv/alina/Utils/Data.php --dry-run --diff --cache-file=/tmp/.php-cs-fixer.cache --allow-risky=yes
-docker compose -f dc.yml -f dc.dev.yml run --rm php-cs-fixer fix server/srv/alina/Utils/Data.php --diff --cache-file=/tmp/.php-cs-fixer.cache --allow-risky=yes
+docker compose -f dc.yml -f dc.dev.yml run --rm php-cs-fixer fix server/srv/alina --cache-file=/tmp/.php-cs-fixer.cache --allow-risky=yes
+docker compose -f dc.yml -f dc.dev.yml run --rm php-cs-fixer fix server/srv/alina_consumers --cache-file=/tmp/.php-cs-fixer.cache --allow-risky=yes
+docker compose -f dc.yml -f dc.dev.yml run --rm php-cs-fixer fix server/var/www --cache-file=/tmp/.php-cs-fixer.cache --allow-risky=yes
