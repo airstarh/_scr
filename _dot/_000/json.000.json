@@ -1,66 +1,96 @@
-[
-    {
-        "Id": "sha256:6f77fbed47f99c5c7e9dc0f4e15c0a4fc243b9d4e28f17ef8a01105b5887d93e",
-        "RepoTags": [
-            "ghcr.io/motioneye-project/motioneye:0.44.0b2"
-        ],
-        "RepoDigests": [
-            "ghcr.io/motioneye-project/motioneye@sha256:6f77fbed47f99c5c7e9dc0f4e15c0a4fc243b9d4e28f17ef8a01105b5887d93e"
-        ],
-        "Comment": "buildkit.dockerfile.v0",
-        "Created": "2026-05-23T15:28:26.39578581Z",
-        "Config": {
-            "ExposedPorts": {
-                "8765/tcp": {}
-            },
-            "Env": [
-                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-            ],
-            "Entrypoint": [
-                "/entrypoint.sh"
-            ],
-            "Volumes": {
-                "/etc/motioneye": {},
-                "/var/lib/motioneye": {}
-            },
-            "Labels": {
-                "maintainer": "Marcus Klein <himself@kleini.org>",
-                "org.opencontainers.image.created": "2026-05-23T15:27:13.956Z",
-                "org.opencontainers.image.description": "A web frontend for the motion daemon.",
-                "org.opencontainers.image.licenses": "GPL-3.0",
-                "org.opencontainers.image.revision": "ca23eb2abc72c4fbe9760c52401dd3fec5fc0911",
-                "org.opencontainers.image.source": "https://github.com/motioneye-project/motioneye",
-                "org.opencontainers.image.title": "motioneye",
-                "org.opencontainers.image.url": "https://github.com/motioneye-project/motioneye",
-                "org.opencontainers.image.version": "0.44.0b2"
-            }
-        },
-        "Architecture": "amd64",
-        "Os": "linux",
-        "Size": 261564815,
-        "RootFS": {
-            "Type": "layers",
-            "Layers": [
-                "sha256:219a998c60509502b47b97f1158067d5dd62640d2d689560d32cfd5594f6bc40",
-                "sha256:0c3e7dc51e816490c132193c13131bc5ace57e0e3cca6f1e10d7fd7d67f2a249",
-                "sha256:d29b9334f2b95bfef5b9f37cb82b4d684df04688c0fb0a4d578877f5f9f6d952",
-                "sha256:42be5e3162761333e197e03ea4eb73859ab83df181932e135840c5c58f10bdda"
-            ]
-        },
-        "Metadata": {
-            "LastTagTime": "2026-05-26T15:17:29.918152596Z"
-        },
-        "Descriptor": {
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "digest": "sha256:6f77fbed47f99c5c7e9dc0f4e15c0a4fc243b9d4e28f17ef8a01105b5887d93e",
-            "size": 3140
-        },
-        "Identity": {
-            "Pull": [
-                {
-                    "Repository": "ghcr.io/motioneye-project/motioneye"
-                }
-            ]
-        }
+{
+    "DOMAIN": "www.mironova45a.ru:443",
+    "URL_PATH": "\/wp-json\/gravitysmtp\/v1\/tests\/mock-data",
+    "METHOD": "GET",
+    "AJAX": false,
+    "QUERY_STRING": "alinapath=\/wp-json\/gravitysmtp\/v1\/tests\/mock-data&page=gravitysmtp-settings",
+    "IP": "45.148.10.13",
+    "BROWSER": "Mozilla\/5.0 (compatible; SecurityResearch\/1.0; )",
+    "BROWSER_enc": "3bbdcb41ee6f13e370818cd6cfa69903",
+    "LANGUAGE": "en",
+    "GET": {
+        "alinapath": "\/wp-json\/gravitysmtp\/v1\/tests\/mock-data",
+        "page": "gravitysmtp-settings"
+    },
+    "POST": {},
+    "HEADERS": {
+        "Connection": "close",
+        "Accept-Encoding": "gzip",
+        "Referer": "http:\/\/www.mironova45a.ru\/wp-json\/gravitysmtp\/v1\/tests\/mock-data?page=gravitysmtp-settings",
+        "User-Agent": "Mozilla\/5.0 (compatible; SecurityResearch\/1.0; )",
+        "Host": "www.mironova45a.ru:443",
+        "X-Forwarded-Proto": "https",
+        "X-Real-Ip": "45.148.10.13",
+        "X-Forwarded-For": "45.148.10.13",
+        "Content-Length": "",
+        "Content-Type": ""
+    },
+    "SERVER": {
+        "HOSTNAME": "272bfe1efc0b",
+        "PHP_VERSION": "7.4.33",
+        "PHP_INI_DIR": "\/usr\/local\/etc\/php",
+        "CREATOR": "VSEVOLOD_AZOVSKY",
+        "GPG_KEYS": "42670A7FE4D0441C8E4632349E4FDC074A4EF02D 5A52880781F755608BF815FC910DEB46F53EA312",
+        "PHP_LDFLAGS": "-Wl,-O1 -pie",
+        "PWD": "\/srv\/alina",
+        "MYSQL_ROOT_PASSWORD": "NewDbPassword@1234567890",
+        "TZ": "Europe\/Moscow",
+        "MYSQL_HOST_1": "mysql",
+        "MYSQL_PASSWORD": "new_borg_password_!@1234",
+        "MYSQL_USER": "borg_user",
+        "HOME": "\/var\/www",
+        "PMA_PORT": "3306",
+        "PHP_SHA256": "924846abf93bc613815c55dd3f5809377813ac62a9ec4eb3778675b82a27b927",
+        "PHPIZE_DEPS": "autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+        "PHP_URL": "https:\/\/www.php.net\/distributions\/php-7.4.33.tar.xz",
+        "SHLVL": "0",
+        "PHP_CFLAGS": "-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+        "MYSQL_DATABASE": "borg_db",
+        "PMA_ARBITRARY": "1",
+        "PATH": "\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin",
+        "PHP_ASC_URL": "https:\/\/www.php.net\/distributions\/php-7.4.33.tar.xz.asc",
+        "PMA_HOST": "mysql",
+        "PHP_CPPFLAGS": "-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+        "USER": "www-data",
+        "HTTP_CONNECTION": "close",
+        "HTTP_ACCEPT_ENCODING": "gzip",
+        "HTTP_REFERER": "http:\/\/www.mironova45a.ru\/wp-json\/gravitysmtp\/v1\/tests\/mock-data?page=gravitysmtp-settings",
+        "HTTP_USER_AGENT": "Mozilla\/5.0 (compatible; SecurityResearch\/1.0; )",
+        "HTTP_HOST": "www.mironova45a.ru:443",
+        "HTTP_X_FORWARDED_PROTO": "https",
+        "HTTP_X_REAL_IP": "45.148.10.13",
+        "HTTP_X_FORWARDED_FOR": "45.148.10.13",
+        "REDIRECT_STATUS": "200",
+        "PATH_TRANSLATED": "\/var\/www\/m45a",
+        "PATH_INFO": "",
+        "SCRIPT_FILENAME": "\/var\/www\/m45a\/index.php",
+        "SERVER_NAME": "mironova45a.ru",
+        "SERVER_PORT": "443",
+        "SERVER_ADDR": "172.19.0.4",
+        "REMOTE_PORT": "50808",
+        "REMOTE_ADDR": "45.148.10.13",
+        "SERVER_SOFTWARE": "nginx\/1.20.2",
+        "GATEWAY_INTERFACE": "CGI\/1.1",
+        "HTTPS": "on",
+        "REQUEST_SCHEME": "https",
+        "SERVER_PROTOCOL": "HTTP\/1.1",
+        "DOCUMENT_ROOT": "\/var\/www\/m45a",
+        "DOCUMENT_URI": "\/index.php",
+        "REQUEST_URI": "\/wp-json\/gravitysmtp\/v1\/tests\/mock-data?page=gravitysmtp-settings",
+        "SCRIPT_NAME": "\/index.php",
+        "CONTENT_LENGTH": "",
+        "CONTENT_TYPE": "",
+        "REQUEST_METHOD": "GET",
+        "QUERY_STRING": "alinapath=\/wp-json\/gravitysmtp\/v1\/tests\/mock-data&page=gravitysmtp-settings",
+        "FCGI_ROLE": "RESPONDER",
+        "PHP_SELF": "\/index.php",
+        "REQUEST_TIME_FLOAT": 1781834603.856258,
+        "REQUEST_TIME": 1781834603
+    },
+    "COOKIE": {},
+    "FILES": {},
+    "R": {
+        "alinapath": "\/wp-json\/gravitysmtp\/v1\/tests\/mock-data",
+        "page": "gravitysmtp-settings"
     }
-]
+}
