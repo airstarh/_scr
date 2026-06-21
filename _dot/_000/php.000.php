@@ -238,6 +238,7 @@ class _BaseAlinaModel
 
     public function upsertByUniqueFields($data, ?array $uniqueKeys = null)
     {
+        sprintf('ASD %s asd %s', 'aaa', 'bbb');
         $data = Data::toObject($data);
         $data = Data::mergeObjects($this->attributes, $data);
 
