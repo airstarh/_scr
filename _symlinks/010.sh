@@ -1,42 +1,49 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
-SWAP_FILE="/swapfile"
+USER_NAME="qqq"
+OSA_BASE="/osa"
 
-if [ ! -f "\$SWAP_FILE" ]; then
-    echo "Файл \$SWAP_FILE не найден. Завершаем работу."
-    exit 0
-fi
+check_mount() {
+    local target="$1"
+    if mountpoint -q "$target"; then
+        echo "[OK] $target is already bound to another mount point"
+        return 0
+    else
+        echo "[MISSING] $target is NOT bound yet"
+        return 1
+    fi
+}
 
-echo "Обнаружен swap-файл: \$SWAP_FILE"
+echo "=== Checking current bind mounts ==="
 
-# Отключаем swap для конкретного файла
-if sudo swapoff "\$SWAP_FILE"; then
-    echo "Swap-файл успешно отключен."
-else
-    echo "Не удалось отключить swap-файл. Проверьте права или состояние системы."
-    exit 1
-fi
+# Snap
+check_mount "/var/lib/snapd"
+check_mount "/var/cache/snapd"
 
-# Создаем резервную копию fstab
-sudo cp /etc/fstab /etc/fstab.bak.\$(date +%F-%H%M%S)
+# APT
+check_mount "/var/lib/apt"
 
-# Удаляем из fstab только строку, содержащую именно /swapfile
-# Используем якоря и экранирование, чтобы не затронуть другие файлы (например, /osa/swapfile)
-if sudo sed -i '/^[[:space:]]*\/swapfile[[:space:]]/d' /etc/fstab; then
-    echo "Запись о swap-файле удалена из /etc/fstab."
-else
-    echo "Не удалось отредактировать /etc/fstab. Проверьте файл вручную."
-fi
+# User dirs (redundant if /home is already fully bound, but we check anyway)
+check_mount "/home/${USER_NAME}/Downloads"
+check_mount "/home/${USER_NAME}/tmp"
 
-# Проверка: убеждаемся, что файл все еще существует (мы его не удаляли), но не активен
-if [ -f "\$SWAP_FILE" ]; then
-    echo "Файл \$SWAP_FILE сохранен на диске, но отключен."
-else
-    echo "Файл \$SWAP_FILE не найден (возможно, был удален ранее)."
-fi
+echo ""
+echo "=== Summary of your existing /osa binds (from mount) ==="
+mount | grep "^${OSA_BASE}/" | while read -r line; do
+    echo "$line"
+done
 
-# Финальная проверка статуса swap
-echo "Текущий статус swap:"
-swapon --show
+echo ""
+echo "=== Quick size check for key dirs on root FS (if not bound) ==="
+for dir in /var/lib/snapd /var/cache/snapd /var/lib/apt; do
+    if ! mountpoint -q "$dir"; then
+        if [ -d "$dir" ]; then
+            du -sh "$dir" 2>/dev/null || echo "$dir: size check failed"
+        else
+            echo "$dir: directory does not exist"
+        fi
+    else
+        echo "$dir: already bound (size skipped)"
+    fi
+done
