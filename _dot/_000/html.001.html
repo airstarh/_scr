@@ -1,121 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Chat Window</title>
+    <style>
+      /* ===== RESET & BASE ===== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<!DOCTYPE html>
-<html lang="en" style="background-color: #343a40; color: #fff;">
-<head>
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();
-   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+      html,
+      body {
+        height: 100%;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          sans-serif;
+        background: #f0f2f5;
+      }
 
-   ym(91541361, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/91541361" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter --><meta name="mobile-web-app-capable" content="yes">
-<link rel="manifest" href="/manifest.json"/>
-<link
-    rel="ic
-    on" href="/favicon.svg"
-    >
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Хутор Красно-Ореховое"/>
-<title>Хутор Красно-Ореховое</title>
-    <link rel="alternate" href="https://ospl1942.ru/root/frontend/#/tale/upsert/10"/>
-    <link rel="canonical" href="https://ospl1942.ru/tale/upsert/10"/>
-<meta property="og:description" content="С июля 1942 г. по декабрь 1942г. на линии фронта противостояния итало-немецких и советских войск. На"/>
-<!--CSS-->
-<link rel="stylesheet" href="/kiss/their.bootstrap/jquery-ui.css">
-<link rel="stylesheet" href="/kiss/their.bootstrap/bootstrap.css">
-<link rel="stylesheet" href="/kiss/their.ck/index.css">
-<link rel="stylesheet" href="/kiss/alina.css/index.css">
-<link rel="stylesheet" href="/kiss/alina.css.specific/index.css">
-<!--JS-->
-<script defer src="/kiss/their.bootstrap/jquery.js"></script>
-<script defer src="/kiss/their.bootstrap/jquery-ui.js"></script>
-<script defer src="/kiss/their.bootstrap/popper.js"></script>
-<script defer src="/kiss/their.bootstrap/bootstrap.js"></script>
-<script defer src="/kiss/alina.js/alina-js-collector.php"></script>
+      /* ===== CHAT CONTAINER ===== */
+      .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
 
-</head>
-<body id="alina-real-body" class="alina-main-bg alina-main-txt">
-<div class="alina-flex-vertical-container alina-vh-100">
-    <div class="alina-flex-vertical-header">
+      /* ===== HEADER ===== */
+      .chat-header {
+        flex: 0 0 auto;
+        padding: 16px 20px;
+        background: #075e54;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid #054740;
+      }
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Осетровский плацдарм</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
-    </div>
-    <div class="alina-flex-vertical-content">
-                <div class="container p-0">
-            <div class="row no-gutters">
-            <div class="col mb-3 mt-3" style="position: relative">
-                <h1 class="notranslate m-0 p-3 text-left rounded alina-tale-header corporate-bg-gradient">
-                    <a
-                        href="/root/frontend/#/tale/upsert/10"
-                        class="m-0"
-                    >Хутор Красно-Ореховое</a>
-                </h1>
-                            </div>
+      .chat-header h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .chat-header .status {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-left: auto;
+      }
+
+      /* ===== MESSAGES AREA ===== */
+      .messages {
+        flex: 1 1 auto;
+        min-height: 0; /* CRITICAL: allows scrolling */
+        padding: 16px 20px;
+        overflow-y: auto;
+        background: #ece5dd;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* Message bubbles */
+      .message {
+        max-width: 70%;
+        padding: 8px 12px;
+        border-radius: 8px;
+        word-wrap: break-word;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .message.received {
+        align-self: flex-start;
+        background: white;
+        color: #303030;
+        border-bottom-left-radius: 2px;
+      }
+
+      .message.sent {
+        align-self: flex-end;
+        background: #dcf8c6;
+        color: #303030;
+        border-bottom-right-radius: 2px;
+      }
+
+      .message .time {
+        font-size: 10px;
+        opacity: 0.6;
+        margin-top: 4px;
+        text-align: right;
+      }
+
+      /* System messages */
+      .message.system {
+        align-self: center;
+        background: rgba(0, 0, 0, 0.05);
+        color: #666;
+        font-size: 12px;
+        padding: 4px 12px;
+        border-radius: 12px;
+        max-width: 90%;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Scrollbar styling */
+      .messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .messages::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .messages::-webkit-scrollbar-thumb {
+        background: #c1c7cd;
+        border-radius: 3px;
+      }
+
+      .messages::-webkit-scrollbar-thumb:hover {
+        background: #a0a7ae;
+      }
+
+      /* ===== INPUT AREA ===== */
+      .input-area {
+        flex: 0 0 auto;
+        display: flex;
+        gap: 8px;
+        padding: 12px 16px;
+        background: #f0f0f0;
+        border-top: 1px solid #ddd;
+        align-items: flex-end;
+      }
+
+      .input-area textarea {
+        flex: 1 1 auto;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        font-family: inherit;
+        font-size: 14px;
+        resize: none;
+        min-height: 44px;
+        max-height: 120px;
+        line-height: 1.5;
+        background: white;
+        transition: border-color 0.2s;
+      }
+
+      .input-area textarea:focus {
+        outline: none;
+        border-color: #075e54;
+        box-shadow: 0 0 0 3px rgba(7, 94, 84, 0.1);
+      }
+
+      .input-area textarea::placeholder {
+        color: #999;
+      }
+
+      .input-area button {
+        flex: 0 0 auto;
+        padding: 10px 24px;
+        background: #075e54;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        height: 44px;
+        min-width: 80px;
+      }
+
+      .input-area button:hover {
+        background: #054740;
+      }
+
+      .input-area button:active {
+        transform: scale(0.96);
+      }
+
+      .input-area button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 600px) {
+        .chat-container {
+          height: 100dvh;
+          max-width: 100%;
+          box-shadow: none;
+        }
+
+        .messages {
+          padding: 12px 14px;
+        }
+
+        .message {
+          max-width: 85%;
+          font-size: 14px;
+        }
+
+        .input-area {
+          padding: 8px 12px;
+          gap: 6px;
+        }
+
+        .input-area textarea {
+          font-size: 16px; /* Prevents iOS zoom */
+          padding: 8px 12px;
+          min-height: 40px;
+        }
+
+        .input-area button {
+          padding: 8px 16px;
+          height: 40px;
+          min-width: 60px;
+          font-size: 13px;
+        }
+
+        .chat-header h2 {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .message {
+          max-width: 92%;
+          font-size: 13px;
+          padding: 6px 10px;
+        }
+
+        .input-area textarea {
+          font-size: 14px;
+          padding: 6px 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== CHAT LAYOUT ===== -->
+    <div class="chat-container">
+      <!-- Header -->
+      <div class="chat-header">
+        <h2>💬 Chat</h2>
+        <span class="status">● Online</span>
+      </div>
+
+      <!-- Messages -->
+      <div
+        class="messages"
+        id="messages"
+      >
+        <!-- Messages will be added here dynamically -->
+        <div class="message received">
+          Hello! How can I help you?
+          <div class="time">10:30 AM</div>
         </div>
-        <!-- -->
-    <!-- -->
-    <!-- -->
-        <!-- -->
-    <!-- -->
-    <!-- -->
-    <div class="mt-1">&nbsp;</div>
-    <div class="row no-gutters">
-        <div class="col mx-auto">
-            <div>
-                <div class="row no-gutters">
-                    <div class="col">
-                        <div class="ck-content">
-                            <div class="notranslate">
-                                <p>С июля 1942 г. по декабрь 1942г. на линии фронта противостояния итало-немецких и советских войск. На стыке Юго-Западного и Воронежского фронтов.</p><p>За овладение хутором велись боевые действия:</p><p>- 24.08.1942г. - 2-я стрелковая рота 1-ой стрелковой дивизии;</p><p>- 06.09.1942г. – 1-я стрелковая дивизия;</p><p>- 11.09.1942г. – 3-й батальон 555 СП&nbsp; 127СД;</p><p>- 11.12.1942г. – 2-ой батальон 122 СП 41гв. СД;</p><p>- 12-16.12.1942г.- 1942г. на подступах к хутору удерживали плацдарм 2-ой батальон 604 СП 195 СД;</p><p>16.12.42- 17.12.42г. – 122 СП 41 гв. СД, 17 танковый корпус и 31 мотострелковая бригада выбили врага из укрепрайона</p><figure class="image"><img src="//ospl1942.ru/uploads/25/388457d15e25ddb31695bb6e0c430ede.png"></figure>                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                                <div class="mt-3">&nbsp;</div>
-                <div class="row no-gutters">
-                    <div class="col">
-                        <iframe
-                            class="AlinaIframe AlinaIframe-tale AlinaIframe-tale-10"
-                            src="/root/frontend/#/tale/upsert/10"
-                            width="100%"
-                            allowfullscreen
-                            frameborder="0"
-                            scrolling="no"
-                        ></iframe>
-                    </div>
-                </div>
-            </div>
+        <div class="message sent">
+          I need help with my account.
+          <div class="time">10:31 AM</div>
         </div>
-    </div>
-</div>
-    </div>
-    <div class="alina-flex-vertical-footer">
-        <div class="mt-5 alina-form p-5">
-    Мемориальный комплекс "Осетровский плацдарм"
-    <a href="https://oixm.ru/" target="_blank">
-        Острогожского историко-художественного музея им. И.Н. Крамского
-    </a>
-    <br>
-    Воронежская область, Верхнемамонский район, 720 км федеральной автомобильной дороги М4 «Дон».
-</div>
-    </div>
-</div>
+        <div class="message received">
+          Sure! What seems to be the issue?
+          <div class="time">10:32 AM</div>
+        </div>
+        <div class="message system">User joined the chat</div>
+      </div>
 
-</body>
+      <!-- Input Area -->
+      <div class="input-area">
+        <textarea
+          id="input"
+          rows="1"
+          placeholder="Type a message..."
+          autocomplete="off"
+        ></textarea>
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const messagesDiv = document.getElementById("messages");
+        const input = document.getElementById("input");
+        const sendBtn = document.getElementById("send-btn");
+
+        // Auto-resize textarea
+        input.addEventListener("input", () => {
+          input.style.height = "auto";
+          input.style.height = Math.min(input.scrollHeight, 120) + "px";
+        });
+
+        // Send message function
+        function sendMessage() {
+          const text = input.value.trim();
+          if (!text) return;
+
+          // Add message to chat
+          addMessage(text, "sent");
+
+          // Clear input
+          input.value = "";
+          input.style.height = "auto";
+          input.focus();
+
+          // Simulate response (remove this in production)
+          setTimeout(() => {
+            addMessage("Thanks for your message!", "received");
+          }, 1000);
+        }
+
+        // Add message to chat
+        function addMessage(text, type = "received") {
+          const div = document.createElement("div");
+          div.className = `message ${type}`;
+
+          const now = new Date();
+          const timeStr = now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          div.innerHTML = `
+                    ${text}
+                    <div class="time">${timeStr}</div>
+                `;
+
+          messagesDiv.appendChild(div);
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Event listeners
+        sendBtn.addEventListener("click", sendMessage);
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+
+        // Focus input on load
+        input.focus();
+
+        // Example: Add system message
+        addMessage("Chat started", "system");
+      });
+    </script>
+  </body>
 </html>
+f

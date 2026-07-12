@@ -1,0 +1,1602 @@
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 102.38.24.28
+#> AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/531.2 (KHTML, like Gecko) Chrome/56.0.823.0 Safari/531.2
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/pm
+#>
+#> $_GET:
+#> {"alinapath":"\/pm"}
+#>
+#> $_POST:
+#> []
+#> MEM: 685 352 bytes
+#> AT 2026-07-08 12:54:48
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........102.38.24.28
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../pm
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayoutWide.php(16): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina/mvc/Controller/Pm.php(45): alina\\mvc\\View\\html->page(Array, \'_system/html/ht...\')
+#9 [internal function]: alina\\mvc\\Controller\\Pm->actionIndex()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(312): alina\\App->mvcControllerAction(\'\\\\alina\\\\mvc\\\\Cont...\', \'actionIndex\', Array)
+#12 /var/www/stage/index.php(25): alina\\App->mvcGo()
+#13 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 181.160.166.32
+#> AGENT: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_8_9; rv:1.9.2.20) Gecko/2017-10-25 12:26:27.431457 Firefox/3.8
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/tools/JsonSearchReplaceBeautify
+#>
+#> $_GET:
+#> {"alinapath":"\/tools\/JsonSearchReplaceBeautify"}
+#>
+#> $_POST:
+#> []
+#> MEM: 698 976 bytes
+#> AT 2026-07-08 12:54:49
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........181.160.166.32
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../tools/JsonSearchReplaceBeautify
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayoutWide.php(16): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina/mvc/Controller/Tools.php(85): alina\\mvc\\View\\html->page(Object(stdClass), \'_system/html/ht...\')
+#9 [internal function]: alina\\mvc\\Controller\\Tools->actionJsonSearchReplaceBeautify()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(312): alina\\App->mvcControllerAction(\'\\\\alina\\\\mvc\\\\Cont...\', \'actionJsonSearc...\', Array)
+#12 /var/www/stage/index.php(25): alina\\App->mvcGo()
+#13 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 112.202.248.210
+#> AGENT: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_7_4; rv:1.9.2.20) Gecko/4963-04-24 05:10:40.930176 Firefox/11.0
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/tools/JsonSearchReplaceBeautify
+#>
+#> $_GET:
+#> {"alinapath":"\/tools\/JsonSearchReplaceBeautify"}
+#>
+#> $_POST:
+#> []
+#> MEM: 697 760 bytes
+#> AT 2026-07-08 12:54:56
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........112.202.248.210
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../tools/JsonSearchReplaceBeautify
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayoutWide.php(16): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina/mvc/Controller/Tools.php(85): alina\\mvc\\View\\html->page(Object(stdClass), \'_system/html/ht...\')
+#9 [internal function]: alina\\mvc\\Controller\\Tools->actionJsonSearchReplaceBeautify()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(312): alina\\App->mvcControllerAction(\'\\\\alina\\\\mvc\\\\Cont...\', \'actionJsonSearc...\', Array)
+#12 /var/www/stage/index.php(25): alina\\App->mvcGo()
+#13 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 41.122.147.245
+#> AGENT: Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.0)
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/pm
+#>
+#> $_GET:
+#> {"alinapath":"\/pm"}
+#>
+#> $_POST:
+#> []
+#> MEM: 688 600 bytes
+#> AT 2026-07-08 12:54:58
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........41.122.147.245
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../pm
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayoutWide.php(16): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina/mvc/Controller/Pm.php(45): alina\\mvc\\View\\html->page(Array, \'_system/html/ht...\')
+#9 [internal function]: alina\\mvc\\Controller\\Pm->actionIndex()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(312): alina\\App->mvcControllerAction(\'\\\\alina\\\\mvc\\\\Cont...\', \'actionIndex\', Array)
+#12 /var/www/stage/index.php(25): alina\\App->mvcGo()
+#13 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 103.165.187.133
+#> AGENT: Opera/8.68.(Windows NT 6.2; yue-HK) Presto/2.9.189 Version/12.00
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/tools/JsonSearchReplaceBeautify
+#>
+#> $_GET:
+#> {"alinapath":"\/tools\/JsonSearchReplaceBeautify"}
+#>
+#> $_POST:
+#> []
+#> MEM: 697 504 bytes
+#> AT 2026-07-08 12:55:02
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........103.165.187.133
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../tools/JsonSearchReplaceBeautify
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayoutWide.php(16): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina/mvc/Controller/Tools.php(85): alina\\mvc\\View\\html->page(Object(stdClass), \'_system/html/ht...\')
+#9 [internal function]: alina\\mvc\\Controller\\Tools->actionJsonSearchReplaceBeautify()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(312): alina\\App->mvcControllerAction(\'\\\\alina\\\\mvc\\\\Cont...\', \'actionJsonSearc...\', Array)
+#12 /var/www/stage/index.php(25): alina\\App->mvcGo()
+#13 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 46.244.66.65
+#> AGENT: Opera/9.19.(Windows NT 5.1; szl-PL) Presto/2.9.178 Version/11.00
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/pm
+#>
+#> $_GET:
+#> {"alinapath":"\/pm"}
+#>
+#> $_POST:
+#> []
+#> MEM: 688 600 bytes
+#> AT 2026-07-08 12:55:03
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........46.244.66.65
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../pm
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayoutWide.php(16): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina/mvc/Controller/Pm.php(45): alina\\mvc\\View\\html->page(Array, \'_system/html/ht...\')
+#9 [internal function]: alina\\mvc\\Controller\\Pm->actionIndex()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(312): alina\\App->mvcControllerAction(\'\\\\alina\\\\mvc\\\\Cont...\', \'actionIndex\', Array)
+#12 /var/www/stage/index.php(25): alina\\App->mvcGo()
+#13 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/_lh_fa438d32
+#>
+#> $_GET:
+#> {"alinapath":"\/_lh_fa438d32"}
+#>
+#> $_POST:
+#> []
+#> MEM: 693 864 bytes
+#> AT 2026-07-08 14:46:47
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../_lh_fa438d32
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/_lh2_7e6b70b8.bak
+#>
+#> $_GET:
+#> {"alinapath":"\/_lh2_7e6b70b8.bak"}
+#>
+#> $_POST:
+#> []
+#> MEM: 692 648 bytes
+#> AT 2026-07-08 14:46:48
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../_lh2_7e6b70b8.bak
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/administrator/
+#>
+#> $_GET:
+#> {"alinapath":"\/administrator\/"}
+#>
+#> $_POST:
+#> []
+#> MEM: 692 592 bytes
+#> AT 2026-07-08 14:46:49
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../administrator/
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/wp-admin/
+#>
+#> $_GET:
+#> {"alinapath":"\/wp-admin\/"}
+#>
+#> $_POST:
+#> []
+#> MEM: 692 736 bytes
+#> AT 2026-07-08 14:46:49
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../wp-admin/
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/bitrix/admin/
+#>
+#> $_GET:
+#> {"alinapath":"\/bitrix\/admin\/"}
+#>
+#> $_POST:
+#> []
+#> MEM: 693 128 bytes
+#> AT 2026-07-08 14:46:50
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../bitrix/admin/
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/netcat/admin/
+#>
+#> $_GET:
+#> {"alinapath":"\/netcat\/admin\/"}
+#>
+#> $_POST:
+#> []
+#> MEM: 693 128 bytes
+#> AT 2026-07-08 14:46:50
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../netcat/admin/
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/umi/
+#>
+#> $_GET:
+#> {"alinapath":"\/umi\/"}
+#>
+#> $_POST:
+#> []
+#> MEM: 693 144 bytes
+#> AT 2026-07-08 14:46:50
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../umi/
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 72.56.157.67
+#> AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/phpMyAdmin/
+#>
+#> $_GET:
+#> {"alinapath":"\/phpMyAdmin\/"}
+#>
+#> $_POST:
+#> []
+#> MEM: 693 024 bytes
+#> AT 2026-07-08 14:46:50
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........72.56.157.67
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../phpMyAdmin/
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 13.49.224.12
+#> AGENT: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/phpinfo
+#>
+#> $_GET:
+#> {"alinapath":"\/phpinfo"}
+#>
+#> $_POST:
+#> []
+#> MEM: 710 144 bytes
+#> AT 2026-07-08 16:57:43
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........13.49.224.12
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../phpinfo
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 13.49.224.12
+#> AGENT: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/info
+#>
+#> $_GET:
+#> {"alinapath":"\/info"}
+#>
+#> $_POST:
+#> []
+#> MEM: 710 088 bytes
+#> AT 2026-07-08 16:57:44
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........13.49.224.12
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../info
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 13.49.224.12
+#> AGENT: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/_profiler/phpinfo
+#>
+#> $_GET:
+#> {"alinapath":"\/_profiler\/phpinfo"}
+#>
+#> $_POST:
+#> []
+#> MEM: 710 328 bytes
+#> AT 2026-07-08 16:57:44
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........13.49.224.12
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../_profiler/phpinfo
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 13.49.224.12
+#> AGENT: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/_environment
+#>
+#> $_GET:
+#> {"alinapath":"\/_environment"}
+#>
+#> $_POST:
+#> []
+#> MEM: 710 192 bytes
+#> AT 2026-07-08 16:57:44
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........13.49.224.12
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../_environment
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 13.49.224.12
+#> AGENT: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/webroot/index.php/_environment
+#>
+#> $_GET:
+#> {"alinapath":"\/webroot\/index.php\/_environment"}
+#>
+#> $_POST:
+#> []
+#> MEM: 710 592 bytes
+#> AT 2026-07-08 16:57:44
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........13.49.224.12
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../webroot/index.php/_environment
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+
+
+
+LOG STARTED ##########################################################################################
+#> GET
+#> FROM: 13.49.224.12
+#> AGENT: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+#>
+#> SERVER_NAME:stage.saysimsim.ru
+#> REQUEST_URI:/phpinfo.php.bak
+#>
+#> $_GET:
+#> {"alinapath":"\/phpinfo.php.bak"}
+#>
+#> $_POST:
+#> []
+#> MEM: 710 248 bytes
+#> AT 2026-07-08 16:57:44
+<h1> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> </h1>
+<pre>
+'IP...........13.49.224.12
+<br>
+DOMAIN.......stage.saysimsim.ru
+<br>
+URL_PATH...../phpinfo.php.bak
+<br>
+CLASS........ErrorException
+<br>
+SEVERITY.....E_WARNING
+<br>
+CODE.........0
+<br>
+FILE........./srv/alina/mvc/Model/CurrentUser.php
+<br>
+LINE.........320
+<br>
+
+<br>
+TEXT.........:
+<br>
+Undefined property: stdClass::$mail
+<br>
+
+<br>
+
+<br>
+TRACE........:
+<br>
+#0 /srv/alina/mvc/Model/CurrentUser.php(320): alina\\AppExceptionCatcher->error(2, \'Undefined prope...\', \'/srv/alina/mvc/...\', 320)
+#1 /srv/alina/mvc/template/_system/html/menu.php(18): alina\\mvc\\Model\\CurrentUser->name()
+#2 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#3 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', NULL)
+#4 /srv/alina/mvc/template/_system/html/htmlLayout.php(15): alina\\mvc\\View\\html->piece(\'/_system/html/m...\')
+#5 /srv/alina/Utils/Sys.php(541): require(\'/srv/alina/mvc/...\')
+#6 /srv/alina/mvc/View/html.php(95): alina\\Utils\\Sys::template(\'/srv/alina/mvc/...\', Object(alina\\mvc\\View\\html))
+#7 /srv/alina/mvc/View/html.php(83): alina\\mvc\\View\\html->piece(\'_system/html/ht...\', Object(alina\\mvc\\View\\html))
+#8 /srv/alina_consumers/stage/mvc/Controller/Main.php(21): alina\\mvc\\View\\html->page(Object(stdClass))
+#9 [internal function]: stage\\mvc\\Controller\\Main->action404()
+#10 /srv/alina/App.php(263): call_user_func_array(Array, Array)
+#11 /srv/alina/App.php(363): alina\\App->mvcControllerAction(\'\\\\stage\\\\mvc\\\\Cont...\', \'action404\')
+#12 /srv/alina/Router.php(68): alina\\App->mvcPageNotFound()
+#13 /srv/alina/Router.php(38): alina\\Router->processUrl()
+#14 /srv/alina/App.php(237): alina\\Router->firstStep()
+#15 /var/www/stage/index.php(25): alina\\App->defineRoute()
+#16 {main}
+<br>
+
+<br>
+'
+</pre>
+<h2> <<<<<<<<<<<<<<<<<<<< </h2>
+
+
+
+
+array (
+  0 => 'alina\\Utils\\Sys::getCallStack',
+  1 => 'alina\\Utils\\Sys::fDebug',
+  2 => 'alina\\AppExceptionCatcher->processError',
+  3 => 'alina\\AppExceptionCatcher->exception',
+)
+

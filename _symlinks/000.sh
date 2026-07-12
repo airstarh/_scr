@@ -1,54 +1,44 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OSA_BASE="/osa"
-USER_NAME="qqq"
+LOG=net-diag-$(date +%F_%H-%M-%S).log
+{
+  echo "=== Host Info ==="
+  uname -a
+  cat /etc/os-release | grep -E "^(NAME|VERSION|ID)="
+  echo
 
-# Map: source path -> relative path under /osa
-declare -A MAP
-MAP["/var/lib/snapd"]="/var/lib/snapd"
-MAP["/var/cache/snapd"]="/var/cache/snapd"
-MAP["/var/lib/apt"]="/var/lib/apt"
-MAP["/home/${USER_NAME}/Downloads"]="/home/${USER_NAME}/Downloads"
-MAP["/home/${USER_NAME}/tmp"]="/home/${USER_NAME}/tmp"
+  echo "=== DNS ==="
+  host getcomposer.org || echo "[host failed]"
+  nslookup getcomposer.org || echo "[nslookup failed]"
+  dig +short getcomposer.org || echo "[dig failed]"
+  echo
 
-for src in "${!MAP[@]}"; do
-    rel="${MAP[$src]}"
-    dst="${OSA_BASE}${rel}"
+  echo "=== TCP Connectivity ==="
+  echo "nc test:"
+  command -v nc >/dev/null && nc -vz getcomposer.org 443 || echo "nc not installed or failed"
+  echo
+  echo "curl TCP test (no TLS):"
+  curl -v --max-time 30 http://getcomposer.org:80/ 2>&1 || echo "[curl HTTP failed]"
+  echo
+  echo "curl TLS test:"
+  curl -v --max-time 30 https://getcomposer.org/ 2>&1 || echo "[curl HTTPS failed]"
+  echo
 
-    # Skip if already bound
-    if mountpoint -q "$src"; then
-        echo "[SKIP] $src is already bound."
-        continue
-    fi
+  echo "=== Proxies ==="
+  env | grep -iE 'proxy|http|https' || true
+  echo
 
-    # Skip if source doesn't exist
-    if [ ! -d "$src" ]; then
-        echo "[SKIP] $src does not exist."
-        continue
-    fi
+  echo "=== Routing ==="
+  ip route get 104.21.12.147  # IP getcomposer.org (может отличаться — см. DNS выше)
+  echo
 
-    echo "[PROCESS] $src -> $dst"
+  echo "=== Firewall (basic check) ==="
+  sudo ufw status 2>/dev/null || echo "ufw not installed"
+  echo
 
-    # Ensure destination directory exists on HDD
-    mkdir -p "$dst"
+  echo "=== End ==="
+} > "$LOG"
 
-    # If source is non-empty, move its contents
-    if [ -n "$(ls -A "$src" 2>/dev/null)" ]; then
-        mv "$src/"* "$dst"/
-    fi
-
-    # Bind-mount
-    mount --bind "$dst" "$src"
-    echo "[BIND] Mounted $dst on $src"
-done
-
-echo ""
-echo "=== To make permanent, add these lines to /etc/fstab (only for paths that were actually moved): ==="
-for src in "${!MAP[@]}"; do
-    rel="${MAP[$src]}"
-    dst="${OSA_BASE}${rel}"
-    if mountpoint -q "$src"; then
-        printf "%s  %s  none  bind  0  0\n" "$dst" "$src"
-    fi
-done
+echo "Saved to: $LOG"
+cat "$LOG"

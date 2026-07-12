@@ -1,337 +1,87 @@
-name: alina_be
-services:
-  certbot:
-    container_name: alina_certbot
-    depends_on:
-      nginx:
-        condition: service_started
-        required: true
-    image: certbot/certbot:latest
-    networks:
-      default: null
-    volumes:
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/nginx/fastcgi.conf
-        target: /etc/nginx/fastcgi.conf
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/nginx/nginx.conf
-        target: /etc/nginx/nginx.conf
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/nginx/conf.d
-        target: /etc/nginx/conf.d
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/letsencrypt
-        target: /etc/letsencrypt
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/srv/sewa
-        target: /srv/sewa
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/log/nginx
-        target: /var/log/nginx
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/log/letsencrypt
-        target: /var/log/letsencrypt
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/www
-        target: /var/www
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/www/certbot
-        target: /var/www/certbot
-        bind: {}
-  mysql:
-    cap_add:
-      - CHOWN
-      - DAC_OVERRIDE
-      - SETUID
-      - SETGID
-    cap_drop:
-      - ALL
-    command:
-      - --innodb-buffer-pool-size=1G
-      - --innodb-log-file-size=512M
-      - --innodb-flush-log-at-trx-commit=2
-      - --max-allowed-packet=64M
-      - --skip-log-bin
-      - --skip-name-resolve
-      - --table-open-cache=2000
-      - --tmp-table-size=64M
-      - --max-heap-table-size=64M
-      - --innodb-flush-neighbors=0
-      - --performance-schema=ON
-      - --log-error=/var/log/mysql/error.log
-      - --slow-query-log=1
-      - --slow-query-log-file=/var/log/mysql/slow.log
-      - --long-query-time=2
-      - --tls-version=TLSv1.2,TLSv1.3
-      - --max-execution-time=30000
-      - --connect-timeout=30
-      - --net-read-timeout=60
-      - --net-write-timeout=60
-      - --max-connections=100
-    container_name: alina_mysql
-    deploy:
-      resources:
-        limits:
-          cpus: 2
-          memory: "2147483648"
-    environment:
-      CREATOR: VSEVOLOD_AZOVSKY
-      MYSQL_DATABASE: borg_db
-      MYSQL_HOST_1: mysql
-      MYSQL_PASSWORD: new_borg_password_!@1234
-      MYSQL_ROOT_PASSWORD: NewDbPassword@1234567890
-      MYSQL_USER: borg_user
-      PMA_ARBITRARY: "1"
-      PMA_HOST: mysql
-      PMA_PORT: "3306"
-      TZ: Europe/Moscow
-    expose:
-      - "3306"
-    healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - -h
-        - localhost
-        - -u
-        - root
-        - -p$$MYSQL_ROOT_PASSWORD
-      timeout: 20s
-      interval: 10s
-      retries: 10
-      start_period: 40s
-    image: mysql:8.0.27
-    init: true
-    networks:
-      default: null
-    ports:
-      - mode: ingress
-        target: 3306
-        published: "53306"
-        protocol: tcp
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    tmpfs:
-      - /var/run/mysqld
-    volumes:
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/database/mysql
-        target: /var/lib/mysql
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/database/mysql-tmp
-        target: /tmp
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/log/mysql
-        target: /var/log/mysql
-        bind: {}
-  nginx:
-    build:
-      context: /home/qqq/_A001/rep/ALINA_BE/docker/nginx
-      dockerfile: Dockerfile
-    cap_add:
-      - NET_BIND_SERVICE
-      - CHOWN
-      - DAC_OVERRIDE
-      - SETUID
-      - SETGID
-      - FOWNER
-      - KILL
-    cap_drop:
-      - ALL
-    command:
-      - nginx
-      - -g
-      - daemon off;
-    container_name: alina_nginx
-    depends_on:
-      php:
-        condition: service_started
-        required: true
-    environment:
-      CREATOR: VSEVOLOD_AZOVSKY
-      MYSQL_DATABASE: borg_db
-      MYSQL_HOST_1: mysql
-      MYSQL_PASSWORD: new_borg_password_!@1234
-      MYSQL_ROOT_PASSWORD: NewDbPassword@1234567890
-      MYSQL_USER: borg_user
-      PMA_ARBITRARY: "1"
-      PMA_HOST: mysql
-      PMA_PORT: "3306"
-      TZ: Europe/Moscow
-    links:
-      - php
-    networks:
-      default: null
-    ports:
-      - mode: ingress
-        target: 80
-        published: "50080"
-        protocol: tcp
-      - mode: ingress
-        target: 443
-        published: "50443"
-        protocol: tcp
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/nginx/fastcgi.conf
-        target: /etc/nginx/fastcgi.conf
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/nginx/nginx.conf
-        target: /etc/nginx/nginx.conf
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/nginx/conf.d
-        target: /etc/nginx/conf.d
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/etc/letsencrypt
-        target: /etc/letsencrypt
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/srv/sewa
-        target: /srv/sewa
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/log/nginx
-        target: /var/log/nginx
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/log/letsencrypt
-        target: /var/log/letsencrypt
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/www
-        target: /var/www
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/www/certbot
-        target: /var/www/certbot
-        bind: {}
-  php:
-    build:
-      context: /home/qqq/_A001/rep/ALINA_BE/docker/php
-      dockerfile: Dockerfile
-      args:
-        INSTALL_XDEBUG: "true"
-    cap_add:
-      - SETUID
-      - SETGID
-    cap_drop:
-      - ALL
-    container_name: alina_php
-    depends_on:
-      mysql:
-        condition: service_healthy
-        required: true
-    environment:
-      CREATOR: VSEVOLOD_AZOVSKY
-      MYSQL_DATABASE: borg_db
-      MYSQL_HOST_1: mysql
-      MYSQL_PASSWORD: new_borg_password_!@1234
-      MYSQL_ROOT_PASSWORD: NewDbPassword@1234567890
-      MYSQL_USER: borg_user
-      PMA_ARBITRARY: "1"
-      PMA_HOST: mysql
-      PMA_PORT: "3306"
-      TZ: Europe/Moscow
-      XDEBUG_CLIENT_HOST: host.docker.internal
-      XDEBUG_CLIENT_PORT: "9003"
-      XDEBUG_MODE: develop
-      XDEBUG_START_WITH_REQUEST: "yes"
-    expose:
-      - "9000"
-      - "9001"
-    extra_hosts:
-      - host.docker.internal=host-gateway
-    links:
-      - mysql
-    networks:
-      default: null
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    tmpfs:
-      - /tmp
-    volumes:
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/usr/local/etc/php/php.ini
-        target: /usr/local/etc/php/php.ini
-        read_only: true
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/log/php
-        target: /var/log/php
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/www
-        target: /var/www
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/srv
-        target: /srv
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/usr/local/etc/php/conf.d
-        target: /usr/local/etc/php/conf.d
-        read_only: true
-        bind: {}
-    working_dir: /srv/alina
-  php-cs-fixer:
-    container_name: alina_php_cs_fixer
-    image: ghcr.io/php-cs-fixer/php-cs-fixer:3-php8.2
-    networks:
-      default: null
-    read_only: true
-    tmpfs:
-      - /tmp
-    user: "33:33"
-    volumes:
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/var/www
-        target: /apps/server/var/www
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/server/srv
-        target: /apps/server/srv
-        bind: {}
-      - type: bind
-        source: /home/qqq/_A001/rep/ALINA_BE/.php-cs-fixer.dist.php
-        target: /apps/.php-cs-fixer.dist.php
-        read_only: true
-        bind: {}
-    working_dir: /apps
-networks:
-  default:
-    name: alina_be_default
-x-vol-nginx:
-  - ./server/etc/nginx/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
-  - ./server/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  - ./server/etc/nginx/conf.d/:/etc/nginx/conf.d/:rw
-  - ./server/etc/letsencrypt/:/etc/letsencrypt/
-  - ./server/srv/sewa/:/srv/sewa/:ro
-  - ./server/var/log/nginx/:/var/log/nginx/:rw
-  - ./server/var/log/letsencrypt/:/var/log/letsencrypt/:rw
-  - ./server/var/www/:/var/www/:rw
-  - ./server/var/www/certbot/:/var/www/certbot/:rw
+Connection to getcomposer.org (57.128.19.244) 443 port [tcp/https] succeeded!
+Saved to: net-diag-2026-07-02_22-02-44.log
+=== Host Info ===
+Linux aaa 7.0.0-27-generic #27-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 18 19:13:49 UTC 2026 x86_64 GNU/Linux
+NAME="Ubuntu"
+VERSION="26.04 LTS (Resolute Raccoon)"
+ID=ubuntu
+
+=== DNS ===
+getcomposer.org has address 57.128.19.244
+getcomposer.org has IPv6 address 2001:41d0:304:300::18ef
+getcomposer.org mail is handled by 5 alt1.aspmx.l.google.com.
+getcomposer.org mail is handled by 5 alt2.aspmx.l.google.com.
+getcomposer.org mail is handled by 10 aspmx2.googlemail.com.
+getcomposer.org mail is handled by 10 aspmx4.googlemail.com.
+getcomposer.org mail is handled by 10 aspmx3.googlemail.com.
+getcomposer.org mail is handled by 1 aspmx.l.google.com.
+getcomposer.org mail is handled by 10 aspmx5.googlemail.com.
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	getcomposer.org
+Address: 57.128.19.244
+Name:	getcomposer.org
+Address: 2001:41d0:304:300::18ef
+
+57.128.19.244
+
+=== TCP Connectivity ===
+nc test:
+
+curl TCP test (no TLS):
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0* Host getcomposer.org:80 was resolved.
+* IPv6: 2001:41d0:304:300::18ef
+* IPv4: 57.128.19.244
+*   Trying [2001:41d0:304:300::18ef]:80...
+* Immediate connect fail for 2001:41d0:304:300::18ef: Network is unreachable
+*   Trying 57.128.19.244:80...
+* Established connection to getcomposer.org (57.128.19.244 port 80) from 192.168.1.86 port 59850 
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: getcomposer.org
+> User-Agent: curl/8.18.0
+> Accept: */*
+> 
+* Request completely sent off
+  0      0   0      0   0      0      0      0           00:01              0  0      0   0      0   0      0      0      0           00:02              0  0      0   0      0   0      0      0      0           00:03              0  0      0   0      0   0      0      0      0           00:04              0  0      0   0      0   0      0      0      0           00:05              0  0      0   0      0   0      0      0      0           00:06              0  0      0   0      0   0      0      0      0           00:07              0  0      0   0      0   0      0      0      0           00:08              0  0      0   0      0   0      0      0      0           00:09              0  0      0   0      0   0      0      0      0           00:10              0  0      0   0      0   0      0      0      0           00:11              0  0      0   0      0   0      0      0      0           00:12              0  0      0   0      0   0      0      0      0           00:13              0  0      0   0      0   0      0      0      0           00:14              0  0      0   0      0   0      0      0      0           00:15              0  0      0   0      0   0      0      0      0           00:16              0  0      0   0      0   0      0      0      0           00:17              0  0      0   0      0   0      0      0      0           00:18              0  0      0   0      0   0      0      0      0           00:19              0  0      0   0      0   0      0      0      0           00:20              0  0      0   0      0   0      0      0      0           00:21              0  0      0   0      0   0      0      0      0           00:22              0  0      0   0      0   0      0      0      0           00:23              0  0      0   0      0   0      0      0      0           00:24              0  0      0   0      0   0      0      0      0           00:25              0  0      0   0      0   0      0      0      0           00:26              0  0      0   0      0   0      0      0      0           00:27              0  0      0   0      0   0      0      0      0           00:28              0  0      0   0      0   0      0      0      0           00:29              0* Operation timed out after 30002 milliseconds with 0 bytes received
+
+* closing connection #0
+curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received
+[curl HTTP failed]
+
+curl TLS test:
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0* Host getcomposer.org:443 was resolved.
+* IPv6: 2001:41d0:304:300::18ef
+* IPv4: 57.128.19.244
+*   Trying [2001:41d0:304:300::18ef]:443...
+* Immediate connect fail for 2001:41d0:304:300::18ef: Network is unreachable
+*   Trying 57.128.19.244:443...
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [1570 bytes data]
+* SSL Trust Anchors:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+*   CApath: /etc/ssl/certs
+  0      0   0      0   0      0      0      0           00:01              0  0      0   0      0   0      0      0      0           00:02              0  0      0   0      0   0      0      0      0           00:03              0  0      0   0      0   0      0      0      0           00:04              0  0      0   0      0   0      0      0      0           00:05              0  0      0   0      0   0      0      0      0           00:06              0  0      0   0      0   0      0      0      0           00:07              0  0      0   0      0   0      0      0      0           00:08              0  0      0   0      0   0      0      0      0           00:09              0  0      0   0      0   0      0      0      0           00:10              0  0      0   0      0   0      0      0      0           00:11              0  0      0   0      0   0      0      0      0           00:12              0  0      0   0      0   0      0      0      0           00:13              0  0      0   0      0   0      0      0      0           00:14              0  0      0   0      0   0      0      0      0           00:15              0  0      0   0      0   0      0      0      0           00:16              0  0      0   0      0   0      0      0      0           00:17              0  0      0   0      0   0      0      0      0           00:18              0  0      0   0      0   0      0      0      0           00:19              0  0      0   0      0   0      0      0      0           00:20              0  0      0   0      0   0      0      0      0           00:21              0  0      0   0      0   0      0      0      0           00:22              0  0      0   0      0   0      0      0      0           00:23              0  0      0   0      0   0      0      0      0           00:24              0  0      0   0      0   0      0      0      0           00:25              0  0      0   0      0   0      0      0      0           00:26              0  0      0   0      0   0      0      0      0           00:27              0  0      0   0      0   0      0      0      0           00:28              0  0      0   0      0   0      0      0      0           00:29              0* Connection timed out after 30002 milliseconds
+
+* closing connection #0
+curl: (28) Connection timed out after 30002 milliseconds
+[curl HTTPS failed]
+
+=== Proxies ===
+
+=== Routing ===
+104.21.12.147 via 192.168.1.254 dev enp4s0 src 192.168.1.86 uid 0 
+    cache 
+
+=== Firewall (basic check) ===
+Status: inactive
+
+=== End ===

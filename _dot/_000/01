@@ -1,174 +1,34 @@
-qq@aaa:~/_A001/rep/ALINA_BE$ sudo apt rdepends apache2
-[sudo: authenticate] Password:
-apache2
-Reverse Depends:
-  Breaks: fossil (<< 2.4.59-1~)
- |Recommends: sslh
- |Depends: nova-api-metadata
- |Depends: nova-api
-  Recommends: libapache2-mod-php8.5
- |Recommends: keystone (>= 2.4.6-4~)
- |Depends: keystone
-  Recommends: apache2-doc
-  Recommends: tinyows
- |Recommends: pycsw-wsgi (>= 2.4.6-4~)
- |Recommends: mathjax-siunitx
-  Depends: zoph
- |Recommends: zoneminder (>= 2.4.6-4~)
- |Recommends: zabbix-frontend-php (>= 2.4.6-4~)
- |Recommends: xymon (>= 2.4.6-4~)
- |Recommends: xapian-omega
- |Suggests: x2gobroker
-  Suggests: wwwconfig-common
- |Depends: wordpress
-  Depends: wims-lti
- |Recommends: wims (>= 2.4.6-4~)
- |Recommends: wiliki
- |Recommends: w3c-markup-validator
- |Recommends: w3c-linkchecker
- |Recommends: usemod-wiki (>= 2.4.6-4~)
- |Depends: usemod-wiki
- |Recommends: ubumirror
-  Suggests: ttyd
- |Recommends: trac
- |Recommends: tirex-example-map (>= 2.4.6-4~)
- |Recommends: tirex (>= 2.4.6-4~)
-  Depends: task-web-server
- |Suggests: sympa
- |Recommends: sugarplum (>= 2.4.6-4~)
- |Recommends: sslh
-  Recommends: srg
-  Depends: sqwebmail
- |Recommends: spip (>= 2.4.6-4~)
- |Recommends: snac2 (>= 2.4.6-4~)
- |Recommends: smokeping
- |Recommends: smokeping (>= 2.4.6-4~)
- |Recommends: smokeping
-  PreDepends: slm
- |Depends: slbackup-php
- |Recommends: sitesummary
- |Depends: simplesamlphp
-  Suggests: sarg
-  Depends: rt5-apache2
-  Depends: rt4-apache2
- |Recommends: rss-bridge
- |Depends: routino-www
- |Recommends: roundcube-core
- |Recommends: restfuldb (>= 2.4.6-4~)
-  Depends: restfuldb
- |Suggests: rancid-cgi
-  Suggests: radicale
- |Recommends: qemu-web-desktop (>= 2.4.6-4~)
-  Depends: qemu-web-desktop
- |Recommends: pywps-wsgi (>= 2.4.6-4~)
-  Depends: python3-certbot-apache
-  Enhances: prometheus-apache-exporter
- |Depends: postfixadmin
- |Recommends: pnopaste
- |Depends: piuparts-master-from-git-deps
- |Recommends: piuparts-master
- |Suggests: pinot
- |Recommends: phppgadmin (>= 2.4.6-4~)
- |Recommends: phpliteadmin (>= 2.4.6-4~)
- |Recommends: php-codeigniter-framework (>= 2.4.6-4~)
- |Recommends: pagure (>= 2.4.6-4~)
- |Depends: otrs2
-  Depends: openstack-debian-images-build-farm
-  Recommends: openqa
- |Depends: openguides
- |Recommends: open-infrastructure-storage-tools
- |Recommends: onak
- |Depends: oar-web-status
-  Suggests: oar-restful-api
- |Depends: oar-restful-api
- |Recommends: ntpsec-ntpviz (>= 2.4.6-4~)
- |Depends: nova-api-metadata
-  Suggests: namazu2
- |Recommends: nagios4-cgi
- |Recommends: mirrorkit
- |Depends: mediawiki
- |Depends: man2html
- |Depends: mailto
-  Recommends: mailgraph
- |Recommends: live-build-cgi
- |Recommends: linkchecker-web
- |Depends: lightsquid
-  Depends: libsoup2.4-tests
-  Depends: libsoup-3.0-tests
- |Depends: liblemonldap-ng-portal-perl
- |Depends: liblemonldap-ng-manager-perl
-  Suggests: libjs-schoolkit
- |Recommends: libapache2-mod-shib (>= 2.4.6-4~)
- |Recommends: libapache2-mod-auth-openidc (>= 2.4.6-4~)
- |Depends: ldap-account-manager (>= 2.4.0)
- |Recommends: kalkun (>= 2.4.6-4~)
- |Recommends: jsmath (>= 2.4.6-4~)
- |Recommends: iptotal (>= 2.4.6-4~)
- |Depends: info2www
-  Depends: ikiwiki-hosting-web
- |Recommends: icingaweb2
- |Depends: haci
- |Recommends: gridsite (>= 2.4.6-4~)
- |Depends: gosa
- |Depends: gnocchi-api
- |Recommends: gitweb (>= 2.4.6-4~)
- |Suggests: geophar
- |Depends: ganglia-webfrontend
-  Depends: freedombox
- |Recommends: freeboard (>= 2.4.6-4~)
-  Breaks: dwww (<< 2.4.4-6~)
-  Depends: flatnuke
-  Recommends: fbx-all
- |Recommends: emboss-explorer (>= 2.4.6-4~)
- |Recommends: dwww (>= 2.4.6-4~)
-  Conflicts: bandwidthd (<< 2.4)
- |Depends: dwww
-  Recommends: drraw
- |Recommends: dpkg-www (>= 2.4.6-4~)
- |Depends: doc-central
- |Recommends: djvuserve
- |Recommends: dehydrated-apache2 (>= 2.4.6-4~)
-  Depends: debian-edu-router-plugin.content-filter
- |Depends: debian-edu-router-deployserver
- |Depends: debbugs-web
- |Depends: cvsweb
- |Recommends: cricket
- |Recommends: couriergraph
- |Depends: courier-webadmin
- |Recommends: cortado
-  Suggests: colplot
- |Recommends: colplot
-  Suggests: collectd-core
- |Recommends: chemical-structures
- |Recommends: ch5m3d
- |Recommends: cgit (>= 2.4.6-4~)
- |Recommends: cacti
- |Recommends: blosxom
-  Suggests: bandwidthd-pgsql
-  Conflicts: bandwidthd-pgsql (<< 2.4)
-  Suggests: bandwidthd
- |Recommends: barbican-api (>= 2.4.6-4~)
- |Suggests: apcupsd-cgi
-  Depends: apache2-ai-bots
- |Suggests: analog
- |Recommends: adminer (>= 2.4.6-4~)
- |Recommends: adarkroom
- |Depends: placement-api
- |Depends: openstack-dashboard
- |Recommends: nut-cgi
- |Depends: nova-api
- |Depends: neutron-api
- |Depends: masakari-api
-  Recommends: libapache2-mod-php8.5
- |Recommends: keystone (>= 2.4.6-4~)
- |Depends: keystone
- |Suggests: javascript-common
- |Depends: heat-api-cfn
- |Depends: heat-api
- |Depends: cinder-api
- |Depends: aodh-api
- |Depends: barbican-api
- |Depends: backuppc
- |Suggests: awstats
-  Recommends: apache2-doc
-qqq@aaa:~/_A001/rep/ALINA_BE$
+I have databases listed in bash variable:
+```
+export ALINA_BASES=(
+    "alina"
+    "stage"
+    "vov"
+    "m45a"
+)
+```
+Each database is on the same server and has the same data structure.
+Each database has table voc with structure and data example as below:
+```
+id|from   |en_US     |ru_RU |
+--+-------+----------+------+
+ 1|sewa   |Super Star|Писева|
+ 2|project|          |проект|
+ 3|Alina  |          |Алина |
+ 4|admin  |          |админ |
+
+ ```
+Field voc.from - unique.
+id - primary key.
+Admin, ADMIN, admin - are different words.
+
+ I want merge data.
+ Main database - alina.
+ Slave database - stage (then I will change this to merge data from other databases).
+ So all rows must be merged in alina.voc by  unique field `from`.
+ For example: if alina.voc.from row has only ru_RU and stage.voc.from has the same `from` but with filled en_US,  then in result I need one unique alina.voc.from with both ru_RU and en_US filled.
+ If both `from`s have different ru_RU or en_US, then alina has priority.
+ If alina.voc.from does not exist, then it is added from stage.voc.from is it is in slave table.
+
+
+Please no need to explain much, just MySQL query that I execute in DBeaver connected to one server with those different databases.

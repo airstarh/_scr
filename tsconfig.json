@@ -1,0 +1,52 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "baseUrl": "./",
+        "lib": [
+            "es2017",
+            "dom"
+        ],
+        "paths": {
+            "jquery": [
+                "./server/srv/alina_consumers/zero.home/.WwwDiff/kiss/their.bootstrap/jquery.js"
+            ],
+            "ALINA": [
+                "./server/srv/alina_consumers/zero.home/.WwwDiff/kiss/alina.js/001_alina_init.js"
+            ]
+        },
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "jsx": "preserve",
+        "types": [
+            "vue"
+        ],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "sourceMap": true,
+        "allowJs": true
+    },
+    "exclude": [
+        "node_modules",
+        "_GITOUT",
+        "archive",
+        "adm",
+        "docker",
+        "server/var",
+        "server/etc",
+        "server/usr82",
+        "dist",
+        "dist-stage",
+        ".vscode",
+        "nbproject",
+        "_DEV_DOCS"
+    ],
+    "include": [
+        "./server/srv/alina_consumers/zero.home/.WwwDiff",
+    ]
+}
