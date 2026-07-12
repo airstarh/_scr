@@ -1,8 +1,9 @@
 #!/bin/bash
 
 borg_git() {
+    local msg="${1:-dev}"
     git add .
-    git commit -m 'dev'
+    git commit -m "$msg"
     git push
 }
 

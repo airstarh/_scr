@@ -1,7 +1,7 @@
 #!/bin/bash
 
 borg() {
-    source ~/.bashrc
+    . ~/.bashrc
 }
 
 borg_log() {
