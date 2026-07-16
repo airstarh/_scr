@@ -1,44 +1,54 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Проверка прав root
-if [[ $EUID -ne 0 ]]; then
-   echo "Этот скрипт нужно запускать от root (через sudo)."
-   exit 1
-fi
+cat <<EOF
+=== HOST INFO ===
+Hostname: $(hostname)
+IP addr (enp4s0): $(ip -4 addr show dev enp4s0 up scope global | awk '/inet / {print $2}')
+Kernel: $(uname -r)
+Distro: $(cat /etc/os-release | grep PRETTY_NAME | cut -d'"' -f2)
 
-echo ">>> Проверка занятых портов 53..."
-ss -tulnp | grep ':53' || true
+=== INTERFACE & MACVLAN ===
+# Список интерфейсов
+ip -br link
 
-# Создаем директорию для доп. конфигов systemd-resolved, если нет
-mkdir -p /etc/systemd/resolved.conf.d
+# ARP/neigh для enp4s0 — критично для macvlan
+echo "--- ARP table for enp4s0 ---"
+ip neigh show dev enp4s0
 
-# Создаем конфиг, отключающий stub-listener (освобождает 127.0.0.53:53 и ::1:53)
-cat > /etc/systemd/resolved.conf.d/no-stub-listener.conf <<EOF
-[Resolve]
-DNSStubListener=no
+# Есть ли macvlan‑интерфейс явно?
+ip -d link show type macvlan
+
+=== DOCKER MACVLAN NETWORK ===
+docker network inspect alina_be_local_network 2>/dev/null | grep -E '"Name"|"Parent"|"Subnet"' || echo "Network alina_be_local_network not found"
+
+=== CONTAINER IP ===
+docker inspect pihole --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 2>/dev/null || echo "Container pihole not found"
+
+=== ROUTING ===
+ip route
+
+=== DNS PROCESSES LISTENING ===
+ss -tlnp | grep -E ':53|:5353|dnsmasq|unbound|systemd-resolved'
+
+=== RESOLVER CONFIG ===
+cat /etc/systemd/resolved.conf 2>/dev/null || echo "(no /etc/systemd/resolved.conf)"
+resolvectl status
+
+=== NFTABLES/IPTABLES SNIPPET FOR DNS ===
+sudo nft list ruleset | grep -iE '53|dns|dnsmasq' || echo "nft rules not shown (no sudo output in script)"
+
+# Покажем только ключевые цепочки
+sudo iptables -t nat -L -n -v | grep 53 || echo "iptables nat not shown"
+sudo iptables -t filter -L -n -v | grep 53 || echo "iptables filter not shown"
+
+=== TEST PING (LOCAL VIEW) ===
+ping -c 3 192.168.1.200 || echo "Ping failed"
+
+=== TEST DNS (EXPLICIT SERVER) ===
+dig @192.168.1.200 default.org +short || echo "dig failed"
+dig @127.0.0.1 default.org +short || echo "dig to localhost failed"
+
+=== SYSTEMD-RESOLVED QUERY ===
+resolvectl query default.org || echo "resolvectl failed"
 EOF
-
-echo ">>> Применен конфиг /etc/systemd/resolved.conf.d/no-stub-listener.conf"
-
-# Перечитываем конфиги systemd
-systemctl daemon-reload
-
-# Перезапускаем systemd-resolved, чтобы изменения применились
-echo ">>> Перезапуск systemd-resolved..."
-systemctl restart systemd-resolved
-
-# Ждем пару секунд, чтобы сервис успел пересоздать сокеты
-sleep 2
-
-echo ">>> Проверка, освобожден ли порт 53..."
-ss -tulnp | grep ':53' || true
-
-# Проверяем, нет ли других процессов на порту 53 (например, dnsmasq от libvirt)
-if ss -tulnp | grep -q ':53 '; then
-   echo ">>> Внимание: порт 53 всё ещё занят. Проверьте вывод выше."
-   echo ">>> Возможно, это dnsmasq от libvirt (192.168.122.1) или другой сервис."
-   exit 1
-fi
-
-echo ">>> Порт 53 освобожден. Можно запускать docker compose."
