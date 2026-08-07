@@ -1,54 +1,38 @@
-#!/usr/bin/env bash
-set -euo pipefail
+### STOP SERVICES
+sudo systemctl stop docker
+sudo systemctl stop containerd
 
-cat <<EOF
-=== HOST INFO ===
-Hostname: $(hostname)
-IP addr (enp4s0): $(ip -4 addr show dev enp4s0 up scope global | awk '/inet / {print $2}')
-Kernel: $(uname -r)
-Distro: $(cat /etc/os-release | grep PRETTY_NAME | cut -d'"' -f2)
+### CREATE TARGET DIRECTORY ON HDD AND MOVE DATA
+sudo mkdir -p /osa/var/lib/containerd
+sudo rsync -av /var/lib/containerd/ /osa/var/lib/containerd/
+sudo rm -rf /var/lib/containerd
+sudo mkdir /var/lib/containerd
 
-=== INTERFACE & MACVLAN ===
-# Список интерфейсов
-ip -br link
+### ADD BIND MOUNT TO FSTAB
+### Edit /etc/fstab and add this line:
+### /osa/var/lib/containerd  /var/lib/containerd  none  bind  0  0
+### Use: sudo nano /etc/fstab
+### ### MANUAL STEP: Edit /etc/fstab and add the bind mount line above
 
-# ARP/neigh для enp4s0 — критично для macvlan
-echo "--- ARP table for enp4s0 ---"
-ip neigh show dev enp4s0
+### MOUNT AND VERIFY
+sudo systemctl daemon-reload
+sudo mount -a
+mount | grep containerd
+df -h /var/lib/containerd
 
-# Есть ли macvlan‑интерфейс явно?
-ip -d link show type macvlan
+### START SERVICES
+sudo systemctl start containerd
+sudo systemctl start docker
 
-=== DOCKER MACVLAN NETWORK ===
-docker network inspect alina_be_local_network 2>/dev/null | grep -E '"Name"|"Parent"|"Subnet"' || echo "Network alina_be_local_network not found"
+### VERIFY EVERYTHING
+df -h /var/lib/containerd
+sudo du -sh /var/lib/containerd
+docker info | grep "Docker Root Dir"
+df -h /dev/sdb2
+sudo du -sh /var/lib/containerd 2>/dev/null
 
-=== CONTAINER IP ===
-docker inspect pihole --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 2>/dev/null || echo "Container pihole not found"
+### OPTIONAL: CLEAN UP UNUSED DOCKER VOLUMES (8.1GB on HDD)
+docker volume prune -f
 
-=== ROUTING ===
-ip route
-
-=== DNS PROCESSES LISTENING ===
-ss -tlnp | grep -E ':53|:5353|dnsmasq|unbound|systemd-resolved'
-
-=== RESOLVER CONFIG ===
-cat /etc/systemd/resolved.conf 2>/dev/null || echo "(no /etc/systemd/resolved.conf)"
-resolvectl status
-
-=== NFTABLES/IPTABLES SNIPPET FOR DNS ===
-sudo nft list ruleset | grep -iE '53|dns|dnsmasq' || echo "nft rules not shown (no sudo output in script)"
-
-# Покажем только ключевые цепочки
-sudo iptables -t nat -L -n -v | grep 53 || echo "iptables nat not shown"
-sudo iptables -t filter -L -n -v | grep 53 || echo "iptables filter not shown"
-
-=== TEST PING (LOCAL VIEW) ===
-ping -c 3 192.168.1.200 || echo "Ping failed"
-
-=== TEST DNS (EXPLICIT SERVER) ===
-dig @192.168.1.200 default.org +short || echo "dig failed"
-dig @127.0.0.1 default.org +short || echo "dig to localhost failed"
-
-=== SYSTEMD-RESOLVED QUERY ===
-resolvectl query default.org || echo "resolvectl failed"
-EOF
+### CHECK FINAL SSD USAGE
+df -h /dev/sdb2
