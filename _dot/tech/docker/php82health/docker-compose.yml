@@ -1,0 +1,14 @@
+services:
+  serv_php82health:
+    build:
+      context: .
+    restart: unless-stopped
+    mem_limit: 128M
+    env_file: ./.env
+    container_name: cont_php82health
+    expose:
+      - "9000"
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp

@@ -1,0 +1,89 @@
+--progress is a global compose flag, better use `docker compose --progress xx build ...
+ Image php82health-serv_php82health Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 622B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile:
+#2 transferring dockerfile: 922B done
+#2 DONE 0.5s
+
+#3 [internal] load metadata for docker.io/library/php:8.2-fpm
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 2B done
+#4 DONE 0.6s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/6] FROM docker.io/library/php:8.2-fpm@sha256:07da04f452476c49f810c2081a2ce38536003041d5b70383350c66e49e4485f8
+#6 resolve docker.io/library/php:8.2-fpm@sha256:07da04f452476c49f810c2081a2ce38536003041d5b70383350c66e49e4485f8
+#6 resolve docker.io/library/php:8.2-fpm@sha256:07da04f452476c49f810c2081a2ce38536003041d5b70383350c66e49e4485f8 0.1s done
+#6 DONE 0.2s
+
+#6 [1/6] FROM docker.io/library/php:8.2-fpm@sha256:07da04f452476c49f810c2081a2ce38536003041d5b70383350c66e49e4485f8
+#6 CACHED
+
+#7 [2/6] RUN ln -sf /bin/bash /bin/sh
+#7 ...
+
+#5 [internal] load build context
+#5 transferring context: 3.64MB 0.2s done
+#5 DONE 1.0s
+
+#7 [2/6] RUN ln -sf /bin/bash /bin/sh
+#7 DONE 4.1s
+
+#8 [3/6] COPY soft/composer.phar /usr/local/bin/composer
+#8 DONE 1.6s
+
+#9 [4/6] RUN chmod +x /usr/local/bin/composer
+#9 DONE 2.9s
+
+#10 [5/6] RUN echo "=== NETWORK DEBUG ===" &&     echo "" &&     echo "--- DNS Configuration ---" &&     cat /etc/resolv.conf &&     echo "" &&     echo "--- DNS Resolution Test ---" &&     (getent hosts deb.debian.org 2>&1 || echo "DNS resolution failed") &&     echo "" &&     echo "--- Connectivity Test (8.8.8.8) ---" &&     (curl -s --connect-timeout 3 -o /dev/null -w "HTTP Status: %{http_code}\n" http://8.8.8.8 2>&1 || echo "Connectivity failed") &&     echo "" &&     echo "--- HTTP Test (deb.debian.org) ---" &&     (curl -s --connect-timeout 3 -o /dev/null -w "HTTP Status: %{http_code}\n" http://deb.debian.org 2>&1 || echo "HTTP test failed")
+#10 1.065 === NETWORK DEBUG ===
+#10 1.065 
+#10 1.065 --- DNS Configuration ---
+#10 1.086 nameserver 8.8.8.8
+#10 1.086 nameserver 77.88.8.8
+#10 1.086 search .
+#10 1.086 
+#10 1.087 --- DNS Resolution Test ---
+#10 11.11 DNS resolution failed
+#10 11.11 
+#10 11.11 --- Connectivity Test (8.8.8.8) ---
+#10 14.19 HTTP Status: 000
+#10 14.19 Connectivity failed
+#10 14.20 
+#10 14.20 --- HTTP Test (deb.debian.org) ---
+#10 17.24 HTTP Status: 000
+#10 17.25 HTTP test failed
+#10 DONE 19.2s
+
+#11 [6/6] RUN rm -rf /var/lib/apt/lists/*
+#11 DONE 3.0s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 4.6s done
+#12 exporting manifest sha256:d35ee920954fac78228efb3591bd4709b19bdccc087f7baf86920261da4c8678
+#12 exporting manifest sha256:d35ee920954fac78228efb3591bd4709b19bdccc087f7baf86920261da4c8678 0.2s done
+#12 exporting config sha256:875a95e8db1b163912875c868c2ca718371a03f4f82ca618680d6311745e8a84
+#12 exporting config sha256:875a95e8db1b163912875c868c2ca718371a03f4f82ca618680d6311745e8a84 0.5s done
+#12 exporting attestation manifest sha256:d45f504326c8148276a15efa0f5a6d53894534a8f9c5794a8a9ade54a7f2f30f
+#12 exporting attestation manifest sha256:d45f504326c8148276a15efa0f5a6d53894534a8f9c5794a8a9ade54a7f2f30f 0.3s done
+#12 exporting manifest list sha256:7dbc5ff360084aecce2f4d72943d03e1430d864e567c095ebc902443628922f7
+#12 exporting manifest list sha256:7dbc5ff360084aecce2f4d72943d03e1430d864e567c095ebc902443628922f7 0.2s done
+#12 naming to docker.io/library/php82health-serv_php82health:latest
+#12 naming to docker.io/library/php82health-serv_php82health:latest 0.0s done
+#12 unpacking to docker.io/library/php82health-serv_php82health:latest
+#12 unpacking to docker.io/library/php82health-serv_php82health:latest 1.2s done
+#12 DONE 7.4s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.1s
+ Image php82health-serv_php82health Built 
