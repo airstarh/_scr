@@ -19,8 +19,10 @@ RUN apt-get update && \
         build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Imagick via PECL
-RUN pecl install imagick && \
+# Install Imagick via PIE (PHP Installer for Extensions)
+RUN curl -sSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie && \
+    chmod +x /usr/local/bin/pie && \
+    pie install imagick/imagick && \
     docker-php-ext-enable imagick
 
 # PDO and PDO_mysql are built‑in to PHP 8.2 FPM — no need to enable; just verify they’re present
