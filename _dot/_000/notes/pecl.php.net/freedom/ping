@@ -1,0 +1,9 @@
+qqq@aaa:~$ ping -c 3 pecl.php.net
+PING pecl-internal-php-net.b-cdn.net (138.199.46.68) 56(84) bytes of data.
+64 bytes from 138-199-46-68.bunnyinfra.net (138.199.46.68): icmp_seq=1 ttl=49 time=208 ms
+64 bytes from 138-199-46-68.bunnyinfra.net (138.199.46.68): icmp_seq=2 ttl=49 time=210 ms
+64 bytes from 138-199-46-68.bunnyinfra.net (138.199.46.68): icmp_seq=3 ttl=49 time=210 ms
+
+--- pecl-internal-php-net.b-cdn.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 208.331/209.238/209.718/0.641 ms

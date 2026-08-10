@@ -1,0 +1,10 @@
+qqq@aaa:~$ nslookup pecl.php.net
+Server:         195.98.64.65
+Address:        195.98.64.65#53
+
+Non-authoritative answer:
+pecl.php.net    canonical name = pecl-internal-php-net.b-cdn.net.
+Name:   pecl-internal-php-net.b-cdn.net
+Address: 138.199.46.68
+Name:   pecl-internal-php-net.b-cdn.net
+Address: 2400:52e0:1500::1274:1
