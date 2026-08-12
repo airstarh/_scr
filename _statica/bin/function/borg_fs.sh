@@ -1,4 +1,7 @@
 borg_fs_tree() {
+    # Custom array of folder names to skip
+    SKIP_NAMES=(".git" "node_modules" "vendor")
+
     local start_dir="${1:-.}"
     local MAX_DEPTH="${2:-10}"
 
@@ -16,6 +19,16 @@ borg_fs_tree() {
         printf "%b%s%b%s" "$1" "$2" "$NC" "$3"
     }
 
+    __should_skip() {
+        local item="$1"
+        for skip_name in "${SKIP_NAMES[@]}"; do
+            if [ "$item" = "$skip_name" ]; then
+                return 0
+            fi
+        done
+        return 1
+    }
+
     __print_tree() {
         local dir="$1"
         local prefix="$2"
@@ -30,6 +43,10 @@ borg_fs_tree() {
 
         while IFS= read -r item; do
             if [ -n "$item" ] && [ "$item" != "." ] && [ "$item" != ".." ]; then
+                # Skip folders in SKIP_NAMES
+                if __should_skip "$item"; then
+                    continue
+                fi
                 if [ -d "$dir/$item" ]; then
                     dirs+=("$item")
                 else
@@ -103,6 +120,10 @@ borg_fs_tree() {
 
         while IFS= read -r item; do
             if [ -n "$item" ] && [ "$item" != "." ] && [ "$item" != ".." ]; then
+                # Skip folders in SKIP_NAMES
+                if __should_skip "$item"; then
+                    continue
+                fi
                 if [ -d "$dir/$item" ]; then
                     dir_count=$((dir_count + 1))
                     [[ "$item" == _* ]] && underscore_count=$((underscore_count + 1))
@@ -199,7 +220,7 @@ borg_fs_tree() {
     __print_color "$YELLOW" "(empty)" " - Empty directory"
     printf "\n"
 
-    unset -f __print_tree __print_color __count_items
+    unset -f __print_tree __print_color __count_items __should_skip
 }
 
 _borg_fs_tree_completion() {
