@@ -1,134 +1,207 @@
-# ============================================
-# borg_fs_tree - Display directory tree with pseudo-graphic output
-# Usage: borg_fs_tree [directory]
-# Max depth: 10 levels
-# ============================================
 borg_fs_tree() {
-    # Local function variables
-    local MAX_DEPTH=10
-    local current_depth=0
+    local start_dir="${1:-.}"
+    local MAX_DEPTH="${2:-10}"
 
-    # Color definitions
+    local ORANGE='\033[0;33m'
+    local PURPLE='\033[0;35m'
     local GREEN='\033[0;32m'
-    local BLUE='\033[0;34m'
-    local YELLOW='\033[0;33m'
+    local WHITE='\033[0;37m'
+    local YELLOW='\033[1;33m'
     local RED='\033[0;31m'
-    local NC='\033[0m' # No Color
+    local BLUE='\033[0;34m'
+    local NC='\033[0m'
     local BOLD='\033[1m'
 
-    # Internal recursive function to print tree
+    __print_color() {
+        printf "%b%s%b%s" "$1" "$2" "$NC" "$3"
+    }
+
     __print_tree() {
         local dir="$1"
         local prefix="$2"
         local depth="$3"
 
-        # Check if depth exceeds maximum
         if [ $depth -ge $MAX_DEPTH ]; then
-            echo "${prefix}${YELLOW}└── ... (max depth reached)${NC}"
             return
         fi
 
-        # Get list of items (directories first, then files)
-        local items=()
         local dirs=()
         local files=()
 
-        # Read directory contents
         while IFS= read -r item; do
-            if [ -d "$dir/$item" ]; then
-                dirs+=("$item")
-            else
-                files+=("$item")
+            if [ -n "$item" ] && [ "$item" != "." ] && [ "$item" != ".." ]; then
+                if [ -d "$dir/$item" ]; then
+                    dirs+=("$item")
+                else
+                    files+=("$item")
+                fi
             fi
-        done < <(ls -A "$dir" 2>/dev/null | sort)
+        done < <(ls -A1 "$dir" 2>/dev/null | sort)
 
-        # Combine directories and files
-        items=("${dirs[@]}" "${files[@]}")
-
+        local items=("${dirs[@]}" "${files[@]}")
         local total_items=${#items[@]}
         local count=0
 
         for item in "${items[@]}"; do
             count=$((count + 1))
-            local is_last=$([ $count -eq $total_items ] && echo "true" || echo "false")
+            local is_last=false
+            [ $count -eq $total_items ] && is_last=true
             local full_path="$dir/$item"
 
-            # Determine the connector
             local connector="├──"
-            if [ "$is_last" = "true" ]; then
-                connector="└──"
-            fi
+            $is_last && connector="└──"
 
-            # Determine the prefix for children
             local child_prefix="$prefix"
-            if [ "$is_last" = "true" ]; then
+            if $is_last; then
                 child_prefix="${prefix}    "
             else
                 child_prefix="${prefix}│   "
             fi
 
-            # Check if it's a directory
             if [ -d "$full_path" ]; then
-                # Check if directory is empty
-                if [ -z "$(ls -A "$full_path" 2>/dev/null)" ]; then
-                    echo "${prefix}${connector} ${BLUE}${BOLD}$item${NC} ${YELLOW}(empty)${NC}"
-                else
-                    echo "${prefix}${connector} ${BLUE}${BOLD}$item${NC}/"
-                    __print_tree "$full_path" "$child_prefix" $((depth + 1))
+                local dir_color="$ORANGE"
+                [[ "$item" == _* ]] && dir_color="$PURPLE"
+
+                printf "%s" "$prefix"
+                printf "%s " "$connector"
+                __print_color "$dir_color" "$item" "/"
+
+                local content_count=$(ls -A1 "$full_path" 2>/dev/null | wc -l)
+                if [ "$content_count" -eq 0 ]; then
+                    __print_color "$YELLOW" " (empty)" ""
                 fi
+                printf "\n"
+
+                __print_tree "$full_path" "$child_prefix" $((depth + 1))
             else
-                # It's a file - check if executable
-                if [ -x "$full_path" ]; then
-                    echo "${prefix}${connector} ${GREEN}$item${NC}*"
-                else
-                    echo "${prefix}${connector} ${NC}$item${NC}"
-                fi
+                local file_color="$WHITE"
+                local suffix=""
+
+                [[ "$item" == .* ]] && file_color="$GREEN"
+                [ -x "$full_path" ] && suffix="*"
+
+                printf "%s" "$prefix"
+                printf "%s " "$connector"
+                __print_color "$file_color" "$item" "$suffix"
+                printf "\n"
             fi
         done
     }
 
-    # Main function logic
-    local start_dir="${1:-.}"
+    __count_items() {
+        local dir="$1"
+        local depth="$2"
+        local dir_count=0
+        local file_count=0
+        local hidden_count=0
+        local underscore_count=0
 
-    # Check if directory exists
+        if [ $depth -ge $MAX_DEPTH ]; then
+            echo "0 0 0 0"
+            return
+        fi
+
+        while IFS= read -r item; do
+            if [ -n "$item" ] && [ "$item" != "." ] && [ "$item" != ".." ]; then
+                if [ -d "$dir/$item" ]; then
+                    dir_count=$((dir_count + 1))
+                    [[ "$item" == _* ]] && underscore_count=$((underscore_count + 1))
+                    local sub_counts=$(__count_items "$dir/$item" $((depth + 1)))
+                    local sub_dirs=$(echo "$sub_counts" | cut -d' ' -f1)
+                    local sub_files=$(echo "$sub_counts" | cut -d' ' -f2)
+                    local sub_hidden=$(echo "$sub_counts" | cut -d' ' -f3)
+                    local sub_underscore=$(echo "$sub_counts" | cut -d' ' -f4)
+                    dir_count=$((dir_count + sub_dirs))
+                    file_count=$((file_count + sub_files))
+                    hidden_count=$((hidden_count + sub_hidden))
+                    underscore_count=$((underscore_count + sub_underscore))
+                else
+                    file_count=$((file_count + 1))
+                    [[ "$item" == .* ]] && hidden_count=$((hidden_count + 1))
+                fi
+            fi
+        done < <(ls -A1 "$dir" 2>/dev/null | sort)
+
+        echo "$dir_count $file_count $hidden_count $underscore_count"
+    }
+
     if [ ! -d "$start_dir" ]; then
-        echo -e "${RED}Error: Directory '$start_dir' does not exist${NC}"
+        __print_color "$RED" "Error: Directory '$start_dir' does not exist" ""
+        printf "\n"
         return 1
     fi
 
-    # Get absolute path
     local abs_path=$(cd "$start_dir" && pwd 2>/dev/null)
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Cannot access directory '$start_dir'${NC}"
+        __print_color "$RED" "Error: Cannot access directory '$start_dir'" ""
+        printf "\n"
         return 1
     fi
 
-    # Print header
-    echo -e "${BOLD}${BLUE}📁 $abs_path${NC}"
-    echo -e "${BOLD}${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    __print_color "$BLUE" "📁 $abs_path" ""
+    printf "\n"
+    __print_color "$YELLOW" "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" ""
+    printf "\n"
 
-    # Start printing tree
     __print_tree "$start_dir" "" 0
 
-    # Print footer with statistics
-    echo -e "\n${BOLD}${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    printf "\n"
+    __print_color "$YELLOW" "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" ""
+    printf "\n"
 
-    # Count total items (only top level for summary)
-    local total_items=$(find "$start_dir" -maxdepth 1 -type f -o -type d 2>/dev/null | wc -l)
-    local total_dirs=$(find "$start_dir" -maxdepth 1 -type d 2>/dev/null | wc -l)
-    local total_files=$(find "$start_dir" -maxdepth 1 -type f 2>/dev/null | wc -l)
+    local counts=$(__count_items "$start_dir" 0)
+    local total_dirs=$(echo "$counts" | cut -d' ' -f1)
+    local total_files=$(echo "$counts" | cut -d' ' -f2)
+    local total_hidden=$(echo "$counts" | cut -d' ' -f3)
+    local total_underscore_dirs=$(echo "$counts" | cut -d' ' -f4)
+    local total_items=$((total_dirs + total_files))
 
-    echo -e "${BOLD}📊 Summary:${NC}"
-    echo -e "  📂 Directories: ${BLUE}$total_dirs${NC}"
-    echo -e "  📄 Files: ${GREEN}$total_files${NC}"
-    echo -e "  📦 Total items: ${YELLOW}$total_items${NC}"
-    echo -e "  📏 Max depth: ${YELLOW}$MAX_DEPTH${NC}"
+    __print_color "$BOLD" "📊 Summary:" ""
+    printf "\n"
+    printf "  "
+    __print_color "$ORANGE" "📂 Directories: " "$total_dirs"
+    printf "\n"
+    printf "  "
+    __print_color "$PURPLE" "📂 Underscore dirs (_*): " "$total_underscore_dirs"
+    printf "\n"
+    printf "  "
+    __print_color "$WHITE" "📄 Regular files: " "$((total_files - total_hidden))"
+    printf "\n"
+    printf "  "
+    __print_color "$GREEN" "📄 Hidden files (.*): " "$total_hidden"
+    printf "\n"
+    printf "  "
+    __print_color "$YELLOW" "📦 Total items: " "$total_items"
+    printf "\n"
+    printf "  "
+    __print_color "$YELLOW" "📏 Max depth: " "$MAX_DEPTH"
+    printf "\n"
 
-    # Clean up internal function
-    unset -f __print_tree
+    printf "\n"
+    __print_color "$BOLD" "Legend:" ""
+    printf "\n"
+    printf "  "
+    __print_color "$ORANGE" "Orange" " - Regular directories"
+    printf "\n"
+    printf "  "
+    __print_color "$PURPLE" "Purple" " - Directories starting with _"
+    printf "\n"
+    printf "  "
+    __print_color "$WHITE" "White" " - Regular files"
+    printf "\n"
+    printf "  "
+    __print_color "$GREEN" "Green" " - Hidden files (dot files)"
+    printf "\n"
+    printf "  "
+    __print_color "$GREEN" "*" " - Executable file"
+    printf "\n"
+    printf "  "
+    __print_color "$YELLOW" "(empty)" " - Empty directory"
+    printf "\n"
+
+    unset -f __print_tree __print_color __count_items
 }
 
-# Optional: Add tab completion for directory paths
 _borg_fs_tree_completion() {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -d -- "$cur") )
