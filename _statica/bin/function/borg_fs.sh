@@ -1,6 +1,6 @@
 borg_fs_tree() {
     # Custom array of folder names to skip
-    SKIP_NAMES=(".git" "node_modules" "vendor" "storage")
+    SKIP_NAMES=(".git" "node_modules" "vendor" "storage" "config" "bootstrap" "config" "public" "resources")
 
     local start_dir="${1:-.}"
     local MAX_DEPTH="${2:-10}"
@@ -135,6 +135,7 @@ borg_fs_tree() {
 
     unset -f __print_tree __count_items __should_skip
 }
+export -f borg_fs_tree
 
 _borg_fs_tree_completion() {
     local cur="${COMP_WORDS[COMP_CWORD]}"

@@ -67,5 +67,8 @@ borg_sftp_sss() {
     -o allow_other,idmap=user,reconnect,IdentityFile=~/.ssh/id_rsa \
     sewa@saysimsim.ru:/home/sewa/_A001/rep/ALINA_BE \
     ~/remote_alina_be
+}
 
+borg_ssh_bbb(){
+    ssh -i /home/qqq/.ssh/001 'qqq@192.168.1.120'
 }
