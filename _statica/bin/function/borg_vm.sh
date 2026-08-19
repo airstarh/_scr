@@ -21,7 +21,10 @@ borg_vm() {
         -netdev user,id=net0,smb=/mnt/d1001/_v/qemu/shara/ \
         -device e1000,netdev=net0 \
         -vga qxl \
-        -device AC97 \
+        -audiodev pa,id=audio0,server=/run/user/1000/pulse/native \
+        -device AC97,audiodev=audio0 \
+        -audiodev pa,id=audio1,server=/run/user/1000/pulse/native \
+        -device intel-hda -device hda-duplex,audiodev=audio1 \
         -usb \
         -device usb-tablet \
         -monitor stdio \
