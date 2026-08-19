@@ -15,10 +15,10 @@ borg_vm() {
         -enable-kvm \
         -m 4096 \
         -cpu qemu64 \
-        -drive file=/home/qqq/qemu/w7x64_HDA.img,format=raw,if=ide \
+        -drive file=/mnt/d1001/_v/qemu/w7x64_HDA.img,format=raw,if=ide \
         -cdrom /dev/null \
         -boot c \
-        -netdev user,id=net0,smb=/home/qqq/shared_qemu/ \
+        -netdev user,id=net0,smb=/mnt/d1001/_v/qemu/shara/ \
         -device e1000,netdev=net0 \
         -vga qxl \
         -device AC97 \
