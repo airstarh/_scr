@@ -1,41 +1,61 @@
 #!/bin/bash
 
-# Stop all services
-sudo systemctl stop docker
-sudo systemctl stop docker.socket
-sudo systemctl stop containerd
+# --- Конфигурация ---
+DOCKER_NEW_ROOT="/mnt/d1001/docker"
+CONTAINERD_NEW_ROOT="/mnt/d1001/containerd"
 
-# Create main directory
-sudo mkdir -p /mnt/d1001/dockersys
+# Останавливаем сервисы
+echo "Останавливаю сервисы..."
+sudo systemctl stop docker.socket docker containerd
 
-# Move Docker data
-sudo mv /var/lib/docker/* /mnt/d1001/dockersys/ 2>/dev/null || true
-sudo mv /var/lib/docker/.[!.]* /mnt/d1001/dockersys/ 2>/dev/null || true
+# Создаём целевые директории
+echo "Создаю директории для хранения данных..."
+sudo mkdir -p "$DOCKER_NEW_ROOT"
+sudo mkdir -p "$CONTAINERD_NEW_ROOT"
 
-# Move containerd data
-sudo mv /var/lib/containerd/* /mnt/d1001/dockersys/ 2>/dev/null || true
-sudo mv /var/lib/containerd/.[!.]* /mnt/d1001/dockersys/ 2>/dev/null || true
+# Надёжно перемещаем данные Docker
+echo "Перемещаю данные Docker..."
+sudo shopt -s dotglob nullglob # Включает обработку скрытых файлов и предотвращает ошибку, если файлов нет
+if [ -d /var/lib/docker ]; then
+    sudo mv /var/lib/docker/* "$DOCKER_NEW_ROOT/"
+fi
+sudo shopt -u dotglob nullglob
 
-# Remove old empty directories
+# Надёжно перемещаем данные containerd
+echo "Перемещаю данные containerd..."
+sudo shopt -s dotglob nullglob
+if [ -d /var/lib/containerd ]; then
+    sudo mv /var/lib/containerd/* "$CONTAINERD_NEW_ROOT/"
+fi
+sudo shopt -u dotglob nullglob
+
+# Удаляем старые пустые директории
+echo "Очищаю старые локации..."
 sudo rmdir /var/lib/docker 2>/dev/null || true
 sudo rmdir /var/lib/containerd 2>/dev/null || true
 
-# Configure Docker
+# Настраиваем Docker
+echo "Настраиваю daemon.json для Docker..."
 sudo tee /etc/docker/daemon.json > /dev/null <<EOF
 {
-  "data-root": "/mnt/d1001/dockersys"
+  "data-root": "${DOCKER_NEW_ROOT}"
 }
 EOF
 
-# Configure containerd
+# Настраиваем containerd
+echo "Генерирую и настраиваю config.toml для containerd..."
 sudo mkdir -p /etc/containerd
-sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
-sudo sed -i 's|root = "/var/lib/containerd"|root = "/mnt/d1001/dockersys"|g' /etc/containerd/config.toml
+# Правильный способ указать корень при генерации
+sudo containerd config default | sudo sed "s|/var/lib/containerd|${CONTAINERD_NEW_ROOT}|g" | sudo tee /etc/containerd/config.toml > /dev/null
 
-# Start services
+# Запускаем сервисы
+echo "Запускаю сервисы..."
 sudo systemctl start containerd
 sudo systemctl start docker
 
-# Verify
+# Проверка
+echo "Проверка Docker:"
 sudo docker info | grep "Docker Root Dir"
-sudo ls -la /mnt/d1001/dockersys/
+echo ""
+echo "Содержимое новой директории Docker:"
+sudo ls -la "$DOCKER_NEW_ROOT" | head -n 5
