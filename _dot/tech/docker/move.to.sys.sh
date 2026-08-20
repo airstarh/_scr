@@ -1,61 +1,63 @@
 #!/bin/bash
+set -e # Stop the script if any command fails
 
-# --- Конфигурация ---
+# --- Configuration ---
 DOCKER_NEW_ROOT="/mnt/d1001/docker"
 CONTAINERD_NEW_ROOT="/mnt/d1001/containerd"
 
-# Останавливаем сервисы
-echo "Останавливаю сервисы..."
+# 1. Stop services
+echo "Stopping Docker and Containerd services..."
 sudo systemctl stop docker.socket docker containerd
 
-# Создаём целевые директории
-echo "Создаю директории для хранения данных..."
+# 2. Create target directories
+echo "Creating new directories on HDD..."
 sudo mkdir -p "$DOCKER_NEW_ROOT"
 sudo mkdir -p "$CONTAINERD_NEW_ROOT"
 
-# Надёжно перемещаем данные Docker
-echo "Перемещаю данные Docker..."
-sudo shopt -s dotglob nullglob # Включает обработку скрытых файлов и предотвращает ошибку, если файлов нет
+# 3. Copy data safely using rsync (Preserves permissions and special files)
+echo "Copying Docker data (this might take a while)..."
 if [ -d /var/lib/docker ]; then
-    sudo mv /var/lib/docker/* "$DOCKER_NEW_ROOT/"
+    sudo rsync -aHAX --info=progress2 /var/lib/docker/ "$DOCKER_NEW_ROOT/"
 fi
-sudo shopt -u dotglob nullglob
 
-# Надёжно перемещаем данные containerd
-echo "Перемещаю данные containerd..."
-sudo shopt -s dotglob nullglob
+echo "Copying containerd data..."
 if [ -d /var/lib/containerd ]; then
-    sudo mv /var/lib/containerd/* "$CONTAINERD_NEW_ROOT/"
+    sudo rsync -aHAX --info=progress2 /var/lib/containerd/ "$CONTAINERD_NEW_ROOT/"
 fi
-sudo shopt -u dotglob nullglob
 
-# Удаляем старые пустые директории
-echo "Очищаю старые локации..."
-sudo rmdir /var/lib/docker 2>/dev/null || true
-sudo rmdir /var/lib/containerd 2>/dev/null || true
+# 4. Configure Docker daemon.json
+echo "Updating Docker configuration..."
+# This safely handles creating or merging with an existing daemon.json
+if [ -f /etc/docker/daemon.json ]; then
+    echo "Warning: /etc/docker/daemon.json already exists. Backing it up."
+    sudo cp /etc/docker/daemon.json /etc/docker/daemon.json.bak
+fi
 
-# Настраиваем Docker
-echo "Настраиваю daemon.json для Docker..."
 sudo tee /etc/docker/daemon.json > /dev/null <<EOF
 {
   "data-root": "${DOCKER_NEW_ROOT}"
 }
 EOF
 
-# Настраиваем containerd
-echo "Генерирую и настраиваю config.toml для containerd..."
-sudo mkdir -p /etc/containerd
-# Правильный способ указать корень при генерации
-sudo containerd config default | sudo sed "s|/var/lib/containerd|${CONTAINERD_NEW_ROOT}|g" | sudo tee /etc/containerd/config.toml > /dev/null
+# 5. Configure containerd config.toml
+echo "Updating containerd configuration..."
+if [ -f /etc/containerd/config.toml ]; then
+    sudo cp /etc/containerd/config.toml /etc/containerd/config.toml.bak
+    sudo sed -i "s|/var/lib/containerd|${CONTAINERD_NEW_ROOT}|g" /etc/containerd/config.toml
+else
+    sudo mkdir -p /etc/containerd
+    sudo containerd config default | sudo sed "s|/var/lib/containerd|${CONTAINERD_NEW_ROOT}|g" | sudo tee /etc/containerd/config.toml > /dev/null
+fi
 
-# Запускаем сервисы
-echo "Запускаю сервисы..."
+# 6. Start services
+echo "Starting services..."
 sudo systemctl start containerd
 sudo systemctl start docker
 
-# Проверка
-echo "Проверка Docker:"
+# 7. Verification
+echo "========================================="
+echo "Verification:"
 sudo docker info | grep "Docker Root Dir"
-echo ""
-echo "Содержимое новой директории Docker:"
-sudo ls -la "$DOCKER_NEW_ROOT" | head -n 5
+echo "========================================="
+echo "If everything works perfectly, you can manually delete the old folders later using:"
+echo "sudo rm -rf /var/lib/docker /var/lib/containerd"
