@@ -1,6 +1,8 @@
 #! /bin/bash
 
+OLD_PATH_DOCKER="/var/lib/docker"
 NEW_PATH_DOCKER="/mnt/d1001/dockersys/docker"
+OLD_PATH_CONTAINERD="/var/lib/containerd"
 NEW_PATH_CONTAINERD="/mnt/d1001/dockersys/containerd"
 
 sudo systemctl stop docker.socket docker containerd
@@ -10,13 +12,13 @@ sudo mkdir -p "$NEW_PATH_CONTAINERD"
 
 ### Paths:
 ### dockersys
-###     docker (/var/lib/docker)
-sudo rsync -aHAX --info=progress2 /var/lib/docker/ "$NEW_PATH_DOCKER/"
-sudo mv /var/lib/docker/* "$NEW_PATH_DOCKER/"
+###     docker (OLD_PATH_DOCKER)
+sudo rsync -aHAX --info=progress2 "$OLD_PATH_DOCKER/" "$NEW_PATH_DOCKER/"
+sudo mv "$OLD_PATH_DOCKER/*" "$NEW_PATH_DOCKER/"
 
-###     containerd (/var/lib/containerd)
-sudo rsync -aHAX --info=progress2 /var/lib/containerd/ "$NEW_PATH_CONTAINERD/"
-sudo mv /var/lib/containerd/* "$NEW_PATH_CONTAINERD/"
+###     containerd (OLD_PATH_CONTAINERD)
+sudo rsync -aHAX --info=progress2 "$OLD_PATH_CONTAINERD/" "$NEW_PATH_CONTAINERD/"
+sudo mv "$OLD_PATH_CONTAINERD/*" "$NEW_PATH_CONTAINERD/"
 
 ###
 ### Configs:
