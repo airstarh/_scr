@@ -1,26 +1,26 @@
 #! /bin/bash
 
-DOCKER_NEW_ROOT="/mnt/d1001/dockersys/docker"
-CONTAINERD_NEW_ROOT="/mnt/d1001/dockersys/containerd"
+NEW__PATH_DOCKER="/mnt/d1001/dockersys/docker"
+NEW__PATH_CONTAINERD="/mnt/d1001/dockersys/containerd"
 
 sudo systemctl stop docker.socket docker containerd
 
-sudo mkdir -p "$DOCKER_NEW_ROOT"
-sudo mkdir -p "$CONTAINERD_NEW_ROOT"
+sudo mkdir -p "$NEW__PATH_DOCKER"
+sudo mkdir -p "$NEW__PATH_CONTAINERD"
 
 ### Paths:
 ### dockersys
 ###     docker (/var/lib/docker)
-sudo rsync -aHAX --info=progress2 /var/lib/docker/ "$DOCKER_NEW_ROOT/"
+sudo rsync -aHAX --info=progress2 /var/lib/docker/ "$NEW__PATH_DOCKER/"
 
 ###     containerd (/var/lib/containerd)
-sudo rsync -aHAX --info=progress2 /var/lib/containerd/ "$CONTAINERD_NEW_ROOT/"
+sudo rsync -aHAX --info=progress2 /var/lib/containerd/ "$NEW__PATH_CONTAINERD/"
 ###
 ### Configs:
 ### /etc/docker/daemon.json
-###     "data-root": "$DOCKER_NEW_ROOT"
+###     "data-root": "$NEW__PATH_DOCKER"
 ### /etc/containerd/config.toml
-###     root = "$CONTAINERD_NEW_ROOT"
+###     root = "$NEW__PATH_CONTAINERD"
 ###
 ##################################################
 
