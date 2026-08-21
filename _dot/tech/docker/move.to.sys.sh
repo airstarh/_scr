@@ -30,4 +30,4 @@ sudo rsync -aHAX --info=progress2 "$OLD_PATH_CONTAINERD/" "$NEW_PATH_CONTAINERD/
 ##################################################
 
 ##################################################
-sudo systemctl start docker
+# sudo systemctl start docker

@@ -17,6 +17,7 @@ borg_fs_sync(){
     ##################################################
     borg_fs_A001
     borg_fs_v
+    # borg_fs_docker
     ##################################################
     local ENDED=$EPOCHREALTIME
     borg_spent $STARTED $ENDED
@@ -27,6 +28,11 @@ borg_fs_A001(){
 
 borg_fs_v(){
     bash_fs_rsync "/mnt/d1001/_v/" "qqq@192.168.1.120:/mnt/d1001/_v/"
+}
+
+borg_fs_docker(){
+    # bash_fs_rsync "/mnt/d1001/_docker/" "qqq@192.168.1.120:/mnt/d1001/_docker/"
+    bash_fs_rsync "/mnt/d1001/_docker/mey/docker-compose.yml" "qqq@192.168.1.120:/mnt/d1001/_docker/mey/docker-compose.yml"
 }
 
 
