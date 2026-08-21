@@ -13,9 +13,10 @@ borg_vm() {
 
     qemu-system-x86_64 \
     -enable-kvm \
+    -cpu host \
+    -smp cores=2,threads=2,sockets=1 \
     -m 4096 \
-    -cpu qemu64 \
-    -drive file=/mnt/d1001/_v/qemu/w7x64_HDA.img,format=raw,if=ide \
+    -drive file=/mnt/d1001/_v/qemu/w7x64_HDA.img,format=raw,if=ide,cache=writeback \
     -cdrom /dev/null \
     -boot c \
     -netdev user,id=net0,smb=/mnt/d1001/_v/qemu/shara/ \
@@ -26,5 +27,6 @@ borg_vm() {
     -device intel-hda -device hda-duplex,audiodev=audio0 \
     -display spice-app \
     -usb \
-    -device usb-tablet
+    -device usb-tablet \
+    -rtc base=localtime,clock=host
 }
