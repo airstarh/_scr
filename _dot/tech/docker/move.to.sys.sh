@@ -14,11 +14,11 @@ sudo mkdir -p "$NEW_PATH_CONTAINERD"
 ### dockersys
 ###     docker (OLD_PATH_DOCKER)
 sudo rsync -aHAX --info=progress2 "$OLD_PATH_DOCKER/" "$NEW_PATH_DOCKER/"
-sudo mv "$OLD_PATH_DOCKER/*" "$NEW_PATH_DOCKER/"
+# sudo mv "$OLD_PATH_DOCKER/*" "$NEW_PATH_DOCKER/"
 
 ###     containerd (OLD_PATH_CONTAINERD)
 sudo rsync -aHAX --info=progress2 "$OLD_PATH_CONTAINERD/" "$NEW_PATH_CONTAINERD/"
-sudo mv "$OLD_PATH_CONTAINERD/*" "$NEW_PATH_CONTAINERD/"
+# sudo mv "$OLD_PATH_CONTAINERD/*" "$NEW_PATH_CONTAINERD/"
 
 ###
 ### Configs:

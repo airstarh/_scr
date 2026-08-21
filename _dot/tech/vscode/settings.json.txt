@@ -1,0 +1,967 @@
+{
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // DANGER !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    "update.mode": "none",
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    "window.title":               "${rootName}",
+    "files.participants.timeout": 0,
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // region workbench.colorCustomizations
+    "workbench.colorCustomizations": {
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region ERROR
+        // Errors (Ошибки)
+        "editorError.background":          "#ff0000dd",   // Фон области с ошибкой в редакторе (если поддерживается темой)
+        "errorBackground":                 "#ff0000",     // Общий фон для элементов с ошибками в UI
+        "inputValidation.errorBackground": "#ff0000",     // Фон поля ввода с ошибкой
+        "panel.errorBackground":           "#ff0000",     // Фон панели (Problems, Output и т. д.) при наличии ошибок
+        "statusBar.errorBackground":       "#ff0000",     // Фон строки состояния при критической ошибке
+        // Warnings (Предупреждения)
+        "editorWarning.background":          "#cf019180",   // Фон области с предупреждением в редакторе
+        "warningBackground":                 "#cf019180",   // Общий фон для элементов с предупреждениями в UI
+        "inputValidation.warningBackground": "#cf019180",   // Фон поля ввода с предупреждением
+        "panel.warningBackground":           "#cf019180",   // Фон панели при наличии предупреждений
+        "statusBar.warningBackground":       "#cf019180",   // Фон строки состояния при предупреждении
+        // Info (Информация/подсказки)
+        // "editorInfo.background": "#E3F2FD", // Фон области с информационной подсказкой в редакторе
+        // "infoBackground": "#E3F2FD", // Общий фон для информационных элементов в UI
+        // "inputValidation.infoBackground": "#E3F2FD", // Фон поля ввода с информационным сообщением
+        // "panel.infoBackground": "#E3F2FD", // Фон панели при наличии информационных сообщений
+        // "statusBar.infoBackground": "#1976D2" // Фон строки состояния для информационных уведомлений
+        //end region ERROR
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        "editorCursor.foreground":              "#ffffffff",
+        "editorWhitespace.foreground":          "#333333",
+        "editorWhitespace.trailing.foreground": "#FF0000",
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region THEME
+        "contrastActiveBorder":              "#333333",
+        "contrastBorder":                    "#333333",
+        "editor.contrastActiveBorder":       "#333333",
+        "editor.contrastBorder":             "#333333",
+        "editorWidget.border":               "#333333",
+        "editorWidget.resizeBorder":         "#333333",
+        "input.border":                      "#333333",
+        "inputOption.activeBorder":          "#cef796",
+        "inputOption.activeForeground":      "#325600",
+        "inputOption.activeBackground":      "#cef796",
+        "menu.selectionBorder":              "#333333",
+        "menubar.selectionBorder":           "#333333",
+        "minimap.contrastBorder":            "#333333",
+        "notebook.cellBorderColor":          "#333333",
+        "notebook.focusedCellBorder":        "#333333",
+        "notificationCenter.border":         "#333333",
+        "notificationToast.border":          "#333333",
+        "panel.border":                      "#333333",
+        "pickerGroup.border":                "#333333",
+        "sideBar.border":                    "#333333",
+        "statusBar.border":                  "#333333",
+        "tab.hoverBorder":                   "#333333",
+        "tab.unfocusedHoverBorder":          "#333333",
+        "terminal.border":                   "#333333",
+        "welcomePage.buttonHoverBackground": "#333333",
+        "welcomePage.tileHoverBorder":       "#333333",
+        "widget.border":                     "#333333",
+        "window.activeBorder":               "#333333",
+        "window.inactiveBorder":             "#333333",
+        // endregion THEME
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region EDITOR
+        "editor.background": "#090909",
+        // ####################################################################################################
+        // region SEARCH FIND SELECTION LINE
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region LINE
+        "editorGutter.background": "#333333",
+        //
+        "editor.lineHighlightBackground":  "#000077",
+        "editor.lineHighlightBorder":      "#000077",
+        "editor.rangeHighlightBackground": "#000077ee",
+        // STICKY LINE
+        "editorStickyScroll.background": "#0000be",
+        //
+        "editorLineNumber.activeForeground": "#ffffff",
+        "editorLineNumber.foreground":       "#000000",
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        "git.blame.editorDecorationForeground": "#13c4cac0",
+        // endregion LINE
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region FIND SEARCH
+        // FIND SEARCH
+        // FIND SEARCH BORDER
+        "editor.findMatchBorder":          "#ffffff00",
+        "editor.findMatchHighlightBorder": "#ffffff00",
+        // inactive search [ OTHER PLACES ]
+        "editor.findMatchHighlightBackground": "#00fb00cc",
+        "editor.findMatchForeground":          "#0805c4",
+        // active search [CURRENT FOUND CURSOR]
+        "editor.findMatchBackground":          "#cc8b00",
+        "editor.findMatchHighlightForeground": "#0805c4ee",
+        // endregion FIND SEARCH
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region WORD ACTIVE VARIABLES
+        "editor.wordHighlightBackground": "#00000011",
+        "editor.wordHighlightBorder":     "#d48b03",
+        // PRIORITY by some unknown reasons fuck!!!! SAME ENTITY:
+        "editor.wordHighlightTextBackground": "#d48b0366",
+        "editor.wordHighlightTextBorder":     "#d48b0366",
+        //
+        "editor.wordHighlightStrongBackground": "#d48b0366",
+        "editor.wordHighlightStrongBorder":     "#d48b0366",
+        // region WORD ACTIVE VARIABLES
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region SELECTION
+        "editor.selectionBackground": "#99a1fafe",
+        "editor.selectionForeground": "#000000aa",
+        //
+        "editor.selectionHighlightBackground": "#0000FFfe",
+        "editor.selectionHighlightBorder":     "#0000FFfe",
+        // endregion SELECTION
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // endregion SEARCH FIND SELECTION LINE
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // HINTS
+        "phpParameterHint.hintForeground": "#000000",
+        "phpParameterHint.hintBackground": "#777777",
+        "editorInlayHint.foreground":      "#000000aa",
+        "editorInlayHint.background":      "#444444",
+        // () [] {}
+        "editorBracketHighlight.foreground1":                  "#ad99ff",
+        "editorBracketHighlight.foreground2":                  "#ad99ff",
+        "editorBracketHighlight.unexpectedBracket.foreground": "#ff0000",
+        "editorBracketMatch.background":                       "#005c00",
+        "editorBracketMatch.border":                           "#005c00",
+        // BOOKMARK
+        "bookmarks.lineBackground": "#be01018a",
+        // EXTENSION: Breakpoint Highlight : https://marketplace.visualstudio.com/items?itemName=ericgomez.breakpoint-highlight
+        "breakpointHighlight.backgroundColor": "#ffffff",
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region INDENT
+        "editorIndentGuide.activeBackground1": "#FF0000ff",
+        "editorIndentGuide.activeBackground2": "#a06800",
+        "editorIndentGuide.activeBackground3": "#7c7c01",
+        "editorIndentGuide.activeBackground4": "#008000ff",
+        "editorIndentGuide.activeBackground5": "#0000FFff",
+        "editorIndentGuide.activeBackground6": "#EE82EEff",
+        // non-active indent guide colors
+        "editorIndentGuide.background1": "#FF0000ff",
+        "editorIndentGuide.background2": "#a06800",
+        "editorIndentGuide.background3": "#666602",
+        "editorIndentGuide.background4": "#008000ff",
+        "editorIndentGuide.background5": "#0000FFff",
+        "editorIndentGuide.background6": "#EE82EEff",
+        // endregion INDENT
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region DIFF
+        "diffEditor.insertedLineBackground":       "#057005c8",
+        "diffEditor.removedLineBackground":        "#78010199",
+        "diffEditor.insertedTextBackground":       "#1e018599",
+        "diffEditor.insertedTextBorder":           "#057005c8",
+        "diffEditor.removedTextBackground":        "#5c5a0099",
+        "diffEditor.removedTextBorder":            "#5c5a0099",
+        "diffEditor.border":                       "#000000",
+        "diffEditor.diagonalFill":                 "#00000099",
+        "diffEditorGutter.insertedLineBackground": "#aaffaa99",
+        "diffEditorGutter.removedLineBackground":  "#ffaaff99",
+        // endregion DIFF
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // endregion EDITOR
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region NOT EDITOR
+        // region TAB
+        "tab.border":                "#ffffff",
+        "tab.activeBorder":          "#830101",
+        "tab.unfocusedActiveBorder": "#830101",
+        "tab.activeBackground":      "#830101",
+        "tab.activeForeground":      "#ffffff",
+        "tab.inactiveBackground":    "#333333",
+        // endregion TAB
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region BREADCRUMB
+        "breadcrumb.foreground":                "#aaa",
+        "breadcrumb.background":                "#024315",
+        "breadcrumb.focusForeground":           "#c6fc01",
+        "breadcrumb.activeSelectionForeground": "#ffffff",
+        "breadcrumbPicker.background":          "#000000",
+        // endregion BREADCRUMB
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region POPUP
+        "editorHoverWidget.background":            "#400068",
+        "editorHoverWidget.border":                "#400068",
+        "editorWidget.background":                 "#400068",
+        "editorParameterHint.background":          "#400068",
+        "editorSuggestWidget.background":          "#400068",
+        "editorSuggestWidget.border":              "#400068",
+        "editorSuggestWidget.selectedBackground":  "#000",
+        "editorSuggestWidget.highlightForeground": "#fff",
+        // endregion POPUP
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region LIST, EXPLORER, FILES
+        "list.inactiveSelectionBackground": "#0e8805",
+        "list.inactiveSelectionForeground": "#aaaaaa",
+        "list.focusBackground":             "#2f2f2f",
+        "list.focusAndSelectionOutline":    "#333333",
+        "list.focusOutline":                "#333333",
+        "list.hoverOutline":                "#333333",
+        "list.inactiveFocusOutline":        "#333333",
+        "list.inactiveSelectionBorder":     "#333333",
+        //
+        "list.activeSelectionBackground": "#0b36d4",
+        "list.activeSelectionBorder":     "#333333",
+        "list.activeSelectionForeground": "#ffffff",
+        //
+        "settings.headerForeground":     "#2ef173",
+        "settings.headerBorder":         "#2ef173",
+        "settings.focusedRowBackground": "#430134",
+        "settings.rowHoverBackground":   "#022c19",
+        //
+        "list.focusForeground":              "#ffffff",
+        "list.focusAndSelectionBackground":  "#555555",
+        "list.focusAndSelectionForeground":  "#ffffff",
+        "list.hoverBackground":              "#4a4a4a",
+        "list.inactiveFocusBackground":      "#444444",
+        "list.highlightForeground":          "#ffd700",
+        "list.dropBackground":               "#007acc40",
+        "list.invalidItemForeground":        "#ff0000",
+        "list.errorForeground":              "#ff0000",
+        "list.warningForeground":            "#ffa500",
+        "list.filterMatchBackground":        "#ffff0033",
+        "list.filterMatchOutline":           "#ffff00",
+        "list.indentGuidesBackground":       "#555555",
+        "list.indentGuidesActiveBackground": "#ffffff",
+        // endregion LIST, EXPLORER, FILES
+        //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // region  INPUT COLORS
+        "settings.numberInputBackground": "#66014c",
+        "settings.textInputBackground":   "#66014c",
+        "settings.checkboxBackground":    "#66014c",
+        "settings.dropdownBackground":    "#66014c",
+        "input.foreground":               "#ffffff",
+        "input.background":               "#000000",
+        "input.selectionBackground":      "#7130b3dd",
+        // ###
+        "button.background":         "#0202a8",
+        "button.hoverBackground":    "#017301",
+        "button.disabledBackground": "#a1cfa1",
+        "button.disabledForeground": "#445344",
+        // endregion INPUT COLORS
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+        // endregion NOT EDITOR
+        // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    },
+    // endregion workbench.colorCustomizations
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // region COLOR BY TOKEN
+    "editor.tokenColorCustomizations": {
+        //"functions": "#a143ff",
+        "textMateRules": [
+            {
+                "scope":    "string.quoted.double",
+                "settings": {
+                    "foreground": "#eeff00",
+                    "fontStyle":  "bold"
+                }
+            },
+            {
+                "scope":    "string.quoted.single",
+                "settings": {
+                    "foreground": "#eeff00",
+                    "fontStyle":  "bold"
+                }
+            },
+            {
+                "scope":    "string.template",
+                "settings": {
+                    "foreground": "#eeff00",
+                    "fontStyle":  "bold"
+                }
+            },
+            // {
+            //     "scope": "entity.name.function",
+            //     "settings": {
+            //         "foreground": "#6fc3f8",
+            //         "fontStyle": "bold"
+            //     }
+            // },
+            {
+                "scope":    "variable.other",
+                "settings": {
+                    "foreground": "#2fff00"
+                }
+            },
+            {
+                "scope":    "variable.other.constant",
+                "settings": {
+                    "foreground": "#ffffff",
+                    // "background": "#ffffff33",
+                }
+            },
+            {
+                "scope": [
+                    "comment",
+                    "comment.block.documentation",
+                    "comment.block.documentation.js",
+                    "comment.line.double-slash.js",
+                    "storage.type.class.jsdoc",
+                    "entity.name.type.instance.jsdoc",
+                    "variable.other.jsdoc",
+                    "punctuation.definition.comment",
+                    "punctuation.definition.comment.begin.documentation",
+                    "punctuation.definition.comment.end.documentation"
+                ],
+                "settings": {
+                    "foreground": "#00b7ff"
+                }
+            }
+        ]
+    },
+    // endregion COLOR BY TOKEN
+    // region HIGHLIGHT
+    "highlight.regexes": {
+        // region OWN HIGHLIGHTS
+        "(\\[:.+?:\\]|\\{.*?\\})": {
+            // "filterFileRegex": ".php",
+            "decorations": [
+                {
+                    "overviewRulerColor": "#ffffff44",
+                    "backgroundColor":    "#ffffff44",
+                    // "color": "#00000066",
+                    "fontWeight": "bold"
+                }
+            ]
+        },
+        "([\\s]*)(private.*?|public.*?|protected.*?|static.*?|function.*?|fn.*?)(\\()": {
+            // "filterFileRegex": ".php",
+            "decorations": [
+                {
+                    // "backgroundColor": "#015897bb",
+                },
+                {
+                    "backgroundColor":    "#015897bb",
+                    "overviewRulerColor": "#015897bb",
+                    // "color": "#ffffff88",
+                    "fontWeight": "bold",
+                },
+                {}
+            ]
+        },
+        "(return|throw|exit|die|break|continue|yield)(.*?)": {
+            // "filterFileRegex": ".php",
+            "decorations": [
+                {
+                    "backgroundColor": "#aaffaa77",
+                    "color":           "#000000",
+                    "fontWeight":      "bold"
+                },
+                {
+                    "backgroundColor": "#b1fd0052",
+                }
+            ]
+        },
+        "(\\s)(foreach|while|do|switch|case|default|for|region|endregion|unless)(\\ |\\(|\\:)": {
+            // "filterFileRegex": ".php",
+            "decorations": [
+                {},
+                {
+                    "overviewRulerColor": "#015897bb",
+                    "backgroundColor":    "#015897bb",
+                    // "color": "#ffffff88",
+                    "fontWeight": "bold"
+                },
+                {}
+            ]
+        },
+        "(console.log|//VA:|plog|xxx|XXX|QQQ|qqq|\\||\\&|!|=|->|\\>|\\<|like|:|\\?|<input|assert|discount)": {
+            // "filterFileRegex": ".php",
+            "decorations": [
+                {
+                    "overviewRulerColor": "#0bbef9bd",
+                    "backgroundColor":    "#0bbef9bd",
+                    "color":              "#000000",
+                    "fontWeight":         "bold"
+                }
+            ]
+        },
+        "(YYY)": {
+            "decorations": [
+                {
+                    "overviewRulerColor": "#C8C456aa",
+                    "backgroundColor":    "#C8C456aa",
+                    "color":              "#ffffff",
+                    "fontWeight":         "bold"
+                }
+            ]
+        },
+        "(zzz)": {
+            "decorations": [
+                {
+                    "overviewRulerColor": "#93C856aa",
+                    "backgroundColor":    "#93C856aa",
+                    "color":              "#ffffff",
+                    "fontWeight":         "bold"
+                }
+            ]
+        },
+        "(onclick|onchange|onsubmit|onfocusout)": {
+            // "filterFileRegex": ".php",
+            "decorations": [
+                {
+                    "overviewRulerColor": "#0bbef9bd",
+                    "backgroundColor":    "#0bbef9bd",
+                    "color":              "#000000aa",
+                    "fontWeight":         "bold"
+                }
+            ]
+        },
+        // PHP CLASS METHODS CALL
+        "(->|::)([a-z-A-Z-0-9]{1,}?)[(]": {
+            "filterFileRegex": ".php",
+            "decorations":     [
+                {},
+                {
+                    "overviewRulerColor": "#a001a040",
+                    "backgroundColor":    "#ff00ff40",
+                    // "color": "#000000",
+                    "fontWeight": "bold"
+                }
+            ]
+        },
+        // endregion OWN HIGHLIGHTS
+        // region DEFAULTS
+        "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *TODO(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+            "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+            "decorations":     [
+                {
+                    "overviewRulerColor": "#ffcc00",
+                    "backgroundColor":    "#ffcc00",
+                    "color":              "#1f1f1f",
+                    "fontWeight":         "bold"
+                },
+                {
+                    "backgroundColor": "#ffcc00",
+                    "color":           "#1f1f1f"
+                }
+            ]
+        },
+        "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:FIXME|FIX|BUG|UGLY|DEBUG|HACK)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+            "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+            "decorations":     [
+                {
+                    "overviewRulerColor": "#cc0000",
+                    "backgroundColor":    "#cc0000",
+                    "color":              "#1f1f1f",
+                    "fontWeight":         "bold"
+                },
+                {
+                    "backgroundColor": "#cc0000",
+                    "color":           "#1f1f1f"
+                }
+            ]
+        },
+        "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:REVIEW|OPTIMIZE|TSC)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+            "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+            "decorations":     [
+                {
+                    "overviewRulerColor": "#00ccff",
+                    "backgroundColor":    "#00ccff",
+                    "color":              "#1f1f1f",
+                    "fontWeight":         "bold"
+                },
+                {
+                    "backgroundColor": "#00ccff",
+                    "color":           "#1f1f1f"
+                }
+            ]
+        },
+        "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:IDEA)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+            "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+            "decorations":     [
+                {
+                    "overviewRulerColor": "#cc00cc",
+                    "backgroundColor":    "#cc00cc",
+                    "color":              "#1f1f1f",
+                    "fontWeight":         "bold"
+                },
+                {
+                    "backgroundColor": "#cc00cc",
+                    "color":           "#1f1f1f"
+                }
+            ]
+        },
+        // endregion DEFAULTS
+    },
+    // endregion HIGHLIGHT
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // region CUSTOM
+    "bookmarks.navigateThroughAllFiles":                     false,
+    "json.format.keepLines":                                 false,
+    "workbench.hover.delay":                                 3000,
+    "workbench.sash.hoverDelay":                             2000,
+    "editor.hover.delay":                                    10000,
+    "editor.hover.hidingDelay":                              100,
+    "workbench.editor.pinnedTabsOnSeparateRow":              true,
+    "workbench.editor.wrapTabs":                             true,
+    "workbench.tree.indent":                                 22,
+    "files.autoSave":                                        "onFocusChange",
+    "editor.mouseWheelZoom":                                 true,
+    "editor.renderLineHighlight":                            "all",
+    "workbench.tree.expandMode":                             "doubleClick",
+    "workbench.list.openMode":                               "doubleClick",
+    "workbench.list.smoothScrolling":                        true,
+    "terminal.integrated.smoothScrolling":                   true,
+    "editor.scrollbar.horizontal":                           "hidden",
+    "editor.mouseWheelScrollSensitivity":                    0.9,
+    "workbench.tree.stickyScrollMaxItemCount":               33,
+    "editor.scrollbar.horizontalScrollbarSize":              5,
+    "editor.scrollbar.verticalScrollbarSize":                5,
+    "workbench.editor.closeOnFileDelete":                    true,
+    "explorer.confirmDelete":                                false,
+    "explorer.confirmPasteNative":                           false,
+    "explorer.confirmDragAndDrop":                           false,
+    "diffEditor.ignoreTrimWhitespace":                       true,
+    "editor.formatOnPaste":                                  false,
+    "editor.formatOnType":                                   false,
+    "editor.showFoldingControls":                            "always",
+    "editor.smartSelect.selectLeadingAndTrailingWhitespace": false,
+    "editor.smartSelect.selectSubwords":                     false,
+    "workbench.tree.renderIndentGuides":                     "always",
+    "workbench.view.alwaysShowHeaderActions":                true,
+    "explorer.autoReveal":                                   false,
+    "window.restoreFullscreen":                              true,
+    "editor.autoIndent":                                     "full",
+    "workbench.list.horizontalScrolling":                    true,
+    "explorer.copyPathSeparator":                            "/",
+    "explorer.copyRelativePathSeparator":                    "/",
+    "editor.fontFamily":                                     "Liberation Mono",
+    "editor.minimap.enabled":                                false,
+    "editor.codeLens":                                       false,
+    "workbench.editor.openPositioning":                      "last",
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // region SPELL
+    "cSpell.language":  "en,ru",
+    "cSpell.userWords": [
+        "ACHT",
+        "ALINA",
+        "alinafool",
+        "alinapath",
+        "anarki",
+        "answ",
+        "atts",
+        "Azbuka",
+        "Bootbox",
+        "Certbot",
+        "COEF",
+        "Coeff",
+        "CURLOPT",
+        "Debet",
+        "Devcasino",
+        "devxa",
+        "egamings",
+        "etts",
+        "fastcgi",
+        "feeamount",
+        "firstname",
+        "Freebets",
+        "Freeround",
+        "Freerounds",
+        "funcore",
+        "fundist",
+        "GITOUT",
+        "HTTPHEADER",
+        "idekey",
+        "intelephense",
+        "Laravel",
+        "lastname",
+        "letsencrypt",
+        "locklib",
+        "maint",
+        "Mimey",
+        "mironova",
+        "modificator",
+        "Modificators",
+        "nbproject",
+        "NOSORT",
+        "notext",
+        "Numpad",
+        "ospl",
+        "plog",
+        "Promocode",
+        "qatest",
+        "Recalc",
+        "Redirector",
+        "rutube",
+        "saysimsim",
+        "searchengiines",
+        "SETGID",
+        "SETUID",
+        "sewa",
+        "tmpfs",
+        "userfile",
+        "vazovsky",
+        "yamr",
+        "автозаполнения",
+        "коммитах",
+        "логировать",
+        "Модал",
+        "Модала",
+        "Модале",
+        "Модалом",
+        "регресионное",
+        "Роут",
+        "Спана",
+        "третьесторонним",
+        "Фандиста",
+        "эндпоинт"
+    ],
+    // endregion SPELL
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // region EXCLUDE
+    "files.exclude": {
+        "**/.composer/":          true,
+        "**/vendor/":             true,
+        "**/.idea/":              true,
+        "**/.idea":               true,
+        "**/.project":            true,
+        "**/node_modules":        false,
+        "**/node_modules/.cache": true,
+        "**/bower_components":    true,
+        "**/.git":                true,
+        "**/dist":                false,
+        "**/build":               true,
+        "**/__pycache__":         true,    // Example for Python
+        "**/.venv":               true,    // Example for Python virtual environment
+        "**/database":            false,
+        "**/nbproject":           true,
+        "ChangeLog":              true,
+        "**/var/www/chat":        true,
+        "**/var/log/":            true,
+    },
+    "search.exclude": {
+        "**/.phpunit.result.cache":   true,
+        "**/ai.prompts":           true,
+        "**/archived":             true,
+        "**/.composer":            true,
+        "**/.idea":                true,
+        "**/db":                   true,
+        "**/.project":             true,
+        "**/node_modules":         true,
+        "**/node_modules/.cache":  true,
+        "**/bower_components":     true,
+        "**/.git":                 true,
+        "**/dist":                 true,
+        "**/dist-stage":           true,
+        "**/build":                true,
+        "**/__pycache__":          true,
+        "**/.venv":                true,
+        "**/database":             true,
+        "**/nbproject":            true,
+        "**/var/www/zero.home":    true,
+        "**/var/www/saysimsim.ru": true,
+        "**/var/www/vov":          true,
+        "**/var/www/m45a":         true,
+        "**/var/www/stage":        true,
+        "**/var/log/":             true,
+        "**/package-lock.json":    true,
+        "ChangeLog":               true,
+        "**/var/www/chat.":        true,
+        "**/their*/":              true,
+        "**/_MISC_CONTENT/":       true,
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**":       true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**":       true,
+        "**/.venv/**":              true,
+        "**/dist/**":               true,
+        "**/build/**":              true,
+        "**/var/log/**":            true,
+        "**/.idea/**":              true,
+    },
+    // endregion EXCLUDE
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    "workbench.editor.revealIfOpen": true,
+    "editor.overtypeOnPaste":        true,
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    "js/ts.suggest.autoImports":                                                false,
+    "js/ts.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions":        false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces":  false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces":       false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets":     false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis":  false,
+    "js/ts.format.insertSpaceAfterSemicolonInForStatements":                    true,
+    "js/ts.format.insertSpaceBeforeAndAfterBinaryOperators":                    true,
+    "js/ts.format.insertSpaceAfterKeywordsInControlFlowStatements":             true,
+    "js/ts.format.insertSpaceAfterCommaDelimiter":                              true,
+    "js/ts.format.insertSpaceAfterConstructor":                                 false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces":          false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
+    "js/ts.format.insertSpaceBeforeFunctionParenthesis":                        false,
+    "js/ts.format.placeOpenBraceOnNewLineForFunctions":                         true,
+    "js/ts.format.placeOpenBraceOnNewLineForControlBlocks":                     true,
+    "js/ts.format.semicolons":                                                  "insert",
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // region LANGAUGEs
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[php]": {
+        "editor.defaultFormatter": "junstyle.php-cs-fixer"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[sql]": {
+        "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+    },
+    "[dockercompose]": {
+        "editor.insertSpaces":     true,
+        "editor.tabSize":          4,
+        "editor.autoIndent":       "advanced",
+        "editor.quickSuggestions": {
+            "other":    true,
+            "comments": false,
+            "strings":  true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+    },
+    // endregion LANGAUGEs
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    "keyboard.dispatch": "keyCode",
+    // endregion CUSTOM
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    "remote.SSH.remotePlatform": {
+        "fundist.dev": "linux"
+    },
+    "workbench.colorTheme":        "Default High Contrast",
+    "editor.accessibilitySupport": "off",
+    "window.newWindowDimensions":  "maximized",
+    "files.associations":          {
+        "*.blade.php": "php",
+        "*.tpl":       "php"
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "[html]":                                  {},
+    "html.format.wrapAttributes":              "preserve",
+    "php.stubs":                               [
+        "*",
+        "Zookeeper",
+    ],
+    "editor.definitionLinkOpensInPeek":                false,
+    "bookmarks.saveBookmarksInProject":                true,
+    "search.showLineNumbers":                          true,
+    "notebook.lineNumbers":                            "on",
+    "search.defaultViewMode":                          "tree",
+    "search.quickAccess.preserveInput":                true,
+    "search.searchEditor.defaultNumberOfContextLines": 3,
+    "editor.colorDecoratorsActivatedOn":               "click",
+    "editor.colorDecoratorsLimit":                     5000,
+    "editor.defaultColorDecorators":                   "always",
+    "git.blame.editorDecoration.enabled":              true,
+    "code-eol.highlightExtraWhitespace":               true,
+    "code-eol.colors.error.foreground":                "#ff0000",
+    "code-eol.colors.default.foreground":              "#333333",
+    "editor.renderWhitespace":                         "all",
+    "alignmenthash.surroundSpace":                     {
+        "colon": [
+            -1,
+            1
+        ], // The first number specify how much space to add to the left, can be negative. // The second number is how much space to the right, can be negative.
+        "assignment": [
+            1,
+            1
+        ], // 1The same as above.
+        "arrow": [
+            1,
+            -1
+        ], // The same as above.
+        "comment": 2  // Special how much space to add between the trailing comment and the code. // If this value is negative, it means don't align the trailing comment.
+    },
+    "editor.gotoLocation.multipleDefinitions":                    "goto",
+    "editor.cursorStyle":                                         "line",
+    "editor.cursorSmoothCaretAnimation":                          "on",
+    "editor.cursorWidth":                                         4,
+    "editor.folding":                                             true,
+    "editor.glyphMargin":                                         true,
+    "selection-foreground.textColor":                             "#000000",
+    "selection-foreground.enabled":                               true,
+    "editor.inlineSuggest.experimental.emptyResponseInformation": false,
+    "application.experimental.rendererProfiling":                 true,
+    "editor.accessibilityPageSize":                               1,
+    "gitTreeCompare.diffMode":                                    "full",
+    "eslint.codeActionsOnSave.options":                           {},
+    "debug.javascript.resourceRequestOptions":                    {},
+    "js/ts.autoClosingTags.enabled":                              true,
+    "search.useIgnoreFiles":                                      false,
+    "sftp.printDebugLog":                                         true,
+    "sftp.debug":                                                 true,
+    "editor.rulers":                                              [
+        1111
+    ],
+    "editor.wordWrapColumn":                                             500,
+    "diffEditor.wordWrap":                                               "off",
+    "editor.wrappingIndent":                                             "none",
+    "code-eol.forceShowOnBoundary":                                      true,
+    "code-eol.forceShowOnWordWrap":                                      true,
+    "editor.comments.ignoreEmptyLines":                                  false,
+    "accessibility.verbosity.comments":                                  false,
+    "html.format.wrapLineLength":                                        500,
+    "editor.defaultFormatter":                                           "esbenp.prettier-vscode",
+    "notebook.defaultFormatter":                                         "esbenp.prettier-vscode",
+    "js/ts.inlayHints.propertyDeclarationTypes.enabled":                 true,
+    "docker.extension.enableComposeLanguageServer":                      false,
+    "highlight.maxMatches":                                              5000,
+    "gitlens.fileAnnotations.command":                                   "blame",
+    "gitlens.currentLine.uncommittedChangesFormat":                      "\"ASDF\"",
+    "gitlens.currentLine.fontSize":                                      12,
+    "prettier.singleAttributePerLine":                                   true,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "explorer.compactFolders":                                           false,
+    "editor.defaultFoldingRangeProvider":                                "esbenp.prettier-vscode",
+    "scm.diffDecorationsIgnoreTrimWhitespace":                           "true",
+    "gitlens.blame.ignoreWhitespace":                                    true,
+    "markdown-pdf.breaks":                                               true,
+    "markdown-pdf.highlightStyle":                                       "a11y-dark.css",
+    "editor.fastScrollSensitivity":                                      1,
+    "bookmarks.sideBar.expanded":                                        true,
+    "trailing-spaces.deleteModifiedLinesOnly":                           true,
+    "trailing-spaces.logLevel":                                          "error",
+    "window.customMenuBarAltFocus":                                      false,
+    "window.enableMenuBarMnemonics":                                     false,
+    "files.trimTrailingWhitespaceInRegexAndStrings":                     false,
+    "trailing-spaces.trimOnSave":                                        true,
+    "terminal.integrated.gpuAcceleration":                               "off",
+    "accessibility.accessibleView.closeOnKeyPress":                      false,
+    "accessibility.debugWatchVariableAnnouncements":                     false,
+    "accessibility.replEditor.readLastExecutionOutput":                  false,
+    "accessibility.verboseChatProgressUpdates":                          false,
+    "accessibility.verbosity.debug":                                     false,
+    "accessibility.verbosity.diffEditor":                                false,
+    "accessibility.verbosity.emptyEditorHint":                           false,
+    "accessibility.verbosity.find":                                      false,
+    "accessibility.verbosity.hover":                                     false,
+    "accessibility.verbosity.inlineChat":                                false,
+    "accessibility.verbosity.inlineCompletions":                         false,
+    "accessibility.verbosity.keybindingsEditor":                         false,
+    "accessibility.windowTitleOptimized":                                false,
+    "accessibility.verbosity.walkthrough":                               false,
+    "accessibility.verbosity.terminal":                                  false,
+    "accessibility.verbosity.sourceControl":                             false,
+    "accessibility.verbosity.replEditor":                                false,
+    "accessibility.verbosity.panelChat":                                 false,
+    "accessibility.verbosity.notification":                              false,
+    "accessibility.verbosity.notebook":                                  false,
+    "accessibility.verbosity.diffEditorActive":                          false,
+    "accessibility.replEditor.autoFocusReplExecution":                   "lastExecution",
+    "terminal.integrated.customGlyphs":                                  false,
+    "markdown-pdf.headerTemplate":                                       "",
+    "editor.rename.enablePreview":                                       false,
+    "workbench.editor.enablePreview":                                    false,
+    "workbench.editor.alwaysShowEditorActions":                          true,
+    "editor.detectIndentation":                                          true,
+    "php-cs-fixer.allowRisky":                                           true,
+    "php-cs-fixer.executablePath":                                       "/home/qqq/.config/composer/vendor/bin/php-cs-fixer",
+    "treeSitterSmartSelect.includeAnonymousNodes":                       true,
+    "workbench.editor.preventPinnedEditorClose":                         "mouse",
+    "phpNamespaceResolver.highlightNotUsed":                             false,
+    "editor.codeLensFontFamily":                                         "Liberation Mono",
+    "editor.inlayHints.fontFamily":                                      "Liberation Mono",
+    "editor.inlineSuggest.fontFamily":                                   "Liberation Mono",
+    "chat.editor.fontFamily":                                            "Liberation Mono",
+    "chat.fontFamily":                                                   "Liberation Mono",
+    "debug.console.fontFamily":                                          "Liberation Mono",
+    "scm.inputFontFamily":                                               "Liberation Mono",
+    "terminal.integrated.fontFamily":                                    "Liberation Mono",
+    "notebook.markup.fontFamily":                                        "Liberation Mono",
+    "notebook.output.fontFamily":                                        "Liberation Mono",
+    "gitlens.currentLine.fontFamily":                                    "Liberation Mono",
+    "gitlens.blame.fontFamily":                                          "Liberation Mono",
+    "markdown.preview.fontFamily":                                       "Liberation Mono",
+    "errorLens.fontFamily":                                              "Liberation Mono",
+    "files.eol":                                                         "\n",
+    "cSpell.enabled":                                                    false,
+    "editor.smoothScrolling":                                            true,
+    "editor.cursorBlinking":                                             "phase",
+    "files.insertFinalNewline":                                          true,
+    "js/ts.implicitProjectConfig.checkJs":                               true,
+    "oxc.suppressProgramErrors":                                         true,
+    "oxc.tsConfigPath":                                                  "./tsconfig.json",
+    "js/ts.implicitProjectConfig.experimentalDecorators":                true,
+    "php.format.rules.alignEnumCases":                                   true,
+    "php.format.rules.alignConsecutiveAssignments":                      true,
+    "php.format.rules.alignConstants":                                   true,
+    "php.format.rules.alignMatchArmBodies":                              true,
+    "php.format.rules.alignProperties":                                  true,
+    "js/ts.tsserver.npm.path":                                           "npm",
+    "workbench.editor.tabSizingFixedMaxWidth":                           1000,
+    "workbench.editor.tabSizingFixedMinWidth":                           500,
+    "php.suggest.basic":                                                 true,
+    "php.validate.enable":                                               true,
+    "php.validate.executablePath":                                       "/usr/bin/php",
+    "php.executablePath":                                                "/usr/bin/php",
+    "php-cs-fixer.formatHtml":                                           true,
+    "php-cs-fixer.tmpDir":                                               "/tmp",
+    "vitest.debugExclude":                                               [
+        "node_internals/**"
+    ],
+    "editor.parameterHints.enabled": false,
+    "editor.quickSuggestions":       {
+        "other":    "offWhenInlineCompletions",
+        "comments": "off",
+        "strings":  "off"
+    },
+    "editor.acceptSuggestionOnCommitCharacter":                    false,
+    "editor.inlineSuggest.suppressSuggestions":                    true,
+    "editor.screenReaderAnnounceInlineSuggestion":                 false,
+    "editor.snippetSuggestions":                                   "none",
+    "editor.wordBasedSuggestions":                                 "off",
+    "tailwindCSS.lint.invalidScreen":                              "ignore",
+    "chat.disableAIFeatures":                                      true,
+    "editor.wrappingStrategy":                                     "advanced",
+    "editor.inlineSuggest.edits.allowCodeShifting":                "never",
+    "editor.inlineSuggest.edits.longDistanceHintContextLineCount": 1,
+    "editor.inlineSuggest.edits.showLongDistanceHint":             false,
+    "editor.inlineSuggest.edits.renderSideBySide":                 "never",
+    "editor.inlineSuggest.enabled":                                false,
+    "editor.inlineSuggest.showToolbar":                            "never",
+    "editor.inlineSuggest.suppressInSnippetMode":                  false,
+    "editor.codeActionWidget.includeNearbyQuickFixes":             false,
+    "editor.cursorSurroundingLinesStyle":                          "all",
+    "editor.stickyScroll.defaultModel":                            "indentationModel",
+    "editor.stickyScroll.enabled":                                 false,
+    "editor.stickyTabStops":                                       true,
+    "workbench.editor.titleScrollbarSizing":                       "large",
+    "workbench.editor.titleScrollbarVisibility":                   "visible",
+    "editor.fontLigatures":                                        false,
+    "editor.codeLensFontSize":                                     10,
+    "notebook.markup.fontSize": 10,
+    "terminal.integrated.initialHint": false,
+    "workbench.experimental.modernUI": false,
+    "update.showReleaseNotes": false,
+}
