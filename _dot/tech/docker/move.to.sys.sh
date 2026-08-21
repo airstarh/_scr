@@ -18,9 +18,9 @@ sudo rsync -aHAX --info=progress2 /var/lib/containerd/ "$CONTAINERD_NEW_ROOT/"
 ###
 ### Configs:
 ### /etc/docker/daemon.json
-###     "data-root": "/osa/dockersys/docker"
+###     "data-root": "$DOCKER_NEW_ROOT"
 ### /etc/containerd/config.toml
-###     root = "/mnt/d1001/dockersys/containerd"
+###     root = "$CONTAINERD_NEW_ROOT"
 ###
 ##################################################
 
