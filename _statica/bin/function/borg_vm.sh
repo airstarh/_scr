@@ -19,12 +19,13 @@ borg_vm() {
     -drive file=/mnt/d1001/_v/qemu/w7x64_HDA.img,format=raw,if=ide,cache=writeback \
     -cdrom /dev/null \
     -boot c \
-    -netdev user,id=net0,smb=/mnt/d1001/_v/qemu/shara/ \
+    -netdev user,id=net0,smb=/mnt/d1001/_v/qemu/shara/,dns=8.8.8.8,hostname=guest-vm \
     -device e1000,netdev=net0 \
     -vga qxl \
     -audiodev pa,id=audio0,server=/run/user/1000/pulse/native \
     -device AC97,audiodev=audio0 \
-    -device intel-hda -device hda-duplex,audiodev=audio0 \
+    -device intel-hda \
+    -device hda-duplex,audiodev=audio0 \
     -display spice-app \
     -usb \
     -device usb-tablet \
