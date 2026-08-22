@@ -32,7 +32,8 @@ borg_fs_v(){
 
 borg_fs_docker(){
     # bash_fs_rsync "/mnt/d1001/_docker/" "qqq@192.168.1.120:/mnt/d1001/_docker/"
-    bash_fs_rsync "/mnt/d1001/_docker/mey/docker-compose.yml" "qqq@192.168.1.120:/mnt/d1001/_docker/mey/docker-compose.yml"
+    # bash_fs_rsync "/mnt/d1001/_docker/mey/docker-compose.yml" "qqq@192.168.1.120:/mnt/d1001/_docker/mey/docker-compose.yml"
+    echo 1234
 }
 
 
