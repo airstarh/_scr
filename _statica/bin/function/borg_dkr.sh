@@ -7,6 +7,10 @@ borg_dkr(){
 
 borg_dkr_reboot(){
     # Stop and disable
+    sudo systemctl stop docker.socker 2>/dev/null
+    sudo systemctl stop docker 2>/dev/null
+    sudo systemctl stop containerd 2>/dev/null
+
     sudo systemctl stop iptables 2>/dev/null
     sudo systemctl disable iptables 2>/dev/null
 
@@ -28,8 +32,7 @@ borg_dkr_reboot(){
     # Make it persistent (so it stays after reboot)
     sudo apt remove -y iptables-persistent netfilter-persistent 2>/dev/null
 
-    # Restart Docker
-    sudo systemctl restart docker
+    sudo systemctl start docker
 
     # verify
     sudo iptables -L -n
