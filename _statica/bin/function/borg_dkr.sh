@@ -5,6 +5,16 @@ borg_dkr(){
     docker exec -it "$TARGET" bash || docker exec -it "$TARGET" sh
 }
 
+borg_dkr_stop() {
+    sudo systemctl stop docker.socker 2>/dev/null
+    sudo systemctl stop docker 2>/dev/null
+    sudo systemctl stop containerd 2>/dev/null
+}
+
+borg_dkr_start(){
+    sudo systemctl start docker
+}
+
 borg_dkr_reboot(){
     # Stop and disable
     sudo systemctl stop docker.socker 2>/dev/null
@@ -46,4 +56,8 @@ borg_dkr_mey_up(){
 borg_dkr_mey_down(){
     cd /osa/_docker/mey
     docker compose down
+}
+
+borg_dkr_create_network() {
+    docker network create --driver bridge --ipv6=false bnet
 }
