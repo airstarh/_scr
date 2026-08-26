@@ -4,7 +4,12 @@ bash_fs_rsync() {
     local source_dir="$1"
     local target_dir="$2"
 
-    rsync -rtlvz --delete --no-perms --no-owner --no-group --progress \
+    rsync -rtlvz \
+        --delete-after \
+        --no-perms \
+        --no-owner \
+        --no-group \
+        --progress \
         -i \
         --modify-window=10 \
         --rsync-path="sudo rsync" \
@@ -13,8 +18,11 @@ bash_fs_rsync() {
         "$source_dir" \
         "$target_dir"
 
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "=== Files that failed/were skipped (from log) ==="
     grep -E "failed|skipped|error" /tmp/rsync_errors.log || echo "No errors found"
+    rm -f /tmp/rsync_errors.log
 }
 
 
@@ -41,5 +49,6 @@ borg_fs_bdbmysql(){
     bash_fs_rsync "/mnt/d1001/_docker/bdb/" "qqq@bbb:/mnt/d1001/_docker/bdb/"
 }
 
-
-
+borg_fs_bng(){
+    bash_fs_rsync "/mnt/d1001/_docker/bng/" "qqq@bbb:/mnt/d1001/_docker/bng/"
+}

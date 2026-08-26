@@ -62,6 +62,12 @@ borg_ssh_sss() {
     ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 sewa@saysimsim.ru
 }
 
+borg_ssh_sss_fs() {
+    sshfs sewa@saysimsim.ru:/home/sewa/_A001/rep/ /mnt/prod_sss -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
+    cd /mnt/prod_sss
+    ls -al
+}
+
 borg_sftp_sss() {
     sshfs \
     -o allow_other,idmap=user,reconnect,IdentityFile=~/.ssh/id_rsa \
