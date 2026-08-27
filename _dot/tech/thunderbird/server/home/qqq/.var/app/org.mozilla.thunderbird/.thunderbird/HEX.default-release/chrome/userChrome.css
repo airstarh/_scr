@@ -1,0 +1,11 @@
+/* Change only UNREAD messages to a dark-blue background with white text */
+#threadTree tr[data-properties~="unread"] {
+  background-color: #1a3a5f !important;
+  color: #ffffff !important;
+}
+
+/* Make sure the subject text stays bright and bold when unread */
+#threadTree tr[data-properties~="unread"] .subject {
+  font-weight: bold !important;
+  color: #ffffff !important;
+}
