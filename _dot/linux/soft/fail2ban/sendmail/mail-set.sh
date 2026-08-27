@@ -17,3 +17,9 @@ sudo apt install ca-certificates -y
 # Mail utilities (optional, for testing)
 sudo apt install mailutils -y
 sudo apt install bsd-mailx -y
+
+# REBUILD
+cd /etc/mail
+sudo m4 sendmail.mc | sudo tee sendmail.cf > /dev/null
+sudo systemctl restart sendmail
+printf "Subject: Test\n\nTest\n.\n" | /usr/sbin/sendmail -v vsevolod.azovsky@gmail.com
