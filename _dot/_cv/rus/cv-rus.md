@@ -12,8 +12,6 @@
 - **Linked-in:** [vazovsky](https://www.linkedin.com/in/vazovskiy/)
 - **Github:** [airstarh](https://github.com/airstarh?tab=repositories)
 
----
-
 <br/>
 <br/>
 <br/>
@@ -47,13 +45,17 @@
 
 | Направление | Технологии |
 |---|---|
-| **Инфраструктура** | Docker, AWS, Yandex Cloud, Nginx, Apache, GNU Linux, bash/sh |
-| **Backend** | PHP, Laravel, Yii, Symfony, WordPress, Drupal, Node.js, Python |
-| **Frontend** | JavaScript, Vue.js 2/3, WebRTC, React, Angular, Backbone.js, jQuery, Lodash, Css, SCSS, Bootstrap, Quasar |
-| **Базы данных и кеширование** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcached |
-| **Инструменты** | composer, npm, pip, Jenkins, Webpack, Babel, Gulp, Grunt |
+| **ОС** | GNU Linux (Debian, Ubuntu) |
+| **Контейнеризация** | Docker, LXC |
+| **Инфраструктура** |  AWS, Yandex Cloud |
+| **Web-серверы** |  Nginx, Apache |
+| **Back-end** | PHP, Laravel, Yii, Symfony, WordPress, Drupal, Node.js, Python, bash/sh |
+| **Front-end** | JavaScript, Vue.js 2/3, WebRTC, React, Angular, Backbone.js, jQuery, Lodash, Css, SCSS, Bootstrap, Quasar |
+| **Базы данных, кеширование** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcached |
+| **Менеджеры очередей** | Kafka, RabbitMQ, Horizon |
+| **Инструменты** | git, composer, npm, pip, Jenkins, Webpack, Babel, Gulp, Grunt |
+| **Управление и методологии** | Scrum, CI/CD, Jira, Trello, Redmine |
 | **Интеграции** | OAuth 2.0, LDAP (Active Directory), DocuSign, Office 365, облачные хранилища (DropBox), платёжные системы |
-| **Управление разработкой** | Scrum, CI/CD, Jira, Trello, Redmine, Git |
 | **Дополнительно** | C, Arduino, Raspberry Pi, Технологии Умного дома, AI |
 
 ---
