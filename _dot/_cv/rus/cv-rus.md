@@ -9,6 +9,8 @@
 - **Телефон:** [+7 960 106-15-65](tel:+79601061565)
 - **Telegram:** [@BorgSeva](https://t.me/BorgSeva)
 - **Дата рождения:** 13 февраля
+- **Linked-in:** [vazovsky](https://www.linkedin.com/in/vazovskiy/)
+- **Github:** [airstarh](https://github.com/airstarh?tab=repositories)
 
 ---
 
@@ -38,7 +40,7 @@
 
 | Направление | Технологии |
 |---|---|
-| **Инфраструктура** | Docker, AWS, Yandex Cloud, Nginx, Apache, GNU Linux |
+| **Инфраструктура** | Docker, AWS, Yandex Cloud, Nginx, Apache, GNU Linux, bash/sh |
 | **Backend** | PHP, Laravel, Yii, Symfony, WordPress, Drupal, Node.js, Python |
 | **Frontend** | JavaScript, Vue.js 2/3, WebRTC, React, Angular, Backbone.js, jQuery, Lodash, Css, SCSS, Bootstrap, Quasar |
 | **Базы данных и кеширование** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcached |
