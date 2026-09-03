@@ -89,7 +89,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 - Разработка видеочата на WebRTC
 - Тестирование безопасности и производительности с использованием Kali Linux
 
-**Стек:** PHP, Laravel, Yii, Symfony, WordPress, Drupal, Vue.js 2/3, Backbone.js, jQuery, WebRTC, Bootstrap, Quasar, SCSS, MySQL, PostgreSQL, MS SQL, Redis, Memcached, AWS, Yandex Cloud, Docker, Nginx, Apache, Linux, Git.
+**Стек:** PHP, Laravel, Yii, Symfony, WordPress, Drupal, Vue.js 2/3, Backbone.js, jQuery, WebRTC, Bootstrap, Quasar, SCSS, MySQL, PostgreSQL, MS SQL, Redis, Memcached, AWS, Yandex Cloud, Docker, Nginx, Apache, GNU Linux, Git.
 
 ### Центр Галереи Чижова, Воронеж
 
