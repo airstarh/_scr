@@ -54,7 +54,8 @@
 | **Базы данных, кеширование** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcached |
 | **Менеджеры очередей** | Kafka, RabbitMQ, Horizon |
 | **Инструменты** | git, composer, npm, pip, Jenkins, Webpack, Babel, Gulp, Grunt |
-| **Управление и методологии** | Scrum, CI/CD, Jira, Trello, Redmine |
+| **Управление и методологии** | Scrum, CI/CD, SOLID, TDD, DRY, KISS |
+| **Системы контроля** | Jira, Trello, Redmine |
 | **Интеграции** | OAuth 2.0, LDAP (Active Directory), DocuSign, Office 365, облачные хранилища (DropBox), платёжные системы |
 | **Дополнительно** | C, Arduino, Raspberry Pi, Технологии Умного дома, AI |
 
