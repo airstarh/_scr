@@ -59,22 +59,25 @@ borg_ssh() {
 }
 
 borg_ssh_sss() {
-    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 sewa@saysimsim.ru
+    ssh sss
 }
 
-borg_ssh_sss_fs() {
-    sshfs sewa@saysimsim.ru:/home/sewa/_A001/rep/ /mnt/prod_sss -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
-    cd /mnt/prod_sss
-    ls -al
+borg_sshfs_sss() {
+    sshfs sss:/home/sewa/_A001/rep/ALINA_BE/ /mnt/sshfs/sss/ \
+        -o reconnect \
+        -o noatime
 }
 
-borg_sftp_sss() {
-    sshfs \
-    -o allow_other,idmap=user,reconnect,IdentityFile=~/.ssh/id_rsa \
-    sewa@saysimsim.ru:/home/sewa/_A001/rep/ALINA_BE \
-    ~/remote_alina_be
-}
 
 borg_ssh_bbb(){
-    ssh -i /home/qqq/.ssh/001 'qqq@192.168.1.120'
+    ssh bbb
 }
+
+borg_sshfs_bbb() {
+    sshfs bbb:/ /mnt/sshfs/bbb \
+        -o reconnect \
+        -o noatime
+}
+
+
+

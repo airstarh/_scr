@@ -32,7 +32,6 @@ borg_fs_sync(){
     ##################################################
     borg_fs_A001
     # borg_fs_v
-    # borg_fs_docker
     ##################################################
     local ENDED=$EPOCHREALTIME
     borg_spent $STARTED $ENDED
@@ -45,9 +44,10 @@ borg_fs_v(){
     bash_fs_rsync "/mnt/d1001/_v/" "qqq@bbb:/mnt/d1001/_v/"
 }
 
-borg_fs_bdbmysql(){
-    bash_fs_rsync "/mnt/d1001/_docker/bdb/" "qqq@bbb:/mnt/d1001/_docker/bdb/"
-}
+# DANGEROUS
+# borg_fs_bdbmysql(){
+#     bash_fs_rsync "/mnt/d1001/_docker/bdb/" "qqq@bbb:/mnt/d1001/_docker/bdb/"
+# }
 
 borg_fs_bng(){
     bash_fs_rsync "/mnt/d1001/_docker/bng/" "qqq@bbb:/mnt/d1001/_docker/bng/"
