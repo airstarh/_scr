@@ -37,14 +37,14 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 
 | Направление | Технологии |
 |---|---|
-| **Backend** | PHP, Laravel, Yii, Symfony, Node.js, Python, WordPress, Drupal |
-| **Frontend** | JavaScript, Vue.js 2/3, React, Backbone.js, jQuery, Lodash, Bootstrap, Quasar, SCSS, WebRTC |
+| **Инфраструктура** | Docker, AWS, Yandex Cloud, Nginx, Apache, GNU Linux |
+| **Backend** | PHP, Laravel, Yii, Symfony, WordPress, Drupal, Node.js, Python |
+| **Frontend** | JavaScript, Vue.js 2/3, WebRTC, React, Angular, Backbone.js, jQuery, Lodash, Css, SCSS, Bootstrap, Quasar |
 | **Базы данных и кеширование** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcached |
-| **Инфраструктура** | Docker, AWS, Yandex Cloud, Nginx, Apache, Linux (Ubuntu, Fedora, Arch/Manjaro) |
-| **Инструменты** | Git, Jenkins, Webpack, Babel, Gulp, Grunt |
-| **Интеграции** | OAuth 2.0, LDAP, Active Directory, DocuSign, Office 365, облачные хранилища, платёжные системы |
-| **Управление разработкой** | Scrum, CI/CD, Jira, Trello, Redmine, код-ревью |
-| **Дополнительно** | SQL, NoSQL, C, Arduino, Raspberry Pi |
+| **Инструменты** | composer, npm, pip, Jenkins, Webpack, Babel, Gulp, Grunt |
+| **Интеграции** | OAuth 2.0, LDAP (Active Directory), DocuSign, Office 365, облачные хранилища (DropBox), платёжные системы |
+| **Управление разработкой** | Scrum, CI/CD, Jira, Trello, Redmine, Git |
+| **Дополнительно** | C, Arduino, Raspberry Pi, Технологии Умного дома, AI |
 
 ---
 
@@ -69,7 +69,8 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 
 ### DataArt Solutions, Inc.
 
-**Senior Engineer / Tech Lead / Team Lead / Scrum Master**
+**[ SeniorEngineer](https://www.linkedin.com/feed/update/urn:li:activity:7023185863832420353/)**
+**Tech Lead / Team Lead / Scrum Master**
 
 2014–2023
 
