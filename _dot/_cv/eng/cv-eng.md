@@ -1,190 +1,196 @@
-# Resume: Vsevolod Azovsky
+# Vsevolod Azovskiy
 
-**Full-stack Developer**
-PHP (Laravel, Yii, Symfony) · JavaScript (Vue)
+## Tech Lead / Team Lead / Senior Full-stack Developer
 
-**Date of birth:** 13.02
+PHP (Laravel, Yii, Symfony) · JavaScript (Node.js, Vue.js) · 16+ years in software development
 
----
-
-## Contacts
-
-- **Email:** vsevolod.azovsky@gmail.com
-- **Phone / messengers:** [+7 960 106 15 65](tel:+79601061565)
+- **Email:** [vsevolod.azovsky@gmail.com](mailto:vsevolod.azovsky@gmail.com)
+- **Phone:** [+7 960 106-15-65](tel:+79601061565)
 - **Telegram:** [@BorgSeva](https://t.me/BorgSeva)
+- **LinkedIn:** [vazovskiy](https://www.linkedin.com/in/vazovskiy/)
+- **GitHub:** [airstarh](https://github.com/airstarh?tab=repositories)
+- **Date of birth:** February 13
 
 ---
 
-## About Me
+## Professional Summary
 
-Full-stack developer with 16+ years of experience, 9 of which were at DataArt. Lead cross-functional teams of up to 10 people as a Scrum Master / Tech Lead.
+Full-stack developer with 16+ years of experience, including 9 years at DataArt. I design and deliver web applications across the full development lifecycle—from architecture and databases to user interfaces, infrastructure, and production deployment. I have led cross-functional teams of up to 10 engineers as a Tech Lead, Team Lead, and Scrum Master.
 
-**I design fault-tolerant architectures** for high-load systems (2,000+ requests/min, financial reporting with 1,000+ forms). **Implement CI/CD**, configure cloud infrastructure (AWS, Yandex Cloud), optimize database and application performance.
+My core expertise includes high-load and fault-tolerant systems, financial products, legacy modernization, CI/CD, and cloud infrastructure. I have worked on systems handling more than 2,000 requests per minute, applications with over 1,000 UI forms, and access-control models comprising 20+ roles and 1,000+ permissions.
 
-I work with both modern stacks (Vue 3, React, Laravel, Symfony, Node.js) and legacy code. Integrate OAuth 2.0, LDAP, DocuSign, payment systems, and WebRTC.
+Open to Tech Lead, Team Lead, and Senior Full-stack Developer positions, either as a full-time employee under Russian labor law or on a long-term contract through my sole proprietorship.
 
-**Looking for:** full-time employment under the Russian Labor Code or long-term projects via sole proprietorship (IE). Open to Tech Lead / Team Lead / Senior Full-stack Developer roles.
+**English:** Intermediate (B1–B2)—comfortable reading technical documentation and participating in stakeholder calls.
 
-**English:** Intermediate (B1–B2) — read technical documentation, participate in calls with stakeholders.
+### Core Competencies
 
-**Key competencies:**
-
-- Application and database architecture design
-- Performance and fault tolerance optimization
-- Integration with external services and APIs
-- CI/CD and DevOps practices
-- SPA development, responsive layout
-- Attention to detail, fast learning, team communication
-
----
-
-## Skills
-
-| Category | Technologies |
-|----------|--------------|
-| **Programming languages** | PHP, JavaScript, Python, SQL, NoSQL, C |
-| **Frontend frameworks** | Vue.js (2/3), jQuery, Backbone, Underscore/Lodash, Bootstrap, Quasar |
-| **Backend frameworks** | Laravel, Yii, Symfony |
-| **CMS** | WordPress, Drupal |
-| **Frontend technologies** | WebRTC |
-| **Databases** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcache |
-| **DevOps & infrastructure** | Docker, AWS, Yandex Cloud, Nginx, Apache, Ubuntu, Fedora, Arch (Manjaro) |
-| **Development tools** | Git, Jenkins, Webpack, Babel, Gulp, Grunt |
-| **Methodologies** | Scrum, CI/CD |
-| **Issue tracking systems** | Jira, Trello, Redmine |
-| **IoT** | Arduino, Raspberry Pi |
+- Web application and database architecture
+- Engineering leadership and Scrum delivery
+- Performance optimization and fault tolerance
+- Third-party service and API integration
+- CI/CD, containerization, and cloud infrastructure
+- SPA development and responsive interfaces
+- Legacy system modernization and support
 
 ---
 
-## Work Experience
+## Technical Skills
 
-**2023 — present**
-### Sole Proprietor Vsevolod Azovsky
-**Role:** Senior Full-stack Web Developer, Tech Lead, Team Lead, Scrum Master
-
-**Collaboration formats:** Employment under Russian Labor Code / Sole proprietorship (IE) for working with corporate clients, startups, and products requiring expert technical expertise.
-
-**Why work with me:**
-
-- Design application and database architecture from scratch for high loads
-- Optimize performance and fault tolerance of existing solutions
-- Implement CI/CD and DevOps practices, configure cloud infrastructure (AWS, Yandex Cloud)
-- Develop SPAs, responsive interfaces, and WebRTC video chats
-- Integrate with OAuth 2.0, LDAP, Active Directory, DocuSign, cloud storage
-- Manage teams as a Scrum Master: planning, quality control, code review, client communication
-- Work with both modern stacks (Vue, React, Laravel, Symfony, Node.js) and legacy projects
-
-**Open to:**
-- Full-time employment (Russian Labor Code)
-- Long-term outsourcing/outstaffing projects via IE
-- Tech Lead / Team Lead / Senior Full-stack Developer roles
+| Area | Technologies |
+|---|---|
+| **Operating systems** | GNU/Linux (Debian, Ubuntu) |
+| **Containerization** | Docker, LXC |
+| **Cloud infrastructure** | AWS, Yandex Cloud |
+| **Web servers** | Nginx, Apache |
+| **Backend** | PHP, Laravel, Yii, Symfony, WordPress, Drupal, Node.js, Python, Bash/sh |
+| **Frontend** | JavaScript, Vue.js 2/3, WebRTC, React, Angular, Backbone.js, jQuery, Lodash, CSS, SCSS, Bootstrap, Quasar |
+| **Databases and caching** | MySQL, PostgreSQL, MS SQL, ClickHouse, Redis, Memcached |
+| **Message brokers and queues** | Kafka, RabbitMQ, Laravel Horizon |
+| **Development tools** | Git, Composer, npm, pip, Jenkins, Webpack, Babel, Gulp, Grunt |
+| **Practices and methodologies** | Scrum, CI/CD, SOLID, TDD, DRY, KISS |
+| **Project management** | Jira, Trello, Redmine |
+| **Integrations** | OAuth 2.0, LDAP, Active Directory, DocuSign, Office 365, Dropbox and other cloud storage services, payment systems |
+| **Additional** | C, Arduino, Raspberry Pi, smart home technologies, AI |
 
 ---
 
-**2014–2023**
+## Professional Experience
+
+### Vsevolod Azovskiy, Sole Proprietor
+
+*2018–Present*
+
+**Senior Full-stack Developer / Tech Lead / Team Lead / Scrum Master**
+
+Long-term software development and technical consulting for enterprise clients, startups, and product teams.
+
+### Softmaster LLC
+
+*2024–2026*
+
+**Software Engineer**
+
+- Assessed software developed by the client
+- Identified root causes of incidents and contributed to their resolution
+
 ### DataArt Solutions, Inc.
-**Senior Engineer, Tech Lead, Team Lead, Scrum Master**
 
-*Managing cross-functional teams of 3–10 engineers, full development cycle from architecture to production.*
+*2014–2023*
 
-**Key responsibilities:**
-- Design and development of scalable web applications from scratch: server logic, databases, client interfaces
-- Scrum processes: daily stand-ups, sprint planning, retrospectives, demos, stakeholder reporting
-- Code quality control through reviews, performance analysis, architectural reviews
-- Performance optimization, resource consumption, fault tolerance
-- Legacy code modernization (PHP, JavaScript) while maintaining backward compatibility
-- Integration with external APIs: OAuth 2.0 (Google, Microsoft, Box, DocuSign), Active Directory / LDAP, MS Exchange (NTLM, SOAP), Office365, cloud storage (Google Drive, Yandex Disk, Box), analytics services
+**Senior Engineer / Tech Lead / Team Lead / Scrum Master**
 
-**Technology stack:**
-- **Backend:** PHP (Laravel, Yii, Symfony), WordPress, Drupal
-- **Frontend:** Vue.js 2/3, Backbone, jQuery, WebRTC, Bootstrap, Quasar, SCSS
-- **Databases:** MySQL, PostgreSQL, MS SQL, Redis, Memcache
-- **DevOps & infrastructure:** AWS, Yandex Cloud, Docker, Nginx, Apache, Linux (Ubuntu, Fedora, Arch)
-- **Tools:** Git, Webpack, Grunt, Gulp, Babel, Jira, Trello
+Led cross-functional teams of 3–10 engineers and managed the full software delivery lifecycle, from architecture to production.
 
-**Achievements (examples):**
-- Built server applications from scratch on AWS and Yandex Cloud
-- Designed and optimized relational databases and caching layers
-- Implemented RBAC for multi-user applications
-- Developed WebRTC video chat
-- Conducted security and performance testing (Kali Linux)
+**Key responsibilities and achievements:**
 
----
+- Designed and developed scalable web applications from the ground up
+- Facilitated Scrum processes, including sprint planning, daily stand-ups, retrospectives, demos, and stakeholder reporting
+- Maintained engineering quality through code reviews, performance analysis, and architectural reviews
+- Improved application performance, resource utilization, and fault tolerance
+- Modernized legacy PHP and JavaScript code while maintaining backward compatibility
+- Designed relational databases and caching layers
+- Implemented role-based access control for multi-user applications
+- Integrated OAuth 2.0, Active Directory, LDAP, MS Exchange, Office 365, DocuSign, Google Drive, Yandex Disk, Box, and analytics services
+- Built server-side applications on AWS and Yandex Cloud
+- Developed a WebRTC video chat application
+- Conducted security and performance testing using Kali Linux
 
-**2012–2014**
-### Gallery Chizhova Center, Voronezh
-Web Programmer, IT Department
-Development and support of shopping center web applications.
+**Technology stack:** PHP, Laravel, Yii, Symfony, WordPress, Drupal, Vue.js 2/3, Backbone.js, jQuery, WebRTC, Bootstrap, Quasar, SCSS, MySQL, PostgreSQL, MS SQL, Redis, Memcached, AWS, Yandex Cloud, Docker, Nginx, Apache, GNU/Linux, Git.
 
-**2010–2012**
+### Galereya Chizhova Center, Voronezh
+
+*2012–2014*
+
+**Web Developer, IT Department**
+
+Developed and supported web applications for the shopping center.
+
 ### Softline, Voronezh
-System Administrator
-Administration of servers and network infrastructure.
 
-**2008–2010**
-### Log-F Taxi LLC, Moscow
-Developer of taxi dispatch management system (Web + 1C)
-Creation of web interface and integration with 1C.
+*2010–2012*
 
-**2006–2008**
+**Systems Administrator / Help Desk Specialist**
+
+Administered servers and network infrastructure.
+
+### Log-For Taxi LLC, Moscow
+
+*2008–2010*
+
+**Taxi Dispatch Management System Developer**
+
+Developed the web interface and integrated it with 1C.
+
 ### Katok.Ru, Moscow
-Senior System Administrator
-Maintenance of IT infrastructure for an ice rink complex.
+
+*2006–2008*
+
+**Senior Systems Administrator**
+
+Supported the ice rink's IT infrastructure.
 
 ---
 
 ## Selected Projects
 
-### 1. Financial Practice CRM System (NDA)
-**Technologies:** Docker, Nginx, MS SQL, MySQL 5.7–8+, PHP 7.4–8+, JavaScript (Backbone, Lodash, jQuery)
-**Role:** Scrum Master (team of 3–10 people), Database Architect
+### [Osetrovsky Bridgehead](https://ospl1942.ru)
+
+A self-initiated volunteer project: a web portal for a World War II museum.
+
+**Objective:** Build an interactive QR-based navigation system for a museum site covering more than 10 km².
+
+**Solution and results:**
+
+- Developed responsive pages presenting information about battle sites, accessible through QR codes placed on location markers
+- Implemented SEO optimization with server-side rendering
+- Built a publishing system with CKEditor 5 and social media cross-posting
+- Implemented two-level threaded comments
+
+**Technology stack:** Docker, Yandex Cloud, Ubuntu Server, Nginx, Let’s Encrypt, Node.js, Vue.js 2/3, Bootstrap 4, Laravel, Symfony, MySQL 8+, Redis.
+
+### [WebRTC Video Chat](https://ospl1942.ru/apps/vue3video/)
+
+**Role:** Full-stack Developer—application build, DNS and HTTPS configuration, and STUN/TURN server setup.
+
+**Result:** Delivered a working video chat application using a third-party UI with the author's permission.
+
+**Technology stack:** Docker, Node.js, Vue.js 3, WebSocket.
+
+### CRM System for a Financial Services Practice (NDA)
+
+**Role:** Scrum Master for a team of 3–10 engineers and database architect.
 
 **Results:**
-- Designed database architecture (MySQL, MS SQL)
-- Created over 1,000 interface forms (Backbone.js, Bootstrap)
-- Implemented RBAC with 20 roles and 1,000+ permissions
-- Integration with LDAP, banks (acquiring), cloud storage (Dropbox, Box API, DocuSign), Google Maps
+
+- Designed the database architecture using MySQL and MS SQL
+- Delivered more than 1,000 UI forms with Backbone.js and Bootstrap
+- Implemented RBAC with 20+ roles and 1,000+ permissions
+- Integrated LDAP, payment acquiring, Dropbox, Box API, DocuSign, and Google Maps
 - Implemented OAuth 2.0 and DocuSign for online contract signing
-- Automated financial transactions and business event logging
+- Automated financial transactions and business-event logging
 
-### 2. Social Project for People Over 60 (NDA, non-CIS)
-**Technologies:** AWS, Ubuntu Server 18, Nginx + Let's Encrypt, MySQL, WordPress, Memcached, Load Balancer
-**Role:** DevOps Engineer, System Administrator
+**Technology stack:** Docker, Nginx, MS SQL, MySQL 5+/8+, PHP 7+/8+, JavaScript, Backbone.js, Lodash, jQuery.
+
+### Social Platform for People Aged 60+ (NDA, Outside the CIS)
+
+**Role:** DevOps Engineer / Systems Administrator.
 
 **Results:**
-- Ensured fault tolerance under load > 2,000 requests/min
+
+- Ensured fault tolerance under loads exceeding 2,000 requests per minute
 - Automated infrastructure updates
 
-### 3. saysimsim.ru — mini social network and blogosphere (author's project)
-**Technologies:** Yandex Cloud, Ubuntu, Nginx + Let's Encrypt, Node.js, Vue.js 2/3, Bootstrap 4, Laravel, Symfony, MySQL 8+, Redis
-
-**Results:**
-- Full responsiveness (True Responsive Layout)
-- SEO optimization with server-side rendering
-- Posting system with WYSIWYG (CKEditor 5+), cross-posting to social networks
-- Two-level comments
-- Continuous integration (CI)
-
-### 4. chat.saysimsim.ru — WebRTC video chat
-**Role:** Setup, DNS configuration, HTTPS, STUN/TURN servers
-**Result:** Working video chat (used third-party UI with author's permission)
-
-### 5. ospl1942.ru — WWII Museum
-**Task:** Interactive museum navigation via QR codes
-**Solution:** Web pages with information about battle locations, accessible via QR codes on height markers
-
-### 6. mironova45a.ru — HOA of an apartment building (Voronezh)
-**Task:** Automation of HOA operations
-**Solution:** Web system for tracking residents, payments, and service requests
+**Technology stack:** AWS, Ubuntu Server 18, Nginx, Let’s Encrypt, MySQL, WordPress, Memcached, Load Balancer.
 
 ---
 
 ## Education
 
-**Specialist degree in Biology and Bioengineering**
-Timiryazev Russian State Agricultural University, 2009
+**Specialist Degree in Biology and Bioengineering**
+
+Russian State Agrarian University—Moscow Timiryazev Agricultural Academy, 2009
 
 ---
 
-> **Note:** Projects marked NDA contain confidential information.
-> Additional details about open projects are available upon request.
+Projects marked as NDA contain confidential information. Further details about publicly available projects can be provided upon request.
