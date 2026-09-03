@@ -146,7 +146,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue)
 ### [Осетровский плацдарм](https://ospl1942.ru)
 **Задача:** Интерактивная навигация по территории музея через QR‑коды на экскурсионной площади более 10 квадратных километров.
 **Решение:** Веб‑страницы с информацией о местах сражений, доступ по QR на указателях высот
-**Технологии:** Yandex Cloud, Ubuntu Server, Nginx + Let’s Encrypt, Node.js, Vue.js 2/3, Bootstrap 4, Laravel, Symfony, MySQL 8+, Redis
+**Технологии:** Docker, Yandex Cloud, Ubuntu Server, Nginx + Let’s Encrypt, Node.js, Vue.js 2/3, Bootstrap 4, Laravel, Symfony, MySQL 8+, Redis
 
 **Результаты:**
 - Полная адаптивность веб-страниц (Mobile first, True Responsive Layout)
@@ -157,7 +157,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue)
 ### Видео-чат WebRTC
 ### [Видео-чат](https://ospl1942.ru/apps/vue3video/)
 **Роль:** Full-stack, Сборка, настройка DNS, HTTPS, STUN/TURN‑серверов
-**Технологии:** Node.js, Vue.js 3, Web-Socket
+**Технологии:** Docker, Node.js, Vue.js 3, Web-Socket
 **Результат:** Работающий видеочат (использован сторонний UI с разрешения автора)
 
 ### Финансовая практика CRM-система (NDA)
