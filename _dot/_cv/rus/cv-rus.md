@@ -2,7 +2,8 @@
 
 ## Tech Lead / Team Lead / [Senior Full-stack Developer](https://www.linkedin.com/feed/update/urn:li:activity:7023185863832420353/)
 
-PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разработке
+## Программист PHP (Laravel, Yii, Symfony), JavaScript (Node.js, Vue).
+
 
 - **Email:** [vsevolod.azovsky@gmail.com](mailto:vsevolod.azovsky@gmail.com)
 - **Телефон:** [+7 960 106-15-65](tel:+79601061565)
@@ -54,7 +55,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 
 **Senior Full-stack Developer / Tech Lead / Team Lead / Scrum Master**
 
-2023 — настоящее время
+2018 — настоящее время
 
 Долгосрочная работа с корпоративными заказчиками, стартапами и продуктовыми командами.
 
@@ -86,7 +87,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 - Внедрение ролевой модели доступа (RBAC) в многопользовательских приложениях
 - Интеграция OAuth 2.0, Active Directory, LDAP, MS Exchange, Office 365, DocuSign, Google Drive, Yandex Disk, Box и аналитических сервисов
 - Разработка серверных приложений в AWS и Yandex Cloud
-- Разработка видеочата на WebRTC
+- Разработка видео-чата на WebRTC
 - Тестирование безопасности и производительности с использованием Kali Linux
 
 **Стек:** PHP, Laravel, Yii, Symfony, WordPress, Drupal, Vue.js 2/3, Backbone.js, jQuery, WebRTC, Bootstrap, Quasar, SCSS, MySQL, PostgreSQL, MS SQL, Redis, Memcached, AWS, Yandex Cloud, Docker, Nginx, Apache, GNU Linux, Git.
@@ -142,11 +143,11 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 
 **Стек:** Docker, Yandex Cloud, Ubuntu Server, Nginx, Let’s Encrypt, Node.js, Vue.js 2/3, Bootstrap 4, Laravel, Symfony, MySQL 8+, Redis.
 
-### [Видеочат WebRTC](https://ospl1942.ru/apps/vue3video/)
+### [Видео-чат WebRTC](https://ospl1942.ru/apps/vue3video/)
 
 **Роль:** Full-stack Developer — сборка приложения, настройка DNS, HTTPS и STUN/TURN-серверов.
 
-**Результат:** работающий видеочат на базе стороннего UI, использованного с разрешения автора.
+**Результат:** работающий видео-чат на базе стороннего UI, использованного с разрешения автора.
 
 **Стек:** Docker, Node.js, Vue.js 3, WebSocket.
 
