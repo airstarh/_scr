@@ -1,4 +1,4 @@
-# Vsevolod Azovskiy
+# Vsevolod Azovsky
 
 ## Tech Lead / Team Lead / Senior Full-stack Developer
 
