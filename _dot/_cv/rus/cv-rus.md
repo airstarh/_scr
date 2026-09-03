@@ -1,6 +1,6 @@
 # Всеволод Азовский
 
-## Tech Lead / Team Lead / Senior Full-stack Developer
+## Tech Lead / Team Lead / [Senior Full-stack Developer](https://www.linkedin.com/feed/update/urn:li:activity:7023185863832420353/)
 
 PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разработке
 
@@ -69,8 +69,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 
 ### DataArt Solutions, Inc.
 
-**[ SeniorEngineer](https://www.linkedin.com/feed/update/urn:li:activity:7023185863832420353/)**
-**Tech Lead / Team Lead / Scrum Master**
+**Senior Engineer/Tech Lead / Team Lead / Scrum Master**
 
 2014–2023
 
@@ -102,7 +101,7 @@ PHP (Laravel, Yii, Symfony) · JavaScript (Vue.js) · 16+ лет в разраб
 
 ### Softline, Воронеж
 
-**Системный администратор**
+**Системный администратор/HelpDesk**
 
 2010–2012
 
