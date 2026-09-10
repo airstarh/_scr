@@ -1,5 +1,10 @@
 #!/bin/bash
 
+borg_dir() {
+    echo "$(cd "$(dirname "${BASH_SOURCE[1]:-${BASH_SOURCE[0]}}")" && pwd)"
+}
+
+
 bash_fs_rsync() {
     local source_dir="$1"
     local target_dir="$2"

@@ -1,0 +1,3 @@
+.corporate-bg-and-text button.navbar-toggler .navbar-toggler-icon {
+    filter: invert(1) !important;
+}
