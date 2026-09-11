@@ -12,3 +12,12 @@ echo '/osa/swapfile none swap sw,pri=10 0 0' | sudo tee -a /etc/fstab
 swapon --show
 free -h
 sudo findmnt --verify
+
+# After major system updates, verify with:
+
+  swapon --show
+  systemctl is-enabled tpm2.target
+  systemctl --failed --no-pager
+  systemd-analyze
+
+#   Problems would mainly arise if /osa fails to mount, the swap file is removed, /etc/fstab is manually replaced, or an update changes TPM boot behavior by introducing a different unit.
