@@ -1,0 +1,3 @@
+Read /home/qqq/_A001/rep/zbx/ZABBIX_CONTEXT.md and perform the read-only network-traffic audit for sss. Measure or estimate Zabbix traffic separately from normal ALINA traffic, calculate
+  daily and projected monthly usage, inspect unsupported or noisy items, and recommend economical adjustments. Do not modify configuration, restart services or containers, change monitoring
+  intervals, or commit anything without my explicit approval.

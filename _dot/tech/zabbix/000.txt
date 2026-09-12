@@ -1,0 +1,14 @@
+• Zabbix is deployed and monitoring both machines.
+
+  - Web UI: http://192.168.1.86:58080
+  - Initial login: Admin / zabbix
+  - MySQL, Zabbix Server, and web interface run in Docker on aaa.
+  - Agent 2 runs natively as a system service on both aaa and bbb.
+  - Both agents start automatically with the machines.
+  - Both hosts are green and returning live Linux metrics.
+  - Both agents can access Docker and discover containers.
+  - Linux and Docker Agent 2 templates are attached to both hosts.
+  - Removed the containerized agent from /home/qqq/_A001/rep/zbx/docker-compose.yml.
+  - Database remains in /home/qqq/_A001/rep/zbx/database.
+  - Shared secrets remain in .env with mode 600.
+  - No commit was created.

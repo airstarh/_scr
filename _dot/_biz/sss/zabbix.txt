@@ -1,0 +1,50 @@
+s is now attached to your local Zabbix and sending real telemetry automatically.
+
+  What was configured:
+
+  - Zabbix Agent 2 version 7.0.30 installed natively on sss
+  - Agent listens only on remote 127.0.0.1:10050
+  - Automatic SSH tunnel runs from aaa to sss
+  - SSH uses your existing /home/qqq/.ssh/001 key
+  - Tunnel starts automatically after reboot and reconnects after failures
+  - Zabbix host: sss — ALINA production
+  - Standard Linux monitoring enabled
+  - No email, SMS, or push notification actions enabled
+  - ALINA and its containers were not changed or restarted
+
+  Verified telemetry includes agent health, hostname, uptime, memory, and system information. Zabbix reports the agent interface as available with no errors.
+
+  Open:
+
+  http://192.168.1.86:58080
+
+  Then use Monitoring → Hosts or Monitoring → Latest data and select sss — ALINA production.
+
+  Resource consumption observed:
+
+  - Agent on sss: approximately 9 MB RAM
+  - SSH tunnel on aaa: approximately 2 MB RAM
+  - No public Agent port is exposed
+
+  The standard Linux template performs about 29 basic checks per minute plus slower discovery checks. We should inspect actual network growth after roughly 24 hours before adding Docker,
+  MySQL, or detailed ALINA monitoring.
+
+  Emergency rollback:
+
+  On sss:
+
+  sudo systemctl disable --now zabbix-agent2
+
+  On aaa:
+
+  sudo systemctl disable --now zabbix-sss-tunnel
+
+  One unrelated pre-existing issue was discovered: the MySQL APT repository on sss has a missing/expired signing key, so apt update reports NO_PUBKEY B7B3B788A8D3785C. I did not modify that
+  repository. It did not prevent the authenticated Zabbix Agent installation.
+
+─ Worked for 14m 14s ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+─ Conversation recap ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Objective: monitor sss with local Zabbix. Zabbix Agent 2 7.0.30 was reportedly installed and sending telemetry; clarify that this normally uses the agent, not ~/.ssh keys, and ask the
+  user to finish their truncated second question.
