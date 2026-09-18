@@ -1,0 +1,48 @@
+Mission: Upgrade Text Chat
+There are 2 project, both you were working with.
+~/_A001/rep/ALINA_BE (PHP 8.2)
+~/_A001/rep/ALINA_FE (Vue 3)
+
+Currently working text chat files are:
+/home/qqq/_A001/rep/ALINA_BE/server/srv/alina/mvc/Controller/Chat.php
+/home/qqq/_A001/rep/ALINA_BE/server/srv/alina/mvc/template/Chat/actionIndex.php
+/home/qqq/_A001/rep/ALINA_BE/server/srv/alina/mvc/template/Chat/actionIndex.js
+/home/qqq/_A001/rep/ALINA_BE/server/srv/alina/mvc/template/Chat/actionIndex.css
+
+In ALINA_FE I'd like to create new Chat component which has all the same features and extend it further.
+Could you assist?
+
+I see the architecture as follows:
+ALINA_FE
+    src
+        views
+            Chat - the view that uses:
+    src
+        components
+            Chat 0 re0usable component that serves all necessary features
+Route is yours!
+And let's also do this way:
+instead of spamming in chat window when a one is joined, let's have Left Coulumn with list of joined people - avatar + nick names + small statuses if possible.
+you are free to modify both projects if needed: ALINA_FE, ALINA_BE
+wgat you think?
+
+white-space: pre;
+overflow-x: auto;
+overflow-y: auto;
+background-color: #000;
+color: #70ff70;
+font-family: monospace, monospace;
+
+
+• Working in our tests:
+
+  - 87.228.71.67
+  - 178.250.154.58
+
+  Provided by KeenDNS but timed out in our tests:
+
+  - 185.162.93.96
+  - 95.213.212.50
+  - 5.35.2.42
+
+  Tested over HTTP and HTTPS from your LAN and external server sss; 5.35.2.42 was tested from sss only.

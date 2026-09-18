@@ -1,3 +1,11 @@
-Read /home/qqq/_A001/rep/zbx/ZABBIX_CONTEXT.md and perform the read-only network-traffic audit for sss. Measure or estimate Zabbix traffic separately from normal ALINA traffic, calculate
-  daily and projected monthly usage, inspect unsupported or noisy items, and recommend economical adjustments. Do not modify configuration, restart services or containers, change monitoring
-  intervals, or commit anything without my explicit approval.
+• Read /home/qqq/_A001/rep/zbx/ZABBIX_CONTEXT.md and /home/qqq/_A001/rep/zbx/SSS_LOG_STORAGE_AUDIT.md, especially the traffic follow-up dated 2026-09-18.
+
+  Perform a read-only review of Zabbix monitoring traffic on production server `ssh sss`. Compare with the previous estimate of approximately 70 MB/day combined (41 MB/day outgoing), or 2.1
+  GB per 30 days.
+
+  Separate monitoring traffic from total server traffic. Account for SSH reconnects, reboots, and counter resets. Explain measurement duration and uncertainty.
+
+  Keep monitoring unchanged. Do not modify configurations or ALINA, restart services or containers, alter socat, enable notifications, prune Docker, or create Git commits without my
+  explicit approval.
+
+  Report the findings and update ZABBIX_CONTEXT.md with the new measurements.

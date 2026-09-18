@@ -1,0 +1,10 @@
+qqq@bbb:~$ docker ps
+CONTAINER ID   IMAGE                                      COMMAND                  CREATED        STATUS                  PORTS                                                                                                          NAMES
+717827af6d37   alina_be-php82chat                         "/usr/local/bin/entr…"   13 hours ago   Up 13 hours (healthy)   8080/tcp, 9000/tcp                                                                                             alina_php82chat
+a37d888a6ee1   alina_be-php82                             "/usr/local/bin/entr…"   13 hours ago   Up 13 hours             9000/tcp                                                                                                       alina_php82
+29972289ab58   node:20-alpine                             "docker-entrypoint.s…"   13 hours ago   Up 13 hours             3000/tcp                                                                                                       alina_signaling
+86259cdfbe72   nginx:1.20                                 "/docker-entrypoint.…"   13 hours ago   Up 13 hours             0.0.0.0:50080->80/tcp, [::]:50080->80/tcp, 0.0.0.0:50443->443/tcp, [::]:50443->443/tcp                         alina_nginx
+7ccbeac8d537   mysql:8.0.27                               "docker-entrypoint.s…"   13 hours ago   Up 13 hours (healthy)   33060/tcp, 0.0.0.0:53306->3306/tcp, [::]:53306->3306/tcp                                                       alina_mysql
+10b83e820044   portainer/agent:2.45.0                     "./agent"                6 days ago     Up 6 days               0.0.0.0:9001->9001/tcp, [::]:9001->9001/tcp                                                                    twportainer_agent
+4526632199d4   ghcr.io/motioneye-project/motioneye:edge   "/entrypoint.sh"         3 weeks ago    Up 6 days               0.0.0.0:8765->8765/tcp, [::]:8765->8765/tcp, 0.0.0.0:9081-9082->9081-9082/tcp, [::]:9081-9082->9081-9082/tcp   motioneye
+qqq@bbb:~$
