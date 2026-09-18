@@ -34,15 +34,4 @@ color: #70ff70;
 font-family: monospace, monospace;
 
 
-• Working in our tests:
 
-  - 87.228.71.67
-  - 178.250.154.58
-
-  Provided by KeenDNS but timed out in our tests:
-
-  - 185.162.93.96
-  - 95.213.212.50
-  - 5.35.2.42
-
-  Tested over HTTP and HTTPS from your LAN and external server sss; 5.35.2.42 was tested from sss only.
