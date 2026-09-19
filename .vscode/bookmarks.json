@@ -39,31 +39,6 @@
 					"label": ""
 				}
 			]
-		},
-		{
-			"path": "_dot/_000/txt.000.txt",
-			"bookmarks": [
-				{
-					"line": 35,
-					"column": 10,
-					"label": ""
-				},
-				{
-					"line": 49,
-					"column": 4,
-					"label": ""
-				},
-				{
-					"line": 63,
-					"column": 9,
-					"label": ""
-				},
-				{
-					"line": 82,
-					"column": 39,
-					"label": ""
-				}
-			]
 		}
 	]
 }

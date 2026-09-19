@@ -1,0 +1,16 @@
+On remote bbb server we have disks which are not mounted automatically:
+
+sdb    swap     931,5G
+└─sdb1 ntfs     931,5G
+sdc             931,5G
+└─sdc1 ext4     931,5G
+sdd             232,9G
+└─sdd1 xfs      232,9G
+
+I want you to make all necessary fstab changest to automount these disks as follows:
+
+└─sdb1 to /mnt/d1000
+└─sdc1 to /mnt/d1001
+└─sdd1 to /mnt/d500
+
+Since from time to time I make physical changes in my home lab please mount them by their robust IDs. Not partitions! As that IDs which never changes!
