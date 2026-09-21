@@ -5,9 +5,9 @@ borg() {
 }
 
 borg_sudo() {
-    local borg_env='/home/qqq/_A001/_scr/_statica/index.sh'
+    local borg_env="$HOME/_A001/_scr/_statica/index.sh"
     sudo SSH_AUTH_SOCK="$SSH_AUTH_SOCK" HOME=/home/qqq \
-        bash -c ". '$borg_env'; \"\$@\"" bash "$@"
+        bash -c '. "$0"; "$@"' "$borg_env" "$@"
 }
 
 borg_log() {
