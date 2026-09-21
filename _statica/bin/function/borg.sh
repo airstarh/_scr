@@ -4,6 +4,12 @@ borg() {
     . ~/.bashrc
 }
 
+borg_sudo() {
+    local borg_env='/home/qqq/_A001/_scr/_statica/index.sh'
+    sudo SSH_AUTH_SOCK="$SSH_AUTH_SOCK" HOME=/home/qqq \
+        bash -c ". '$borg_env'; \"\$@\"" bash "$@"
+}
+
 borg_log() {
     sudo bash /home/qqq/000 > /home/qqq/ln-log 2>&1
 }
@@ -41,5 +47,3 @@ borg_spent() {
     # Print the formatted result perfectly
     echo "SPENT: $(printf "%02d:%02d:%02d.%03d" $hours $minutes $seconds $ms)"
 }
-
-

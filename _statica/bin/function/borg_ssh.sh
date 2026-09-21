@@ -74,7 +74,8 @@ borg_ssh_bbb(){
 }
 
 borg_sshfs_bbb() {
-    sshfs bbb:/ /mnt/sshfs/bbb \
+    sshfs bbb:/mnt \
+        /mnt/sshfs/bbb \
         -o reconnect \
         -o noatime
 }

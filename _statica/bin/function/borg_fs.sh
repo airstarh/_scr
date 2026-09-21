@@ -42,7 +42,7 @@ borg_fs_sync(){
     borg_spent $STARTED $ENDED
 }
 borg_fs_A001(){
-    bash_fs_rsync "/home/qqq/_A001/" "qqq@bbb:/home/qqq/_A001/"
+    bash_fs_rsync "/home/qqq/_A001/" "qqq@bbb:/mnt/d1000/_MIRA/_A001.aaa/"
 }
 
 borg_fs_v(){
