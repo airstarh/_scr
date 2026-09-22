@@ -8,8 +8,12 @@ borg_dir() {
 bash_fs_rsync() {
     local source_dir="$1"
     local target_dir="$2"
+    local log_file
+    local rsync_status
 
-    borg_sudo rsync -rtlvz \
+    log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
+
+    if borg_sudo rsync -rtlvz \
         --delete-after \
         --no-perms \
         --no-owner \
@@ -19,15 +23,21 @@ bash_fs_rsync() {
         --modify-window=10 \
         --rsync-path="sudo rsync" \
         -e ssh \
-        --log-file=/tmp/rsync_errors.log \
+        --log-file="$log_file" \
         "$source_dir" \
-        "$target_dir"
+        "$target_dir"; then
+        rsync_status=0
+    else
+        rsync_status=$?
+    fi
 
     echo ""
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "=== Files that failed/were skipped (from log) ==="
-    grep -E "failed|skipped|error" /tmp/rsync_errors.log || echo "No errors found"
-    rm -f /tmp/rsync_errors.log
+    grep -E "failed|skipped|error" "$log_file" || echo "No errors found"
+    rm -f -- "$log_file"
+
+    return "$rsync_status"
 }
 
 
