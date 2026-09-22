@@ -9,7 +9,7 @@ bash_fs_rsync() {
     local source_dir="$1"
     local target_dir="$2"
 
-    rsync -rtlvz \
+    borg_sudo rsync -rtlvz \
         --delete-after \
         --no-perms \
         --no-owner \
