@@ -78,6 +78,11 @@ borg_sshfs_bbb() {
         /mnt/sshfs/bbb \
         -o reconnect \
         -o noatime
+
+    sshfs bbb:/home/qqq \
+        /mnt/sshfs/bbb-home-qqq \
+        -o reconnect \
+        -o noatime
 }
 
 
