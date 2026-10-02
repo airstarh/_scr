@@ -1,6 +1,0 @@
-Security???
-    Docker...
-    Repositories...
-
-Stability
-    Bluetooth

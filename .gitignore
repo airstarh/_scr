@@ -1,1 +1,9 @@
 nbproject/
+**/_GITOUT/
+**/.idea/
+**/nbproject/
+**/*.code-workspace
+**/node_modules/
+**/vendor/
+**/bookmarks.json
+
