@@ -1,0 +1,11 @@
+.git/**
+.superpowers/**
+docs/superpowers/**
+src/**
+test/**
+out/**
+node_modules/**
+*.vsix
+package-lock.json
+tsconfig.json
+esbuild.mjs

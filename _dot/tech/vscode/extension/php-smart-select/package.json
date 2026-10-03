@@ -1,0 +1,81 @@
+{
+  "name": "tree-sitter-smart-select-patched",
+  "displayName": "Tree-sitter Smart Select — Patched",
+  "description": "Locally maintained AST-aware selection expansion powered by Tree-sitter.",
+  "version": "0.1.0",
+  "publisher": "local-alina",
+  "license": "MIT",
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": ["Programming Languages", "Other"],
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:python",
+    "onLanguage:rust",
+    "onLanguage:go",
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onLanguage:java",
+    "onLanguage:ruby",
+    "onLanguage:html",
+    "onLanguage:css",
+    "onLanguage:json",
+    "onLanguage:shellscript",
+    "onLanguage:php"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Tree-sitter Smart Select — Patched",
+      "properties": {
+        "treeSitterSmartSelect.enabledLanguages": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "typescript", "typescriptreact", "javascript", "javascriptreact",
+            "python", "rust", "go", "c", "cpp", "java", "ruby", "html",
+            "css", "json", "shellscript", "php"
+          ],
+          "description": "VS Code language IDs for Tree-sitter smart selection."
+        },
+        "treeSitterSmartSelect.additionalParsers": {
+          "type": "object",
+          "default": {},
+          "description": "Map language IDs to custom Tree-sitter grammar WASM files."
+        },
+        "treeSitterSmartSelect.maxFileSize": {
+          "type": "number",
+          "default": 1048576,
+          "description": "Maximum document size in bytes for Tree-sitter parsing."
+        },
+        "treeSitterSmartSelect.includeAnonymousNodes": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include punctuation and other anonymous syntax nodes."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "check": "tsc --noEmit",
+    "test:metadata": "node test/metadata.test.cjs",
+    "test": "node test/metadata.test.cjs && node test/activation.test.cjs && node scripts/verify-wasm-assets.cjs && node test/php-parser.test.cjs && node test/parser-manager-fallback.test.cjs && node test/selection-range-provider.test.cjs && node test/instructions.test.cjs",
+    "package": "vsce package --out artifacts/tree-sitter-smart-select-patched-0.1.0.vsix --no-dependencies",
+    "verify:vsix": "node scripts/verify-vsix.cjs artifacts/tree-sitter-smart-select-patched-0.1.0.vsix"
+  },
+  "dependencies": {
+    "web-tree-sitter": "0.26.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.75.0",
+    "@vscode/vsce": "^3.6.2",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.3.3"
+  }
+}
