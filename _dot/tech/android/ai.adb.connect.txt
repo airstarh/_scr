@@ -1,0 +1,24 @@
+cd /home/qqq/_A001/_sport/scrcpy/linux
+codex --sandbox danger-full-access --ask-for-approval on-request
+
+Connect to Android device 3e795875 using ADB and verify the connection.
+
+adb -s 3e795875 get-state
+adb -s 3e795875 shell getprop ro.product.model
+
+adb -s 3e795875 shell cp \
+  "/storage/emulated/12/DCIM/" \
+  "/storage/emulated/0/_A001.sp1/"
+
+adb shell cp \
+  "/storage/emulated/12/DCIM" \
+  "/storage/emulated/0/_A001.sp1/DCIM"
+
+
+# scan after copy
+adb -s 3e795875 shell am broadcast --user 12 \
+  -a android.intent.action.MEDIA_SCANNER_SCAN_FILE \
+  -d "file:///storage/emulated/12/Download/video.mp4"
+
+_A001.sp1
+_A001.sp2
