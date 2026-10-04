@@ -1,19 +1,37 @@
 #! /bin/bash
 
 borg_oid_DCIM_to_sp1(){
+    local source="${1:-/storage/emulated/12/DCIM}"
+    local destination_root="${2:-/storage/emulated/0/_A001.sp1/DCIM}"
+    local source_user source_prefix
     local rows row id format source_path relative_path
     local destination destination_dir temporary
     local quoted_destination quoted_dir quoted_temporary
 
+    source="${source%/}"
+    destination_root="${destination_root%/}"
+
+    if [[ ! "$source" =~ ^/storage/emulated/([0-9]+)/.+$ || "$source" == *"'"* ]]; then
+        echo "Source must match /storage/emulated/<user-id>/<directory>" >&2
+        return 2
+    fi
+    if [[ "$destination_root" != /storage/emulated/*/* ]]; then
+        echo "Destination must be below /storage/emulated/<user-id>" >&2
+        return 2
+    fi
+
+    source_user="${BASH_REMATCH[1]}"
+    source_prefix="$source/"
+
     if ! rows="$(
         adb shell \
-            "content query --user 12 \
+            "content query --user $source_user \
              --uri content://media/external/file \
              --projection _id:_data:format \
-             --where \"_data LIKE '/storage/emulated/12/DCIM/%'\" \
+             --where \"_data LIKE '$source_prefix%'\" \
              --sort '_id ASC'"
     )"; then
-        echo "Failed to enumerate Second Space DCIM files" >&2
+        echo "Failed to enumerate source files: $source" >&2
         return 1
     fi
 
@@ -28,9 +46,12 @@ borg_oid_DCIM_to_sp1(){
 
         source_path="${row#*_data=}"
         source_path="${source_path%, format=*}"
-        relative_path="${source_path#/storage/emulated/12/DCIM/}"
+        if [[ "$source_path" != "$source_prefix"* ]]; then
+            continue
+        fi
+        relative_path="${source_path#"$source_prefix"}"
 
-        destination="/storage/emulated/0/_A001.sp1/DCIM/$relative_path"
+        destination="$destination_root/$relative_path"
         destination_dir="$(dirname -- "$destination")"
         temporary="${destination}.partial"
 

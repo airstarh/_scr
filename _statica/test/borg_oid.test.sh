@@ -28,6 +28,10 @@ Row: 1 _id=101, _data=/storage/emulated/12/DCIM/Camera/My photo.jpg, format=1433
 Row: 2 _id=102, _data=/storage/emulated/12/DCIM/Screenshots/Shot.png, format=14337
 Row: 3 _id=103, _data=/storage/emulated/12/DCIM/Camera/metadata.dat, format=12288
 ROWS
+elif [[ "$command_line" == *"content query --user 15"* ]]; then
+    cat <<'ROWS'
+Row: 0 _id=201, _data=/storage/emulated/15/Pictures/Trip/photo one.jpg, format=14337
+ROWS
 elif [[ -n "${ADB_FAIL_URI:-}" && "$command_line" == *"$ADB_FAIL_URI"* ]]; then
     exit 7
 elif [[ "$command_line" == *"test -e --"* ]]; then
@@ -61,6 +65,25 @@ grep -Fq '/storage/emulated/0/_A001.sp1/DCIM/Camera/metadata.dat.partial' "$ADB_
     || fail "ordinary non-media destination path was not preserved"
 if grep -Fq 'content://media/external/file/100' "$ADB_LOG"; then
     fail "directory row was treated as a file"
+fi
+
+: > "$ADB_LOG"
+borg_oid_DCIM_to_sp1 \
+    '/storage/emulated/15/Pictures/' \
+    '/storage/emulated/0/Shared pictures/' >/dev/null
+grep -Fq 'content query --user 15' "$ADB_LOG" \
+    || fail "source user was not derived from the custom source"
+grep -Fq "_data LIKE '/storage/emulated/15/Pictures/%'" "$ADB_LOG" \
+    || fail "custom source was not used in the MediaProvider query"
+grep -Fq '/storage/emulated/0/Shared\ pictures/Trip/photo\ one.jpg.partial' "$ADB_LOG" \
+    || fail "custom destination did not preserve the relative path"
+
+: > "$ADB_LOG"
+if borg_oid_DCIM_to_sp1 '/sdcard/DCIM' '/storage/emulated/0/output' >/dev/null 2>&1; then
+    fail "malformed source path was accepted"
+fi
+if [[ -s "$ADB_LOG" ]]; then
+    fail "adb was called for a malformed source path"
 fi
 
 : > "$ADB_LOG"
