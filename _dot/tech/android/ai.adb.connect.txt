@@ -1,6 +1,26 @@
 cd /home/qqq/_A001/_sport/scrcpy/linux
 codex --sandbox danger-full-access --ask-for-approval on-request
 
+##### region (cameras)
+fuck!!!
+codex --dangerously-bypass-approvals-and-sandbox --no-daemon resume --last
+
+either
+codex --dangerously-bypass-approvals-and-sandbox -C /home/qqq/_A001/rep/ALINA_BE
+or
+codex \
+  --sandbox danger-full-access \
+  --ask-for-approval never \
+  -C /home/qqq/_A001/rep/ALINA_BE
+or
+To make it permanent, add to `~/.codex/config.toml`:
+Add them at the top level of `~/.codex/config.toml`, outside every `[section]`:
+```
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
+```
+##### endregion (cameras)
+
 Connect to Android device 3e795875 using ADB and verify the connection.
 
 adb -s 3e795875 get-state
