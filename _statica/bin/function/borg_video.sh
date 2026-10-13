@@ -9,8 +9,8 @@ borg_video() {
         -vf "scale='min(1280,iw)':-2,fps=30" \
         -r 30 \
         -vcodec libx264 \
-        -crf 26 \
-        -preset superfast \
+        -crf 24 \
+        -preset veryfast \
         -acodec aac \
         -b:a 64k \
         -movflags +faststart \
