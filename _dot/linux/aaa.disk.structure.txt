@@ -1,0 +1,34 @@
+kubuntu@kubuntu:/mnt$ lsblk -f
+NAME   FSTYPE   FSVER            LABEL               UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+
+sys-slave1.hdd.1tb
+sda
+└─sda1 ext4     1.0              nix_tb              dcd6103c-415f-4818-8953-bba4a9578b5f    664G    22% /run/media/kubuntu/nix_tb
+
+sys-slave2.ssh.64gb.swao
+sdb
+└─sdb1 ext4     1.0              d64vik              ff28e0e7-827b-4a4c-a9bb-da97bd3f38ee   30.2G    43% /run/media/kubuntu/d64vik
+
+data.RM-X-500
+sdc
+└─sdc1 ntfs                      RM-X-500            B6941AFE941AC0B3                      177.2G    62% /run/media/kubuntu/RM-X-500
+
+kubuntu_2510
+sys---main.ssd.50gb
+sdd
+├─sdd1 vfat     FAT32                                4108-87B2
+└─sdd2 ext4     1.0              kubuntu_2510        b558d9e9-f74d-4187-b46e-fc015a88d84f   10.4G    76% /mnt
+
+---
+flash.livecd
+sde    iso9660  Joliet Extension Kubuntu 26.04 amd64 2026-04-23-01-04-38-00
+├─sde1 iso9660  Joliet Extension Kubuntu 26.04 amd64 2026-04-23-01-04-38-00                     0   100% /cdrom
+├─sde2 vfat     FAT12            ESP                 0190-D2E2
+├─sde3
+└─sde4 ext4     1.0              writable            1a4ae088-1563-4832-9ec7-eb8eb0a7833e    9.1G     1% /var/crash
+                                                                                                         /var/log
+
+
+
+
+
