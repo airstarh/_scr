@@ -6,8 +6,8 @@ borg_video() {
         -stats \
         -loglevel warning \
         -i "$1" \
-        -vf "scale='min(1920,iw)':-2,fps=60" \
-        -r 60 \
+        -vf "scale='min(1920,iw)':-2,fps=30" \
+        -r 30 \
         -vcodec libx264 \
         -crf 20 \
         -preset superfast \
