@@ -56,14 +56,14 @@ borg_fs_A001(){
 }
 
 borg_fs_v(){
-    bash_fs_rsync "/mnt/d1001/_v/" "qqq@bbb:/mnt/d1001/_v/"
+    bash_fs_rsync "/osa/_v/" "qqq@bbb:/mnt/d1001/_v/"
 }
 
 # DANGEROUS
 # borg_fs_bdbmysql(){
-#     bash_fs_rsync "/mnt/d1001/_docker/bdb/" "qqq@bbb:/mnt/d1001/_docker/bdb/"
+#     bash_fs_rsync "/osa/_docker/bdb/" "qqq@bbb:/mnt/d1001/_docker/bdb/"
 # }
 
 borg_fs_bng(){
-    bash_fs_rsync "/mnt/d1001/_docker/bng/" "qqq@bbb:/mnt/d1001/_docker/bng/"
+    bash_fs_rsync "/osa/_docker/bng/" "qqq@bbb:/mnt/d1001/_docker/bng/"
 }

@@ -16,10 +16,10 @@ borg_vm() {
     -cpu host \
     -smp cores=2,threads=2,sockets=1 \
     -m 4096 \
-    -drive file=/mnt/d1001/_v/qemu/w7x64_HDA.img,format=raw,if=ide,cache=writeback \
+    -drive file=/osa/_v/qemu/w7x64_HDA.img,format=raw,if=ide,cache=writeback \
     -cdrom /dev/null \
     -boot c \
-    -netdev user,id=net0,smb=/mnt/d1001/_v/qemu/shara/,dns=8.8.8.8,hostname=guest-vm \
+    -netdev user,id=net0,smb=/osa/_v/qemu/shara/,dns=8.8.8.8,hostname=guest-vm \
     -device e1000,netdev=net0 \
     -vga qxl \
     -audiodev pa,id=audio0,server=/run/user/1000/pulse/native \
