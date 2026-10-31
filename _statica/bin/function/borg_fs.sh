@@ -32,8 +32,10 @@ bash_fs_rsync() {
     fi
 
     echo ""
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo "=== Files that failed/were skipped (from log) ==="
+    echo "============================================================"
+    echo "============================================================"
+    echo "============================================================"
+    echo "Files that failed/were skipped (from log)"
     grep -E "failed|skipped|error" "$log_file" || echo "No errors found"
     rm -f -- "$log_file"
 
@@ -51,6 +53,7 @@ borg_fs_sync(){
     local ENDED=$EPOCHREALTIME
     borg_spent $STARTED $ENDED
 }
+
 borg_fs_A001(){
     bash_fs_rsync "/home/qqq/_A001/" "qqq@bbb:/mnt/d1000/_A001.all/_A001.aaa/"
 }
