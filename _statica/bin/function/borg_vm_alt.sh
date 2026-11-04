@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 borg_vm_alt() (
-    local base_dir=${BORG_VM_ALT_BASE_DIR:-/osa/_v/qemu_alt}
+    local base_dir=${BORG_VM_ALT_BASE_DIR:-/mnt/d501aaa/_v/qemu_alt}
     local disk="$base_dir/alt-linux.vmdk"
     local share="$base_dir/share"
     local pulse_server=${BORG_VM_ALT_PULSE_SERVER:-/run/user/${UID}/pulse/native}
