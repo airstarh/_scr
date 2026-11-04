@@ -5,10 +5,14 @@ borg_vm_alt() (
     local disk="$base_dir/alt-linux.vmdk"
     local share="$base_dir/share"
     local pulse_server=${BORG_VM_ALT_PULSE_SERVER:-/run/user/${UID}/pulse/native}
+    local runtime_dir=${BORG_VM_ALT_RUNTIME_DIR:-${XDG_RUNTIME_DIR:-/run/user/${UID}}/borg-vm-alt}
+    local spice_socket="$runtime_dir/spice.sock"
+    local render_node=${BORG_VM_ALT_RENDER_NODE:-/dev/dri/renderD128}
+    local usb_filter='0x08,-1,-1,-1,1|-1,0x152d,0x0578,-1,1|-1,-1,-1,-1,0'
     local tap_name="tap-alt-${UID}"
     local connections original_connection master interface active
     local attempts=${BORG_VM_ALT_ROUTE_WAIT_ATTEMPTS:-15}
-    local attempt command_name qemu_status
+    local attempt command_name qemu_pid qemu_status
 
     [[ -d "$share" ]] || {
         printf 'borg_vm_alt: shared directory not found: %s\n' "$share" >&2
@@ -18,8 +22,12 @@ borg_vm_alt() (
         printf 'borg_vm_alt: PulseAudio socket not found: %s\n' "$pulse_server" >&2
         return 1
     }
+    [[ -r "$render_node" && -w "$render_node" ]] || {
+        printf 'borg_vm_alt: graphics render node is not accessible: %s\n' "$render_node" >&2
+        return 1
+    }
 
-    for command_name in qemu-img qemu-system-x86_64 nmcli sudo ip flock; do
+    for command_name in qemu-img qemu-system-x86_64 remote-viewer nmcli sudo ip flock; do
         command -v "$command_name" >/dev/null 2>&1 || {
             printf 'borg_vm_alt: required command not found: %s\n' "$command_name" >&2
             return 1
@@ -120,8 +128,15 @@ borg_vm_alt() (
         return 1
     fi
 
+    mkdir -p "$runtime_dir" || {
+        sudo ip link delete dev "$tap_name" >/dev/null 2>&1 || true
+        printf 'borg_vm_alt: could not create runtime directory: %s\n' "$runtime_dir" >&2
+        return 1
+    }
+    rm -f "$spice_socket"
+
     printf 'Starting ALT Linux VM. Shared-folder mount tag: hostshare\n' >&2
-    printf 'Use the SPICE USB menu to redirect an inserted flash drive.\n' >&2
+    printf 'USB flash drives and USB storage will be redirected automatically.\n' >&2
 
     qemu-system-x86_64 \
         -name alt-linux \
@@ -149,10 +164,42 @@ borg_vm_alt() (
         -device usb-redir,chardev=usbredirchardev2,id=usbredirdev2 \
         -chardev spicevmc,name=usbredir,id=usbredirchardev3 \
         -device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
-        -display spice-app,gl=on \
-        -rtc base=localtime,clock=host
+        -spice "unix=on,addr=$spice_socket,disable-ticketing=on,gl=on,rendernode=$render_node" \
+        -display none \
+        -rtc base=localtime,clock=host &
+    qemu_pid=$!
+
+    for ((attempt = 1; attempt <= 100; attempt++)); do
+        [[ -S "$spice_socket" || -e "$spice_socket" ]] && break
+        if ! kill -0 "$qemu_pid" 2>/dev/null; then
+            wait "$qemu_pid"
+            qemu_status=$?
+            rm -f "$spice_socket"
+            sudo ip link delete dev "$tap_name" >/dev/null 2>&1 || true
+            printf 'borg_vm_alt: QEMU stopped before its SPICE socket became ready\n' >&2
+            return "$qemu_status"
+        fi
+        sleep 0.1
+    done
+
+    if [[ ! -S "$spice_socket" && ! -e "$spice_socket" ]]; then
+        printf 'borg_vm_alt: SPICE socket did not become ready: %s\n' "$spice_socket" >&2
+        kill "$qemu_pid" 2>/dev/null || true
+        wait "$qemu_pid" 2>/dev/null || true
+        rm -f "$spice_socket"
+        sudo ip link delete dev "$tap_name" >/dev/null 2>&1 || true
+        return 1
+    fi
+
+    remote-viewer \
+        "--spice-usbredir-auto-redirect-filter=$usb_filter" \
+        "--spice-usbredir-redirect-on-connect=$usb_filter" \
+        "spice+unix://$spice_socket"
+
+    wait "$qemu_pid"
     qemu_status=$?
 
+    rm -f "$spice_socket"
     sudo ip link delete dev "$tap_name" >/dev/null 2>&1 || \
         printf 'borg_vm_alt: warning: could not delete TAP device %s\n' "$tap_name" >&2
     return "$qemu_status"

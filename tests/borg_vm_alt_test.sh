@@ -28,9 +28,12 @@ run_vm() (
     export BORG_VM_ALT_BASE_DIR="$root/base"
     export BORG_VM_ALT_BRIDGE_CONF="$root/bridge.conf"
     export BORG_VM_ALT_PULSE_SERVER="$root/pulse/native"
+    export BORG_VM_ALT_RUNTIME_DIR="$root/runtime"
+    export BORG_VM_ALT_RENDER_NODE="$root/renderD128"
     export BORG_VM_ALT_ROUTE_WAIT_ATTEMPTS=1
     export MOCK_LOG="$root/commands.log"
     : >"$MOCK_LOG"
+    : >"$BORG_VM_ALT_RENDER_NODE"
 
     # These mocks are invoked indirectly by the sourced launcher.
     # shellcheck disable=SC2329
@@ -50,6 +53,26 @@ run_vm() (
             printf ' <%s>' "$@"
             printf '\n'
         } >>"$MOCK_LOG"
+        local argument socket
+        for argument in "$@"; do
+            if [[ "$argument" == unix=on,addr=* ]]; then
+                socket=${argument#unix=on,addr=}
+                socket=${socket%%,*}
+                mkdir -p "$(dirname "$socket")"
+                : >"$socket"
+            fi
+        done
+        sleep 0.2
+    }
+
+    # shellcheck disable=SC2329
+    remote-viewer() {
+        {
+            printf 'remote-viewer'
+            printf ' <%s>' "$@"
+            printf '\n'
+        } >>"$MOCK_LOG"
+        sleep 0.3
     }
 
     # shellcheck disable=SC2329
@@ -109,7 +132,7 @@ run_vm() (
         "$@"
     }
 
-    export -f qemu-img qemu-system-x86_64 nmcli ip sudo
+    export -f qemu-img qemu-system-x86_64 remote-viewer nmcli ip sudo
     # shellcheck source=/dev/null
     source "$launcher"
     borg_vm_alt
@@ -158,13 +181,19 @@ test_first_run_creates_50g_vmdk_and_launches_complete_vm() {
     assert_contains "$log" '<-device> <intel-hda>' 'QEMU must include an HDA controller'
     assert_contains "$log" '<-device> <hda-duplex,audiodev=audio0>' 'QEMU must include duplex sound'
     assert_contains "$log" '<-device> <virtio-vga-gl>' 'QEMU must expose the accelerated VirtIO GPU'
-    assert_contains "$log" '<-display> <spice-app,gl=on>' 'QEMU must enable OpenGL in the SPICE application display'
+    assert_contains "$log" '<-spice> <unix=on,addr=' 'QEMU must expose an explicit local SPICE socket'
+    assert_contains "$log" 'disable-ticketing=on,gl=on,rendernode=' 'QEMU must enable local OpenGL SPICE rendering'
+    assert_contains "$log" '<-display> <none>' 'QEMU must not open a second display window'
+    assert_not_contains "$log" '<spice-app,gl=on>' 'QEMU must not use the implicit spice-app launcher'
     assert_not_contains "$log" '<-vga> <qxl>' 'QEMU must not use unaccelerated QXL graphics'
     assert_contains "$log" '<-device> <virtio-serial-pci,id=virtio-serial0>' 'QEMU must include the VirtIO serial controller for the SPICE agent'
     assert_contains "$log" '<-chardev> <spicevmc,id=vdagent,name=vdagent>' 'QEMU must expose the SPICE guest-agent channel'
     assert_contains "$log" '<-device> <virtserialport,chardev=vdagent,name=com.redhat.spice.0>' 'QEMU must expose the standard bidirectional clipboard port'
     assert_contains "$log" '<-device> <qemu-xhci,id=xhci>' 'QEMU must include a USB 3 controller'
     assert_contains "$log" '<-device> <usb-redir,chardev=usbredirchardev3,id=usbredirdev3>' 'QEMU must provide three hot-plug USB redirection channels'
+    assert_contains "$log" '<--spice-usbredir-auto-redirect-filter=0x08,-1,-1,-1,1|-1,0x152d,0x0578,-1,1|-1,-1,-1,-1,0>' 'viewer must auto-redirect USB storage and deny other classes'
+    assert_contains "$log" '<--spice-usbredir-redirect-on-connect=0x08,-1,-1,-1,1|-1,0x152d,0x0578,-1,1|-1,-1,-1,-1,0>' 'viewer must redirect already-connected USB storage'
+    assert_contains "$log" '<spice+unix://' 'viewer must connect to the explicit local SPICE socket'
     assert_contains "$log" 'sudo <ip> <tuntap> <add>' 'launcher must create a user-owned TAP with narrowly scoped sudo'
     assert_contains "$log" 'sudo <ip> <link> <delete>' 'launcher must delete the TAP after QEMU exits'
 }
