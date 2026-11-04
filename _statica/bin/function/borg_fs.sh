@@ -70,3 +70,42 @@ borg_fs_v(){
 borg_fs_bng(){
     bash_fs_rsync "/osa/_docker/bng/" "qqq@bbb:/mnt/d1001/_docker/bng/"
 }
+
+bash_fs_rsync_local() {
+    local source_dir="$1"
+    local target_dir="$2"
+    local log_file
+    local rsync_status
+
+    log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
+
+    if borg_sudo rsync -rtlv \
+        --delete-after \
+        --no-perms \
+        --no-owner \
+        --no-group \
+        --progress \
+        -i \
+        --modify-window=10 \
+        --log-file="$log_file" \
+        "$source_dir" \
+        "$target_dir"; then
+        rsync_status=0
+    else
+        rsync_status=$?
+    fi
+
+    echo ""
+    echo "============================================================"
+    echo "============================================================"
+    echo "============================================================"
+    echo "Files that failed/were skipped (from log)"
+    grep -E "failed|skipped|error" "$log_file" || echo "No errors found"
+    rm -f -- "$log_file"
+
+    return "$rsync_status"
+}
+
+borg_fs_draft(){
+    bash_fs_rsync_local "/run/media/qqq/RM-X-500/" "/home/qqq/_A001/_from_rm-x-500/"
+}
