@@ -135,10 +135,13 @@ borg_vm_alt() (
         -netdev "tap,id=net0,ifname=$tap_name,script=no,downscript=no" \
         -device virtio-net-pci,netdev=net0,mac=52:54:00:41:4c:54 \
         -virtfs "local,id=hostshare,path=$share,security_model=mapped-xattr,mount_tag=hostshare" \
-        -vga qxl \
+        -device virtio-vga-gl \
         -audiodev "pa,id=audio0,server=$pulse_server" \
         -device intel-hda \
         -device hda-duplex,audiodev=audio0 \
+        -device virtio-serial-pci,id=virtio-serial0 \
+        -chardev spicevmc,id=vdagent,name=vdagent \
+        -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
         -device qemu-xhci,id=xhci \
         -chardev spicevmc,name=usbredir,id=usbredirchardev1 \
         -device usb-redir,chardev=usbredirchardev1,id=usbredirdev1 \
@@ -146,7 +149,7 @@ borg_vm_alt() (
         -device usb-redir,chardev=usbredirchardev2,id=usbredirdev2 \
         -chardev spicevmc,name=usbredir,id=usbredirchardev3 \
         -device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
-        -display spice-app \
+        -display spice-app,gl=on \
         -rtc base=localtime,clock=host
     qemu_status=$?
 
