@@ -12,6 +12,7 @@ bash_fs_rsync() {
     local rsync_status
 
     log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
+    chmod 777 "$log_file"
 
     if borg_sudo rsync -rtlvz \
         --delete-after \
@@ -78,6 +79,7 @@ bash_fs_rsync_local() {
     local rsync_status
 
     log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
+    chmod 777 "$log_file"
 
     if borg_sudo rsync -rtlv \
         --delete-after \
