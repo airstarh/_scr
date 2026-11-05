@@ -13,17 +13,15 @@ fail() {
 }
 
 borg_sudo() {
-    local log_file=""
     local argument
 
     for argument in "$@"; do
         case "$argument" in
-            --log-file=*) log_file="${argument#--log-file=}" ;;
+            --log-file=*) printf '%s\n' "$argument" > "$CAPTURE_FILE" ;;
         esac
     done
 
-    printf '%s\n' "$log_file" > "$CAPTURE_FILE"
-    printf 'rsync: failed test entry\n' >> "$log_file"
+    printf '<f+++++++++ node_modules/error-ex/index.js\n'
     printf 'rsync: read errors mapping "uncopied-file": Input/output error (5)\n' >&2
     return 23
 }
@@ -36,13 +34,12 @@ RSYNC_STATUS=$?
 set -e
 ERROR_REPORT="${OUTPUT##*Files that failed/were skipped (from log)}"
 
-LOG_FILE="$(<"$CAPTURE_FILE")"
-[[ "$(basename "$LOG_FILE")" == borg_rsync_errors.*.log ]] \
-    || fail "borg rsync did not use its own unique log"
-[[ ! -e "$LOG_FILE" ]] \
-    || fail "borg rsync did not remove its user-owned log"
+[[ ! -s "$CAPTURE_FILE" ]] \
+    || fail "borg rsync passed its user-owned temporary log to privileged rsync"
 [[ "$ERROR_REPORT" == *'uncopied-file'* ]] \
     || fail "borg rsync did not report an uncopied file from rsync stderr"
+[[ "$ERROR_REPORT" != *'error-ex/index.js'* ]] \
+    || fail "borg rsync reported a successful filename containing error as a failure"
 [[ "$RSYNC_STATUS" -eq 23 ]] \
     || fail "borg rsync did not preserve rsync failure status"
 

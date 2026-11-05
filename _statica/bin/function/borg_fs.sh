@@ -12,9 +12,8 @@ bash_fs_rsync() {
     local rsync_status
 
     log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
-    chmod 666 "$log_file"
 
-    if borg_sudo rsync -rtlvz \
+    borg_sudo rsync -rtlvz \
         --delete-after \
         --no-perms \
         --no-owner \
@@ -24,20 +23,16 @@ bash_fs_rsync() {
         --modify-window=10 \
         --rsync-path="sudo rsync" \
         -e ssh \
-        --log-file="$log_file" \
         "$source_dir" \
-        "$target_dir" 2>&1 | tee "$log_file"; then
-        rsync_status=0
-    else
-        rsync_status=${PIPESTATUS[0]}
-    fi
+        "$target_dir" 2>&1 | tee "$log_file"
+    rsync_status=${PIPESTATUS[0]}
 
     echo ""
     echo "============================================================"
     echo "============================================================"
     echo "============================================================"
     echo "Files that failed/were skipped (from log)"
-    grep -E "failed|skipped|error|Input/output" "$log_file" || echo "No errors found"
+    grep -E '^(rsync:|rsync error:|skipping )' "$log_file" || echo "No errors found"
     rm -f -- "$log_file"
 
     return "$rsync_status"
@@ -79,9 +74,8 @@ bash_fs_rsync_local() {
     local rsync_status
 
     log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
-    chmod 666 "$log_file"
 
-    if borg_sudo rsync -rtlv \
+    borg_sudo rsync -rtlv \
         --delete-after \
         --no-perms \
         --no-owner \
@@ -89,20 +83,16 @@ bash_fs_rsync_local() {
         --progress \
         -i \
         --modify-window=10 \
-        --log-file="$log_file" \
         "$source_dir" \
-        "$target_dir" 2>&1 | tee "$log_file"; then
-        rsync_status=0
-    else
-        rsync_status=${PIPESTATUS[0]}
-    fi
+        "$target_dir" 2>&1 | tee "$log_file"
+    rsync_status=${PIPESTATUS[0]}
 
     echo ""
     echo "============================================================"
     echo "============================================================"
     echo "============================================================"
     echo "Files that failed/were skipped (from log)"
-    grep -E "failed|skipped|error|Input/output" "$log_file" || echo "No errors found"
+    grep -E '^(rsync:|rsync error:|skipping )' "$log_file" || echo "No errors found"
     rm -f -- "$log_file"
 
     return "$rsync_status"
