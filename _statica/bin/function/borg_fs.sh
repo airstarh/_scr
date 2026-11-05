@@ -60,7 +60,7 @@ borg_fs_A001(){
 }
 
 borg_fs_v(){
-    bash_fs_rsync "/osa/_v/" "qqq@bbb:/mnt/d1001/_v/"
+    bash_fs_rsync "/mnt/d501aaa/_v/" "qqq@bbb:/mnt/d1001/_v/"
 }
 
 # DANGEROUS
