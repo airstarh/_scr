@@ -25,6 +25,9 @@ UUID=ff28e0e7-827b-4a4c-a9bb-da97bd3f38ee	/mnt/d64vik	ext4	defaults,nofail	0	2
 # d1001
 ###UUID=dcd6103c-415f-4818-8953-bba4a9578b5f	/mnt/d1001	ext4	defaults,nofail	0	2
 
+# d501aaa
+UUID=738d9051-dccf-489a-bb86-08134b6c04eb /mnt/d501aaa ext4 defaults,nofail 0 2
+
 # snapd hard-links downloads between snaps and cache; keep both on one filesystem.
 
 # Keep all snapd state in one mount so snapd hard links work.
