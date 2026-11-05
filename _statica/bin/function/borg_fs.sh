@@ -98,6 +98,11 @@ bash_fs_rsync_local() {
     return "$rsync_status"
 }
 
-borg_fs_draft(){
-    bash_fs_rsync_local "/run/media/qqq/RM-X-500/" "/home/qqq/_A001/_from_rm-x-500/"
-}
+# borg_fs_draft(){
+#     local STARTED=$EPOCHREALTIME
+#     ##################################################
+#     bash_fs_rsync_local "/run/media/qqq/RM-X-500/" "/home/qqq/_A001/_from_rm-x-500/"
+#     ##################################################
+#     local ENDED=$EPOCHREALTIME
+#     borg_spent $STARTED $ENDED
+# }
