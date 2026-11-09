@@ -142,11 +142,11 @@ borg_vm_alt() (
         -name alt-linux \
         -enable-kvm \
         -machine type=q35 \
-        -cpu host \
-        -smp cores=2,threads=2,sockets=1 \
+        -cpu skylake-xf,vendor=intel,+kvm_pv_eoi \
+        -smp cores=4,threads=1,sockets=1 \
         -m 4096 \
-        -drive "file=$disk,format=vmdk,if=virtio,cache=writeback" \
-        -boot order=c,menu=on \
+        -drive "file=$disk,format=vmdk,if=virtio,cache=none" \
+        -device virtio-balloon-pci,id=balloon0 \
         -netdev "tap,id=net0,ifname=$tap_name,script=no,downscript=no" \
         -device virtio-net-pci,netdev=net0,mac=52:54:00:41:4c:54 \
         -virtfs "local,id=hostshare,path=$share,security_model=mapped-xattr,mount_tag=hostshare" \
