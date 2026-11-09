@@ -26,8 +26,7 @@ borg_vm_alt() (
         printf 'borg_vm_alt: graphics render node is not accessible: %s\n' "$render_node" >&2
         return 1
     }
-
-    for command_name in qemu-img qemu-system-x86_64 remote-viewer nmcli sudo ip flock; do
+    for command_name in qemu-img qemu-system-x86_64 spicy nmcli sudo ip flock; do
         command -v "$command_name" >/dev/null 2>&1 || {
             printf 'borg_vm_alt: required command not found: %s\n' "$command_name" >&2
             return 1
@@ -142,10 +141,12 @@ borg_vm_alt() (
         -name alt-linux \
         -enable-kvm \
         -machine type=q35 \
-        -cpu skylake-xf,vendor=intel,+kvm_pv_eoi \
+        -cpu Skylake-Client-v4,+kvm_pv_eoi \
         -smp cores=4,threads=1,sockets=1 \
         -m 4096 \
-        -drive "file=$disk,format=vmdk,if=virtio,cache=none" \
+        -object iothread,id=vm-iothread \
+        -drive "file=$disk,format=vmdk,if=none,id=vm-disk,cache=none" \
+        -device virtio-blk-pci,drive=vm-disk,iothread=vm-iothread \
         -device virtio-balloon-pci,id=balloon0 \
         -netdev "tap,id=net0,ifname=$tap_name,script=no,downscript=no" \
         -device virtio-net-pci,netdev=net0,mac=52:54:00:41:4c:54 \
@@ -191,10 +192,10 @@ borg_vm_alt() (
         return 1
     fi
 
-    remote-viewer \
+    spicy \
         "--spice-usbredir-auto-redirect-filter=$usb_filter" \
         "--spice-usbredir-redirect-on-connect=$usb_filter" \
-        "spice+unix://$spice_socket"
+        "--uri=spice+unix://$spice_socket"
 
     wait "$qemu_pid"
     qemu_status=$?
