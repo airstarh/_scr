@@ -6,6 +6,12 @@ borg_dir() {
 
 
 bash_fs_rsync() {
+
+    echo ""
+    echo ""
+    echo ""
+    echo ">>> bash_fs_rsync"
+
     local source_dir="$1"
     local target_dir="$2"
     local log_file
@@ -52,6 +58,7 @@ borg_fs_sync(){
 
 borg_fs_A001(){
     bash_fs_rsync "/home/qqq/_A001/" "qqq@bbb:/mnt/d1000/_A001.all/_A001.aaa/"
+    bash_fs_rsync "/home/qqq/_A002/" "qqq@bbb:/mnt/d1000/_A001.all/_A002.aaa/"
 }
 
 borg_fs_v(){
