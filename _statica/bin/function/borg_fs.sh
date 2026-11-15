@@ -12,6 +12,10 @@ bash_fs_rsync() {
     echo ""
     echo ">>> bash_fs_rsync"
 
+    ##################################################
+    local STARTED=$EPOCHREALTIME
+    ##################################################
+
     local source_dir="$1"
     local target_dir="$2"
     local log_file
@@ -41,24 +45,17 @@ bash_fs_rsync() {
     grep -E '^(rsync:|rsync error:|skipping )' "$log_file" || echo "No errors found"
     rm -f -- "$log_file"
 
-    return "$rsync_status"
-}
-
-
-
-borg_fs_sync(){
-    local STARTED=$EPOCHREALTIME
-    ##################################################
-    borg_fs_A001
-    # borg_fs_v
     ##################################################
     local ENDED=$EPOCHREALTIME
     borg_spent $STARTED $ENDED
+    ##################################################
+
+    return "$rsync_status"
 }
 
-borg_fs_A001(){
+borg_fs_A00(){
     bash_fs_rsync "/home/qqq/_A001/" "qqq@bbb:/mnt/d1000/_A001.all/_A001.aaa/"
-    # bash_fs_rsync "/home/qqq/_A002/" "qqq@bbb:/mnt/d1000/_A001.all/_A002.aaa/"
+    bash_fs_rsync "/home/qqq/_A002/" "qqq@bbb:/mnt/d1000/_A001.all/_A002.aaa/"
 }
 
 borg_fs_v(){
@@ -75,6 +72,16 @@ borg_fs_bng(){
 }
 
 bash_fs_rsync_local() {
+
+    echo ""
+    echo ""
+    echo ""
+    echo ">>> bash_fs_rsync"
+
+    ##################################################
+    local STARTED=$EPOCHREALTIME
+    ##################################################
+
     local source_dir="$1"
     local target_dir="$2"
     local log_file
@@ -101,6 +108,11 @@ bash_fs_rsync_local() {
     echo "Files that failed/were skipped (from log)"
     grep -E '^(rsync:|rsync error:|skipping )' "$log_file" || echo "No errors found"
     rm -f -- "$log_file"
+
+    ##################################################
+    local ENDED=$EPOCHREALTIME
+    borg_spent $STARTED $ENDED
+    ##################################################
 
     return "$rsync_status"
 }
