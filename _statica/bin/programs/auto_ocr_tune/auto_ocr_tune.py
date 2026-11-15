@@ -1,53 +1,118 @@
-import os, glob, cv2, pytesseract
+import os, glob, time, cv2, pytesseract
 import numpy as np
+from PIL import Image, ImageOps
 
 INPUT_DIR = "./blurred_docs"
 OUTPUT_DIR = "./readable_docs"
-TARGET_CONFIDENCE = 78.0  # Stop early once average word confidence hits this %
+TARGET_CONFIDENCE = 80.0
+MAX_WIDTH = 2400
+LANG = "rus+eng"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+def load_upright_gray(path):
+    # Respect phone EXIF orientation tags first
+    pil_img = ImageOps.exif_transpose(Image.open(path)).convert("L")
+    gray = np.array(pil_img)
+    h, w = gray.shape
+    scale = MAX_WIDTH / float(w)
+    gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA if scale < 1 else cv2.INTER_CUBIC)
+    # Check Tesseract orientation (0, 90, 180, 270)
+    try:
+        osd = pytesseract.image_to_osd(gray, output_type=pytesseract.Output.DICT)
+        rot = osd.get("rotate", 0)
+        if rot == 90:
+            gray = cv2.rotate(gray, cv2.ROTATE_90_CLOCKWISE)
+        elif rot == 180:
+            gray = cv2.rotate(gray, cv2.ROTATE_180)
+        elif rot == 270:
+            gray = cv2.rotate(gray, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    except Exception:
+        pass
+    return gray
+
+def wiener_deblur(gray, kernel, snr=0.015):
+    img = gray.astype(np.float32) / 255.0
+    pad_h, pad_w = img.shape
+    kh, kw = kernel.shape
+    psf = np.zeros((pad_h, pad_w), dtype=np.float32)
+    psf[:kh, :kw] = kernel / kernel.sum()
+    psf = np.roll(psf, (-kh // 2, -kw // 2), axis=(0, 1))
+
+    H = np.fft.fft2(psf)
+    G = np.fft.fft2(img)
+    F_hat = np.conj(H) * G / (np.abs(H) ** 2 + snr)
+    res = np.real(np.fft.ifft2(F_hat))
+    return np.clip(res * 255.0, 0, 255).astype(np.uint8)
+
+def disk_kernel(radius):
+    L = np.arange(-radius, radius + 1)
+    X, Y = np.meshgrid(L, L)
+    return ((X**2 + Y**2) <= radius**2).astype(np.float32)
+
+def motion_kernel(length, angle):
+    k = np.zeros((length, length), dtype=np.float32)
+    k[length // 2, :] = 1.0
+    M = cv2.getRotationMatrix2D((length / 2 - 0.5, length / 2 - 0.5), angle, 1.0)
+    return cv2.warpAffine(k, M, (length, length))
+
+def clean_document_bg(gray):
+    # Divides out shadows/uneven lighting and boosts faint strokes
+    bg = cv2.medianBlur(gray, 51)
+    norm = cv2.divide(gray, bg, scale=255)
+    clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8)).apply(norm)
+    return clahe
+
 def get_ocr_score(img):
-    data = pytesseract.image_to_data(img, output_type=pytesseract.Output.DICT, config="--psm 6")
+    data = pytesseract.image_to_data(img, lang=LANG, output_type=pytesseract.Output.DICT, config="--psm 3")
     confs = [int(c) for c, w in zip(data["conf"], data["text"]) if int(c) > 0 and len(w.strip()) > 1]
-    if len(confs) < 5:  # Ignore noise if fewer than 5 real words are found
+    if len(confs) < 5:
         return 0.0, ""
     text = " ".join(w for w in data["text"] if w.strip())
     return float(np.mean(confs)), text
 
 def generate_candidates(gray):
-    # 1. Raw grayscale & 2x upscale (helps Tesseract read small blurred text)
-    up = cv2.resize(gray, None, fx=2.0, fy=2.0, interpolation=cv2.INTER_CUBIC)
-    yield "upscaled", up
+    base = clean_document_bg(gray)
+    yield "clean_bg", base
 
-    # 2. Test different sharpening strengths + adaptive thresholds
-    for sigma in [1.0, 2.0, 3.0]:
-        blur = cv2.GaussianBlur(up, (0, 0), sigma)
-        sharp = cv2.addWeighted(up, 1.8, blur, -0.8, 0)
-        yield f"sharp_s{sigma}", sharp
+    # 1. Strong unsharp mask
+    blur = cv2.GaussianBlur(base, (0, 0), 2.5)
+    sharp = cv2.addWeighted(base, 2.2, blur, -1.2, 0)
+    yield "strong_sharp", sharp
 
-        for block_size in [21, 35, 51]:
-            for c_val in [8, 15]:
-                thresh = cv2.adaptiveThreshold(
-                    sharp, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, block_size, c_val
-                )
-                yield f"sharp_s{sigma}_b{block_size}_c{c_val}", thresh
+    # 2. Out-of-focus (defocus) Wiener deconvolution across radii
+    for r in (3, 5, 7):
+        deblur = wiener_deblur(base, disk_kernel(r), snr=0.02)
+        yield f"defocus_r{r}", deblur
+        _, otsu = cv2.threshold(deblur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        yield f"defocus_r{r}_otsu", otsu
+
+    # 3. Camera-shake (motion) Wiener deconvolution across angles
+    for angle in (0, 45, 90, 135):
+        m_deblur = wiener_deblur(base, motion_kernel(11, angle), snr=0.02)
+        yield f"motion_a{angle}", m_deblur
 
 for path in sorted(glob.glob(f"{INPUT_DIR}/*.*")):
-    img = cv2.imread(path)
-    if img is None:
+    fname = os.path.basename(path)
+    try:
+        gray = load_upright_gray(path)
+    except Exception as e:
+        print(f"Skipping {fname}: {e}")
         continue
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+    h, w = gray.shape
+    print(f"Processing {fname} ({w}x{h})...")
     best_score, best_img, best_name, best_text = -1.0, gray, "original", ""
+
     for name, candidate in generate_candidates(gray):
+        t0 = time.time()
         score, text = get_ocr_score(candidate)
+        print(f"  -> {name}: {score:.1f}% ({time.time() - t0:.1f}s)")
         if score > best_score:
             best_score, best_img, best_name, best_text = score, candidate, name, text
         if best_score >= TARGET_CONFIDENCE:
-            break  # Stop immediately once the image is clearly readable
+            break
 
-    fname = os.path.basename(path)
     cv2.imwrite(f"{OUTPUT_DIR}/{fname}", best_img)
-    with open(f"{OUTPUT_DIR}/{fname}.txt", "w") as f:
+    with open(f"{OUTPUT_DIR}/{fname}.txt", "w", encoding="utf-8") as f:
         f.write(best_text)
-    print(f"{fname}: best={best_name} (confidence={best_score:.1f}%)")
+    print(f"DONE {fname}: best={best_name} (confidence={best_score:.1f}%)\n")

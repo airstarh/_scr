@@ -7,3 +7,6 @@ nbproject/
 **/vendor/
 **/bookmarks.json
 
+_statica/bin/programs/auto_ocr_tune/blurred_docs/
+_statica/bin/programs/auto_ocr_tune/readable_docs/
+
