@@ -4,19 +4,17 @@ from PIL import Image, ImageOps
 
 INPUT_DIR = "./blurred_docs"
 OUTPUT_DIR = "./readable_docs"
-TARGET_CONFIDENCE = 80.0
+TARGET_CONFIDENCE = 82.0
 MAX_WIDTH = 2400
 LANG = "rus+eng"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def load_upright_gray(path):
-    # Respect phone EXIF orientation tags first
     pil_img = ImageOps.exif_transpose(Image.open(path)).convert("L")
     gray = np.array(pil_img)
     h, w = gray.shape
     scale = MAX_WIDTH / float(w)
     gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA if scale < 1 else cv2.INTER_CUBIC)
-    # Check Tesseract orientation (0, 90, 180, 270)
     try:
         osd = pytesseract.image_to_osd(gray, output_type=pytesseract.Output.DICT)
         rot = osd.get("rotate", 0)
@@ -56,11 +54,17 @@ def motion_kernel(length, angle):
     return cv2.warpAffine(k, M, (length, length))
 
 def clean_document_bg(gray):
-    # Divides out shadows/uneven lighting and boosts faint strokes
     bg = cv2.medianBlur(gray, 51)
     norm = cv2.divide(gray, bg, scale=255)
     clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8)).apply(norm)
     return clahe
+
+def enhance_bw_contrast(gray, black_point=95, white_point=205, gamma=1.35):
+    # Stretches dark grays to deep black and light grays to pure white
+    stretched = np.clip((gray.astype(np.float32) - black_point) / (white_point - black_point), 0.0, 1.0)
+    # Gamma > 1 darkens mid-tone ink strokes while keeping background pure white
+    curved = np.power(stretched, gamma)
+    return (curved * 255.0).astype(np.uint8)
 
 def get_ocr_score(img):
     data = pytesseract.image_to_data(img, lang=LANG, output_type=pytesseract.Output.DICT, config="--psm 3")
@@ -72,24 +76,21 @@ def get_ocr_score(img):
 
 def generate_candidates(gray):
     base = clean_document_bg(gray)
-    yield "clean_bg", base
+    yield "clean_bg_bw", enhance_bw_contrast(base)
 
-    # 1. Strong unsharp mask
     blur = cv2.GaussianBlur(base, (0, 0), 2.5)
     sharp = cv2.addWeighted(base, 2.2, blur, -1.2, 0)
-    yield "strong_sharp", sharp
+    yield "strong_sharp_bw", enhance_bw_contrast(sharp)
 
-    # 2. Out-of-focus (defocus) Wiener deconvolution across radii
     for r in (3, 5, 7):
         deblur = wiener_deblur(base, disk_kernel(r), snr=0.02)
-        yield f"defocus_r{r}", deblur
+        yield f"defocus_r{r}_bw", enhance_bw_contrast(deblur)
         _, otsu = cv2.threshold(deblur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         yield f"defocus_r{r}_otsu", otsu
 
-    # 3. Camera-shake (motion) Wiener deconvolution across angles
     for angle in (0, 45, 90, 135):
         m_deblur = wiener_deblur(base, motion_kernel(11, angle), snr=0.02)
-        yield f"motion_a{angle}", m_deblur
+        yield f"motion_a{angle}_bw", enhance_bw_contrast(m_deblur)
 
 for path in sorted(glob.glob(f"{INPUT_DIR}/*.*")):
     fname = os.path.basename(path)
