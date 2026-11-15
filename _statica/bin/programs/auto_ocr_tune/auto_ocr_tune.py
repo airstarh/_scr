@@ -4,17 +4,20 @@ from PIL import Image, ImageOps
 
 INPUT_DIR = "./blurred_docs"
 OUTPUT_DIR = "./readable_docs"
-TARGET_CONFIDENCE = 84.0
-MAX_WIDTH = 2400
+TARGET_CONFIDENCE = 86.0
+MAX_WIDTH = 2800
 LANG = "rus+eng"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def load_upright_gray(path):
     pil_img = ImageOps.exif_transpose(Image.open(path)).convert("L")
     gray = np.array(pil_img)
-    h, w = gray.shape
+    h, w = gray.shape[:2]
     scale = MAX_WIDTH / float(w)
-    gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA if scale < 1 else cv2.INTER_CUBIC)
+    gray = cv2.resize(
+        gray, None, fx=scale, fy=scale,
+        interpolation=cv2.INTER_AREA if scale < 1 else cv2.INTER_LANCZOS4
+    )
     try:
         osd = pytesseract.image_to_osd(gray, output_type=pytesseract.Output.DICT)
         rot = osd.get("rotate", 0)
@@ -29,8 +32,7 @@ def load_upright_gray(path):
     return gray
 
 def auto_crop_page(gray):
-    # Finds the main bright document sheet on a darker background and crops away desk clutter
-    h, w = gray.shape
+    h, w = gray.shape[:2]
     blur = cv2.GaussianBlur(gray, (21, 21), 0)
     _, mask = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -46,8 +48,7 @@ def auto_crop_page(gray):
     return gray[y1:y2, x1:x2]
 
 def auto_deskew(gray, max_angle=12.0):
-    # Straightens tilted pages by maximizing horizontal text-line sharpness
-    h, w = gray.shape
+    h, w = gray.shape[:2]
     small_w = 800
     scale = small_w / float(w)
     small = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
@@ -55,11 +56,12 @@ def auto_deskew(gray, max_angle=12.0):
 
     best_angle = 0.0
     best_score = -1.0
-    center = (small.shape[1] // 2, small.shape[0] // 2)
+    sh, sw = small.shape[:2]
+    center = (sw // 2, sh // 2)
 
     for angle in np.arange(-max_angle, max_angle + 0.5, 0.5):
         M = cv2.getRotationMatrix2D(center, angle, 1.0)
-        rotated = cv2.warpAffine(edges, M, (small.shape[1], small.shape[0]), flags=cv2.INTER_NEAREST)
+        rotated = cv2.warpAffine(edges, M, (sw, sh), flags=cv2.INTER_NEAREST)
         row_sums = np.sum(rotated, axis=1, dtype=np.float64)
         score = np.var(row_sums)
         if score > best_score:
@@ -75,8 +77,8 @@ def auto_deskew(gray, max_angle=12.0):
 
 def wiener_deblur(gray, kernel, snr=0.015):
     img = gray.astype(np.float32) / 255.0
-    pad_h, pad_w = img.shape
-    kh, kw = kernel.shape
+    pad_h, pad_w = img.shape[:2]
+    kh, kw = kernel.shape[:2]
     psf = np.zeros((pad_h, pad_w), dtype=np.float32)
     psf[:kh, :kw] = kernel / kernel.sum()
     psf = np.roll(psf, (-kh // 2, -kw // 2), axis=(0, 1))
@@ -99,44 +101,67 @@ def motion_kernel(length, angle):
     return cv2.warpAffine(k, M, (length, length))
 
 def clean_document_bg(gray):
-    # Removes glare and shadows while keeping paper smooth and grain-free
-    denoised = cv2.bilateralFilter(gray, d=5, sigmaColor=35, sigmaSpace=35)
-    bg = cv2.medianBlur(denoised, 91)
-    norm = cv2.divide(denoised, bg, scale=255)
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8)).apply(norm)
+    bg = cv2.medianBlur(gray, 61)
+    norm = cv2.divide(gray, bg, scale=255)
+    clahe = cv2.createCLAHE(clipLimit=2.4, tileGridSize=(12, 12)).apply(norm)
     return clahe
 
-def enhance_bw_contrast(gray, black_point=92, white_point=196, gamma=1.02):
-    # Clean white paper + crisp, normal-weight black letters without bolding
+def enhance_bw_contrast(gray, black_point=96, white_point=196, gamma=1.05):
     stretched = np.clip((gray.astype(np.float32) - black_point) / (white_point - black_point), 0.0, 1.0)
     curved = np.power(stretched, gamma)
     return (curved * 255.0).astype(np.uint8)
 
+def blend_by_focus(sharp_img, deblur_img, raw_gray):
+    lap = np.abs(cv2.Laplacian(raw_gray, cv2.CV_32F))
+    focus_map = cv2.GaussianBlur(lap, (0, 0), 65)
+    f_min, f_max = np.percentile(focus_map, 10), np.percentile(focus_map, 90)
+    if f_max - f_min < 1e-5:
+        return deblur_img
+    blur_weight = 1.0 - np.clip((focus_map - f_min) / (f_max - f_min), 0.0, 1.0)
+    blended = deblur_img.astype(np.float32) * blur_weight + sharp_img.astype(np.float32) * (1.0 - blur_weight)
+    return np.clip(blended, 0, 255).astype(np.uint8)
+
 def get_ocr_score(img):
+    h, w = img.shape[:2]
     data = pytesseract.image_to_data(img, lang=LANG, output_type=pytesseract.Output.DICT, config="--psm 3")
-    confs = [int(c) for c, w in zip(data["conf"], data["text"]) if int(c) > 0 and len(w.strip()) > 1]
-    if len(confs) < 5:
+    top_confs, bot_confs, words = [], [], []
+    for c, w_txt, top in zip(data["conf"], data["text"], data["top"]):
+        w_clean = w_txt.strip()
+        if w_clean:
+            words.append(w_clean)
+        if int(c) > 0 and len(w_clean) > 1:
+            if top < h * 0.42:
+                top_confs.append(int(c))
+            else:
+                bot_confs.append(int(c))
+    if len(bot_confs) < 5:
         return 0.0, ""
-    text = " ".join(w for w in data["text"] if w.strip())
-    return float(np.mean(confs)), text
+    bot_score = float(np.mean(bot_confs))
+    top_score = float(np.mean(top_confs)) if len(top_confs) >= 3 else bot_score
+    combined = 0.65 * top_score + 0.35 * bot_score
+    return combined, " ".join(words)
 
 def generate_candidates(gray):
     base = clean_document_bg(gray)
 
-    # 1. Smooth unsharp mask (compresses blur without rough pixelation)
-    blur = cv2.GaussianBlur(base, (0, 0), 1.6)
-    sharp = cv2.addWeighted(base, 2.1, blur, -1.1, 0)
-    yield "crisp_smooth_bw", enhance_bw_contrast(sharp)
+    fine_blur = cv2.GaussianBlur(base, (0, 0), 1.0)
+    fine_sharp = cv2.addWeighted(base, 1.65, fine_blur, -0.65, 0)
+    med_blur = cv2.GaussianBlur(fine_sharp, (0, 0), 2.2)
+    dual_sharp = cv2.addWeighted(fine_sharp, 1.5, med_blur, -0.5, 0)
 
-    # 2. Gentle background-cleaned pass
-    yield "clean_bg_bw", enhance_bw_contrast(base)
+    for r in (3, 4, 5):
+        deblur = wiener_deblur(base, disk_kernel(r), snr=0.018)
+        d_blur = cv2.GaussianBlur(deblur, (0, 0), 1.0)
+        deblur_crisp = cv2.addWeighted(deblur, 1.4, d_blur, -0.4, 0)
+        adaptive = blend_by_focus(dual_sharp, deblur_crisp, gray)
+        yield f"focus_blend_r{r}", enhance_bw_contrast(adaptive)
 
-    # 3. Out-of-focus deconvolution
-    for r in (3, 5, 7):
+    for r in (4, 6):
         deblur = wiener_deblur(base, disk_kernel(r), snr=0.02)
-        yield f"defocus_r{r}_bw", enhance_bw_contrast(deblur)
+        yield f"full_defocus_r{r}", enhance_bw_contrast(deblur)
 
-    # 4. Motion-shake deconvolution
+    yield "dual_sharp_bw", enhance_bw_contrast(dual_sharp)
+
     for angle in (0, 45, 90, 135):
         m_deblur = wiener_deblur(base, motion_kernel(11, angle), snr=0.02)
         yield f"motion_a{angle}_bw", enhance_bw_contrast(m_deblur)
@@ -151,7 +176,7 @@ for path in sorted(glob.glob(f"{INPUT_DIR}/*.*")):
         print(f"Skipping {fname}: {e}")
         continue
 
-    h, w = gray.shape
+    h, w = gray.shape[:2]
     print(f"Processing {fname} ({w}x{h})...")
     best_score, best_img, best_name, best_text = -1.0, gray, "original", ""
 
