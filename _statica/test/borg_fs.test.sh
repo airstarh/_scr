@@ -26,6 +26,10 @@ borg_sudo() {
     return 23
 }
 
+borg_spent() {
+    printf 'spent:%s:%s\n' "$1" "$2"
+}
+
 # shellcheck disable=SC1090
 source "$BORG_FS_FILE"
 set +e
@@ -42,5 +46,32 @@ ERROR_REPORT="${OUTPUT##*Files that failed/were skipped (from log)}"
     || fail "borg rsync reported a successful filename containing error as a failure"
 [[ "$RSYNC_STATUS" -eq 23 ]] \
     || fail "borg rsync did not preserve rsync failure status"
+
+USER_RSYNC_CAPTURE="$(mktemp)"
+trap 'rm -f -- "$CAPTURE_FILE" "$USER_RSYNC_CAPTURE"' EXIT
+
+rsync() {
+    printf '%s\n' "$@" > "$USER_RSYNC_CAPTURE"
+    printf 'rsync: simulated user-mode failure\n' >&2
+    return 24
+}
+
+set +e
+USER_OUTPUT="$(bash_fs_rsync_as_user /source-user/ user@host:/target-user/ 2>&1)"
+USER_RSYNC_STATUS=$?
+set -e
+
+grep -Fxq '/source-user/' "$USER_RSYNC_CAPTURE" \
+    || fail "user-mode rsync did not receive the source path"
+grep -Fxq 'user@host:/target-user/' "$USER_RSYNC_CAPTURE" \
+    || fail "user-mode rsync did not receive the remote target path"
+! grep -Fq -- '--rsync-path=' "$USER_RSYNC_CAPTURE" \
+    || fail "user-mode rsync invoked remote sudo"
+[[ "$USER_OUTPUT" == *'simulated user-mode failure'* ]] \
+    || fail "user-mode rsync did not report rsync stderr"
+[[ "$USER_OUTPUT" == *'spent:'* ]] \
+    || fail "user-mode rsync did not report elapsed time"
+[[ "$USER_RSYNC_STATUS" -eq 24 ]] \
+    || fail "user-mode rsync did not preserve rsync failure status"
 
 echo "PASS: borg rsync error reporting and log lifecycle"

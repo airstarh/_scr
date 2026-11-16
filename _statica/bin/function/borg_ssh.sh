@@ -85,5 +85,93 @@ borg_sshfs_bbb() {
         -o noatime
 }
 
+borg_sshfs_xxx() {
+    sshfs xxx:/mnt/ncoder-ai \
+        /mnt/sshfs/xxx/nvme \
+        -o reconnect \
+        -o noatime
 
+    sshfs xxx:/home/qqq \
+        /mnt/sshfs/xxx/home-qqq \
+        -o reconnect \
+        -o noatime
+}
+
+aaa_codex() {
+    local local_dir="$PWD"
+    local remote_dir
+    local mount_source
+    local mount_target
+    local session_hash
+    local session_name
+    local codex_command
+    local tmux_command
+    local remote_command
+
+    case "$local_dir" in
+        /home/qqq)
+            remote_dir=/mnt/sshfs/xxx/home-qqq
+            mount_source=xxx:/home/qqq
+            mount_target=/mnt/sshfs/xxx/home-qqq
+            ;;
+        /home/qqq/*)
+            remote_dir="/mnt/sshfs/xxx/home-qqq${local_dir#/home/qqq}"
+            mount_source=xxx:/home/qqq
+            mount_target=/mnt/sshfs/xxx/home-qqq
+            ;;
+        /mnt/ncoder-ai)
+            remote_dir=/mnt/sshfs/xxx/nvme
+            mount_source=xxx:/mnt/ncoder-ai
+            mount_target=/mnt/sshfs/xxx/nvme
+            ;;
+        /mnt/ncoder-ai/*)
+            remote_dir="/mnt/sshfs/xxx/nvme${local_dir#/mnt/ncoder-ai}"
+            mount_source=xxx:/mnt/ncoder-ai
+            mount_target=/mnt/sshfs/xxx/nvme
+            ;;
+        /srv/_v)
+            remote_dir=/mnt/sshfs/xxx/nvme/_v
+            mount_source=xxx:/mnt/ncoder-ai
+            mount_target=/mnt/sshfs/xxx/nvme
+            ;;
+        /srv/_v/*)
+            remote_dir="/mnt/sshfs/xxx/nvme/_v${local_dir#/srv/_v}"
+            mount_source=xxx:/mnt/ncoder-ai
+            mount_target=/mnt/sshfs/xxx/nvme
+            ;;
+        *)
+            printf 'aaa_codex: current xxx directory is outside the configured mounts: %s\n' \
+                "$local_dir" >&2
+            return 1
+            ;;
+    esac
+
+    session_hash=$(printf '%s' "$remote_dir" | sha256sum | cut -c1-12) || return 1
+    session_name="codex-xxx-$session_hash"
+
+    printf -v codex_command \
+        'source /home/qqq/.nvm/nvm.sh; exec codex --dangerously-bypass-approvals-and-sandbox --no-daemon -C %q' \
+        "$remote_dir"
+    printf -v tmux_command 'bash -lc %q' "$codex_command"
+    printf -v remote_command \
+        'set -e; mkdir -p %q; if ! mountpoint -q %q; then sshfs %q %q -o reconnect -o noatime; fi; test -d %q; exec tmux new-session -A -s %q -c %q %q' \
+        "$mount_target" \
+        "$mount_target" \
+        "$mount_source" \
+        "$mount_target" \
+        "$remote_dir" \
+        "$session_name" \
+        "$remote_dir" \
+        "$tmux_command"
+
+    printf 'aaa_codex: xxx directory: %s\n' "$local_dir"
+    printf 'aaa_codex: aaa workspace: %s\n' "$remote_dir"
+    printf 'aaa_codex: tmux session: %s\n' "$session_name"
+
+    ssh -t \
+        -i /home/qqq/.ssh/003 \
+        -o IdentitiesOnly=yes \
+        qqq@192.168.1.47 \
+        "$remote_command"
+}
 

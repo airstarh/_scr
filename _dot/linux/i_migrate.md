@@ -51,4 +51,7 @@ It all is necessary for qemu virtual machines which are running from:
 - qemu machines run, taking all necessary data from /srv/_v.
 - Logitech mouse buttons work in conjunction with Solar and Input Remapper.
 - ssh hosts availability (aaa, bbb, sss, ttt, ttt.p, xxx).
--
+- AI:
+    -- xxx.ncoder has local xxx.harness and bbb.model.
+    -- xx.icoder has local xxx.harness and local model.
+    -- Global AGENTS' rules for any AI are transfered from aaa to xxx.

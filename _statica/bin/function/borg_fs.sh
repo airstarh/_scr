@@ -55,12 +55,12 @@ bash_fs_rsync() {
 
 borg_fs_A00(){
     bash_fs_rsync "/home/qqq/_A001/" "qqq@bbb:/mnt/d1000/_A001.all/_A001.aaa/"
-    bash_fs_rsync "/home/qqq/_A002/" "qqq@bbb:/mnt/d1000/_A001.all/_A002.aaa/"
+    # bash_fs_rsync "/home/qqq/_A002/" "qqq@bbb:/mnt/d1000/_A001.all/_A002.aaa/"
 }
 
-borg_fs_v(){
-    bash_fs_rsync "/mnt/d501aaa/_v/" "qqq@bbb:/mnt/d1001/_v/"
-}
+# borg_fs_v(){
+#     bash_fs_rsync "/mnt/d501aaa/_v/" "qqq@bbb:/mnt/d1001/_v/"
+# }
 
 # DANGEROUS
 # borg_fs_bdbmysql(){
@@ -70,6 +70,69 @@ borg_fs_v(){
 borg_fs_bng(){
     bash_fs_rsync "/osa/_docker/bng/" "qqq@bbb:/mnt/d1001/_docker/bng/"
 }
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+bash_fs_rsync_as_user() {
+
+    echo ""
+    echo ""
+    echo ""
+    echo ">>> bash_fs_rsync_as_user"
+
+    ##################################################
+    local STARTED=$EPOCHREALTIME
+    ##################################################
+
+    local source_dir="$1"
+    local target_dir="$2"
+    local log_file
+    local rsync_status
+
+    log_file="$(mktemp /tmp/borg_rsync_errors.XXXXXX.log)" || return
+
+    rsync -rtlvz \
+        --delete-after \
+        --no-perms \
+        --no-owner \
+        --no-group \
+        --progress \
+        -i \
+        --modify-window=10 \
+        -e ssh \
+        "$source_dir" \
+        "$target_dir" 2>&1 | tee "$log_file"
+    rsync_status=${PIPESTATUS[0]}
+
+    echo ""
+    echo "============================================================"
+    echo "============================================================"
+    echo "============================================================"
+    echo "Files that failed/were skipped (from log)"
+    grep -E '^(rsync:|rsync error:|skipping )' "$log_file" || echo "No errors found"
+    rm -f -- "$log_file"
+
+    ##################################################
+    local ENDED=$EPOCHREALTIME
+    borg_spent $STARTED $ENDED
+    ##################################################
+
+    return "$rsync_status"
+}
+
+borg_fs_to_xxx(){
+    bash_fs_rsync_as_user "/home/qqq/_A001/" "qqq@xxx:/home/qqq/_A001/"
+}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 bash_fs_rsync_local() {
 
