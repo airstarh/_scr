@@ -130,7 +130,9 @@ borg_fs_to_xxx() {
     agents_file=$(readlink -f /home/qqq/AGENTS.md) || return 1
 
     bash_fs_rsync_as_user "/home/qqq/_A001/" "qqq@xxx:/home/qqq/_A001/" || return
-    bash_fs_rsync_as_user "$agents_file" "qqq@xxx:/home/qqq/AGENTS.md"
+    bash_fs_rsync_as_user "$agents_file" "qqq@xxx:/home/qqq/AGENTS.md" || return
+    bash_fs_rsync_as_user "/home/qqq/.gitconfig" "qqq@xxx:/home/qqq/.gitconfig" || return
+    bash_fs_rsync_as_user "/home/qqq/.gitignore" "qqq@xxx:/home/qqq/.gitignore"
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

@@ -10,6 +10,8 @@ borg_vm_alt() (
     local render_node=${BORG_VM_ALT_RENDER_NODE:-/dev/dri/renderD128}
     local usb_filter='0x08,-1,-1,-1,1|-1,0x152d,0x0578,-1,1|-1,-1,-1,-1,0'
     local tap_name="tap-alt-${UID}"
+    local iface=enp2s0
+    local conn_name="br-alt-${iface}"
     local connections original_connection master interface active
     local attempts=${BORG_VM_ALT_ROUTE_WAIT_ATTEMPTS:-15}
     local attempt command_name qemu_pid qemu_status
@@ -59,25 +61,25 @@ borg_vm_alt() (
     }
 
     if grep -Fxq 'br-alt:bridge' <<<"$connections"; then
-        master=$(nmcli -g connection.master connection show br-alt-enp1s0 2>/dev/null) || master=
-        interface=$(nmcli -g connection.interface-name connection show br-alt-enp1s0 2>/dev/null) || interface=
+        master=$(nmcli -g connection.master connection show "$conn_name" 2>/dev/null) || master=
+        interface=$(nmcli -g connection.interface-name connection show "$conn_name" 2>/dev/null) || interface=
         active=$(nmcli -t -f NAME,DEVICE connection show --active) || active=
 
-        if [[ "$master" != br-alt || "$interface" != enp1s0 ]] ||
+        if [[ "$master" != br-alt || "$interface" != "$iface" ]] ||
             ! grep -Fxq 'br-alt:br-alt' <<<"$active" ||
-            ! grep -Fxq 'br-alt-enp1s0:enp1s0' <<<"$active" ||
+            ! grep -Fxq "${conn_name}:${iface}" <<<"$active" ||
             ! ip route show default dev br-alt | grep -q '^default '; then
             printf 'borg_vm_alt: saved br-alt configuration is incomplete, inactive, or has no default route\n' >&2
-            printf 'borg_vm_alt: repair or remove br-alt and br-alt-enp1s0 with NetworkManager before retrying\n' >&2
+            printf 'borg_vm_alt: repair or remove br-alt and %s with NetworkManager before retrying\n' "$conn_name" >&2
             return 1
         fi
     else
-        original_connection=$(nmcli -g GENERAL.CONNECTION device show enp1s0) || {
+        original_connection=$(nmcli -g GENERAL.CONNECTION device show "$iface") || {
             printf 'borg_vm_alt: could not identify the current wired connection\n' >&2
             return 1
         }
 
-        printf 'borg_vm_alt: creating persistent LAN bridge br-alt over enp1s0 (sudo required)\n' >&2
+        printf 'borg_vm_alt: creating persistent LAN bridge br-alt over %s (sudo required)\n' "$iface" >&2
         printf 'borg_vm_alt: the wired connection may be interrupted briefly during first-time setup\n' >&2
 
         if ! sudo nmcli connection add type bridge ifname br-alt con-name br-alt \
@@ -87,14 +89,14 @@ borg_vm_alt() (
             return 1
         fi
 
-        if ! sudo nmcli connection add type ethernet ifname enp1s0 \
-            con-name br-alt-enp1s0 master br-alt; then
+        if ! sudo nmcli connection add type ethernet ifname "$iface" \
+            con-name "$conn_name" master br-alt; then
             [[ -z "$original_connection" || "$original_connection" == '--' ]] || \
                 sudo nmcli connection up "$original_connection"
             return 1
         fi
 
-        if ! sudo nmcli connection up br-alt || ! sudo nmcli connection up br-alt-enp1s0; then
+        if ! sudo nmcli connection up br-alt || ! sudo nmcli connection up "$conn_name"; then
             [[ -z "$original_connection" || "$original_connection" == '--' ]] || \
                 sudo nmcli connection up "$original_connection"
             return 1

@@ -28,7 +28,7 @@ source ~/_A001/_scr/_statica/index.sh
 - google.chrome.stabel
 - qemu
 - docker
-- KDE plugin: freeze screen by Ctrl+1
+- UI zoomborg: freeze screen by Ctrl+1[/home/qqq/_A001/rep/zoomborg]
 - Solar - for Logitech Mouse
 - Input Remapper - for mouse and other devices
 
@@ -49,10 +49,19 @@ It all is necessary for qemu virtual machines which are running from:
 ### Double checks:
 
 - qemu machines run, taking all necessary data from /srv/_v.
+
 - Logitech mouse buttons work in conjunction with Solar and Input Remapper.
+
 - ssh hosts availability (aaa, bbb, sss, ttt, ttt.p, xxx).
+
 - AI:
     -- xxx.ncoder has local xxx.harness and bbb.model.
     -- xx.icoder has local xxx.harness and local model.
 
 - ansible grab/checks are passed.
+
+- global  git credentials and global .gitignore file.
+
+-- Spectacle keymap and behaviour.
+
+-- Espanso configuration.

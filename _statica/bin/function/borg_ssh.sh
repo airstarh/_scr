@@ -48,11 +48,11 @@ borg_ssh() {
     fi
 
     ### eval "$(ssh-agent -s)"
-    # SSS:
+    # 001 is the primary general-purpose SSH key: bbb, sss, ttt, and other default SSH work.
     ssh-add ~/.ssh/001
     # 1378862
     ssh-add ~/.ssh/002
-    # 1234
+    # 003 is used for xxx, GitHub account airstarh, and aaa_codex from xxx back to aaa.
     ssh-add ~/.ssh/003
     # 1234
     ssh-add ~/.ssh/004
