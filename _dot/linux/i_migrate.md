@@ -25,3 +25,6 @@ source ~/_A001/_scr/_statica/index.sh
 - vscode
 - dbeaver-ce
 - google.chrome.stabel
+- qemu
+- docker
+- KDE plugin: freeze screen by Ctrl+1
