@@ -124,8 +124,13 @@ bash_fs_rsync_as_user() {
     return "$rsync_status"
 }
 
-borg_fs_to_xxx(){
-    bash_fs_rsync_as_user "/home/qqq/_A001/" "qqq@xxx:/home/qqq/_A001/"
+borg_fs_to_xxx() {
+    local agents_file
+
+    agents_file=$(readlink -f /home/qqq/AGENTS.md) || return 1
+
+    bash_fs_rsync_as_user "/home/qqq/_A001/" "qqq@xxx:/home/qqq/_A001/" || return
+    bash_fs_rsync_as_user "$agents_file" "qqq@xxx:/home/qqq/AGENTS.md"
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

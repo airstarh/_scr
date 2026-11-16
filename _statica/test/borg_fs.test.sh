@@ -48,7 +48,8 @@ ERROR_REPORT="${OUTPUT##*Files that failed/were skipped (from log)}"
     || fail "borg rsync did not preserve rsync failure status"
 
 USER_RSYNC_CAPTURE="$(mktemp)"
-trap 'rm -f -- "$CAPTURE_FILE" "$USER_RSYNC_CAPTURE"' EXIT
+MIGRATION_CAPTURE="$(mktemp)"
+trap 'rm -f -- "$CAPTURE_FILE" "$USER_RSYNC_CAPTURE" "$MIGRATION_CAPTURE"' EXIT
 
 rsync() {
     printf '%s\n' "$@" > "$USER_RSYNC_CAPTURE"
@@ -73,5 +74,34 @@ grep -Fxq 'user@host:/target-user/' "$USER_RSYNC_CAPTURE" \
     || fail "user-mode rsync did not report elapsed time"
 [[ "$USER_RSYNC_STATUS" -eq 24 ]] \
     || fail "user-mode rsync did not preserve rsync failure status"
+
+bash_fs_rsync_as_user() {
+    printf '%s\t%s\n' "$1" "$2" >> "$MIGRATION_CAPTURE"
+}
+
+borg_fs_to_xxx
+
+[[ "$(wc -l < "$MIGRATION_CAPTURE")" -eq 2 ]] \
+    || fail "xxx migration did not schedule exactly the workspace and global rules"
+grep -Fxq $'/home/qqq/_A001/\tqqq@xxx:/home/qqq/_A001/' "$MIGRATION_CAPTURE" \
+    || fail "xxx migration did not schedule the canonical workspace"
+grep -Fxq $'/mnt/d64vik/qqq/_ai/agents/AGENTS.md\tqqq@xxx:/home/qqq/AGENTS.md' "$MIGRATION_CAPTURE" \
+    || fail "xxx migration did not dereference and schedule the global AI rules"
+
+MIGRATION_CALLS=0
+bash_fs_rsync_as_user() {
+    ((MIGRATION_CALLS += 1))
+    [[ "$MIGRATION_CALLS" -ne 1 ]]
+}
+
+set +e
+borg_fs_to_xxx
+MIGRATION_STATUS=$?
+set -e
+
+[[ "$MIGRATION_STATUS" -ne 0 ]] \
+    || fail "xxx migration hid a failed workspace transfer"
+[[ "$MIGRATION_CALLS" -eq 1 ]] \
+    || fail "xxx migration continued after a failed workspace transfer"
 
 echo "PASS: borg rsync error reporting and log lifecycle"

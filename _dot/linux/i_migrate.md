@@ -54,5 +54,5 @@ It all is necessary for qemu virtual machines which are running from:
 - AI:
     -- xxx.ncoder has local xxx.harness and bbb.model.
     -- xx.icoder has local xxx.harness and local model.
-    -- Global AGENTS' rules for any AI are transfered from aaa to xxx.
+
 - ansible grab/checks are passed.
