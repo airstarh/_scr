@@ -47,3 +47,7 @@ borg_spent() {
     # Print the formatted result perfectly
     echo "SPENT: $(printf "%02d:%02d:%02d.%03d" $hours $minutes $seconds $ms)"
 }
+
+borg_check() {
+    python3 -c 'import locale; locale.setlocale(locale.LC_ALL, ""); print(locale.format_string("%.2f", 1000.01, grouping=True))'
+}
