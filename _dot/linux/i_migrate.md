@@ -45,3 +45,10 @@ fstab adjustment required.
 It all is necessary for qemu virtual machines which are running from:
     - /home/qqq/_A001/_scr/_statica/bin/function/borg_vm_alt.sh
     - /home/qqq/_A001/_scr/_statica/bin/function/borg_vm.sh
+
+### Double checks:
+
+- qemu machines run, taking all necessary data from /srv/_v.
+- Logitech mouse buttons work in conjunction with Solar and Input Remapper.
+- ssh hosts availability (aaa, bbb, sss, ttt, ttt.p, xxx).
+-
