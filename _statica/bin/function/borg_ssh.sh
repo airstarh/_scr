@@ -48,11 +48,11 @@ borg_ssh() {
     fi
 
     ### eval "$(ssh-agent -s)"
-    # 001 is the primary general-purpose SSH key: bbb, sss, ttt, and other default SSH work.
+    # 001 is the primary general-purpose SSH key: bbb, sss, ttt, aaa_codex, and other default SSH work.
     ssh-add ~/.ssh/001
     # 1378862
     ssh-add ~/.ssh/002
-    # 003 is used for xxx, GitHub account airstarh, and aaa_codex from xxx back to aaa.
+    # 003 is used for xxx and GitHub account airstarh.
     ssh-add ~/.ssh/003
     # 1234
     ssh-add ~/.ssh/004
@@ -154,7 +154,7 @@ aaa_codex() {
         "$remote_dir"
     printf -v tmux_command 'bash -lc %q' "$codex_command"
     printf -v remote_command \
-        'set -e; mkdir -p %q; if ! mountpoint -q %q; then sshfs %q %q -o reconnect -o noatime; fi; test -d %q; exec tmux new-session -A -s %q -c %q %q' \
+        'set -e; mkdir -p %q; if ! mountpoint -q %q; then sshfs %q %q -o reconnect -o noatime -o IdentityFile=/home/qqq/.ssh/001 -o IdentitiesOnly=yes -o BatchMode=yes; fi; test -d %q; exec tmux new-session -A -s %q -c %q %q' \
         "$mount_target" \
         "$mount_target" \
         "$mount_source" \
@@ -169,8 +169,9 @@ aaa_codex() {
     printf 'aaa_codex: tmux session: %s\n' "$session_name"
 
     ssh -t \
-        -i /home/qqq/.ssh/003 \
+        -i /home/qqq/.ssh/001 \
         -o IdentitiesOnly=yes \
+        -o BatchMode=yes \
         qqq@192.168.1.47 \
         "$remote_command"
 }
