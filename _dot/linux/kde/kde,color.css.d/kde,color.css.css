@@ -1,0 +1,18 @@
+/* region TEXT */
+
+.normal { color: #fff }
+.neutral { color: #fff }
+.active { color: #fff }
+.inactive { color: #a1a9b1 }
+.positive { color: #27ae60 }
+.negative { color: #da4453 }
+.link { color: #1d99f3 }
+.visited { color: #9b59b6 }
+
+/* endregion TEXT */
+
+
+/* region Mask*/
+.focus {color: #ffff00}
+.hover {color: #00ff00}
+/* regionregion Mask*/
