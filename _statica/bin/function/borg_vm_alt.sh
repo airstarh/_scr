@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Issues:
+#
+# *\borg_vm_alt: TAP device already exists: tap-alt-1000*
+# Detach from bridge (optional; deleting directly also works)
+#   sudo ip link set tap-alt-1000 nomaster
+# Delete TAP device
+#   sudo ip link delete tap-alt-1000
+#
+
 borg_vm_alt() (
     local base_dir=${BORG_VM_ALT_BASE_DIR:-/srv/_v/qemu_alt}
     local disk="$base_dir/alt-linux.vmdk"
